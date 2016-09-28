@@ -1,0 +1,252 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "滚球";
+}
+<div id="match-list" class="page page-current">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back">
+            <span class="icon icon-left"></span>
+        </a>
+        <a class="icon icon-refresh pull-left match-refresh"><em>180</em></a>
+        <h1 class="title">@ViewBag.Title</h1>
+        <a class="icon icon-me pull-right" href="/m/user"></a>
+    </header>
+    <nav class="bar bar-tab">
+        <span class="tab-item">
+            <a class="button button-big button-fill button-dark button-black" id="btn_clear" href="javascript:void(0)">清空</a>
+        </span>
+        <span class="tab-item no-padding selected_match">
+            已选择<em>0</em>场
+        </span>
+        <span class="tab-item">
+            <a class="button button-big button-fill button-warning disabled" id="btn_ret">投注</a>
+        </span>
+    </nav>
+    <div class="content">
+        <div class="buttons-tab fixed-tab" data-offset="44">
+            <a href="#tab1" class="tab-link button active" bettype="60"><em class="tab1">独赢</em></a>
+            <a href="#tab2" class="tab-link button" bettype="63"><em class="tab2">让球</em></a>
+            <a href="#tab3" class="tab-link button" bettype="61"><em class="tab3">大小球</em></a>
+        </div>
+        <div class="tabs">
+            <div id="tab1" class="tab active">
+                <div class="list-block media-list">
+                    <ul class="match_list_ul"></ul>
+                </div>
+            </div>
+            <div id="tab2" class="tab">
+                <div class="list-block media-list">
+                    <ul class="match_list_ul"></ul>
+                </div>
+            </div>
+            <div id="tab3" class="tab">
+                <div class="list-block media-list">
+                    <ul class="match_list_ul"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--滚球独赢-->
+<script type="text/html" id="match_list_tpl_60">
+    {{if Leagues.length>0}}
+    {{each Leagues as item i}}
+    <li class="item-content detail-product-list-title {{if i!=0}}{{'zhover'}}{{/if}}" onclick="match.showLeagueMatch(60, this)">
+        <div class="item-inner">
+            <div class="item-title">
+                {{if item.Language=='cn'}}
+                {{#item.League+'&nbsp;&nbsp;'}}共{{#'&nbsp;'+item.Match.length+'&nbsp;'}}场比赛可投
+                {{else}}
+                {{#item.League+'&nbsp;&nbsp;'}}Total of {{#'&nbsp;'+item.Match.length+'&nbsp;'}} games can be cast
+                {{/if}}
+            </div>
+        </div>
+        <div class="item-media">
+            <i class="icon icon-browser"></i>
+        </div>
+    </li>
+    <div class="detail-product-content">
+        {{each item.Match as items j}}
+        {{each items.Odds as odd}}
+        {{if odd.BetType=='60'}}
+        <li class="item-content row matchrow-60">
+            <div class="item-media col-20">
+                <span>{{items.MatchDate}}</span>
+            </div>
+            <div class="col-80">
+                <div class="row">
+                    <div class="col-33 text-center match-bettype bettype-60" onclick="match.bettypeSelect('H', '{{#item.League}}', '{{#items.HTeam}}', '{{#items.CTeam}}', '{{items.MatchId}}', '{{#odd.BetIOR.split('|')[0]}}', 60, 'H', this, 0, '{{#items.CurrentScore}}')">
+                        {{if item.Language=='cn'}}
+                        {{#'<span>'+items.HTeam+'</span><span>主胜'+odd.BetIOR.split('|')[0]+'</span>'}}
+                        {{else}}
+                        {{#'<span>'+items.HTeam+'</span><span>H'+odd.BetIOR.split('|')[0]+'</span>'}}
+                        {{/if}}
+                    </div>
+                    <div class="col-33 text-center match-bettype bettype-60 match_center" onclick="match.bettypeSelect('N', '{{#item.League}}', '{{#items.HTeam}}', '{{#items.CTeam}}', '{{items.MatchId}}', '{{#odd.BetIOR.split('|')[2]}}', 60, 'N', this, 2, '{{#items.CurrentScore}}')">
+                        {{if item.Language=='cn'}}
+                        {{#'<span>vs</span><span>平'+odd.BetIOR.split('|')[2]+'</span>'}}
+                        {{else}}
+                        {{#'<span>vs</span><span>N'+odd.BetIOR.split('|')[2]+'</span>'}}
+                        {{/if}}
+                    </div>
+                    <div class="col-33 text-center match-bettype bettype-60" onclick="match.bettypeSelect('C', '{{#item.League}}', '{{#items.HTeam}}', '{{#items.CTeam}}', '{{items.MatchId}}', '{{#odd.BetIOR.split('|')[1]}}', 60, 'C', this, 1, '{{#items.CurrentScore}}')">
+                        {{if item.Language=='cn'}}
+                        {{#'<span>'+items.CTeam+'</span><span>客胜'+odd.BetIOR.split('|')[1]+'</span>'}}
+                        {{else}}
+                        {{#'<span>'+items.CTeam+'</span><span>C'+odd.BetIOR.split('|')[1]+'</span>'}}
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {{/if}}
+        {{/each}}
+        {{/each}}
+    </div>
+    {{/each}}
+    {{else}}
+    <li>
+        <div class="content-padded content-nodata">
+            <p></p>
+        </div>
+    </li>
+    {{/if}}
+</script>
+<!--滚球让球-->
+<script type="text/html" id="match_list_tpl_63">
+    {{if Leagues.length>0}}
+    {{each Leagues as item i}}
+    <li class="item-content detail-product-list-title {{if i!=0}}{{'zhover'}}{{/if}}" onclick="match.showLeagueMatch(63, this)">
+        <div class="item-inner">
+            <div class="item-title">
+                {{if item.Language=='cn'}}
+                {{#item.League+'&nbsp;&nbsp;'}}共{{#'&nbsp;'+item.Match.length+'&nbsp;'}}场比赛可投
+                {{else}}
+                {{#item.League+'&nbsp;&nbsp;'}}Total of {{#'&nbsp;'+item.Match.length+'&nbsp;'}} games can be cast
+                {{/if}}
+            </div>
+        </div>
+        <div class="item-media">
+            <i class="icon icon-browser"></i>
+        </div>
+    </li>
+    <div class="detail-product-content">
+        {{each item.Match as items j}}
+        {{each items.Odds as odd}}
+        {{if odd.BetType=='63'}}
+        <li class="item-content row matchrow-63">
+            <div class="item-media col-20">
+                <span>{{items.MatchDate}}</span>
+            </div>
+            <div class="col-80">
+                <div class="row">
+                    <div class="col-50 text-center match-bettype bettype-63" onclick="match.bettypeSelect('H', '{{#item.League}}', '{{#items.HTeam}}', '{{#items.CTeam}}', '{{items.MatchId}}', '{{#odd.BetIOR.split('|')[0]}}', 63, '{{#odd.BetKey}}', this,0, '{{#items.CurrentScore}}')">
+                        {{letball 'H' items.HTeam odd.BetKey odd.BetIOR.split('|')[0] item.Language}}
+                    </div>
+                    <div class="col-33 text-center match-bettype bettype-63 match_noborder">
+                        VS
+                    </div>
+                    <div class="col-50 text-center match-bettype bettype-63" onclick="match.bettypeSelect('C', '{{#item.League}}', '{{#items.HTeam}}', '{{#items.CTeam}}', '{{items.MatchId}}', '{{#odd.BetIOR.split('|')[1]}}', 63, '{{#odd.BetKey}}', this,1, '{{#items.CurrentScore}}')">
+                        {{letball 'C' items.CTeam odd.BetKey odd.BetIOR.split('|')[1] item.Language}}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {{/if}}
+        {{/each}}
+        {{/each}}
+    </div>
+    {{/each}}
+    {{else}}
+    <li>
+        <div class="content-padded content-nodata">
+            <p></p>
+        </div>
+    </li>
+    {{/if}}
+</script>
+<!--滚球大小球-->
+<script type="text/html" id="match_list_tpl_61">
+    {{if Leagues.length>0}}
+    {{each Leagues as item i}}
+    <li class="item-content detail-product-list-title {{if i!=0}}{{'zhover'}}{{/if}}" onclick="match.showLeagueMatch(61, this)">
+        <div class="item-inner">
+            <div class="item-title">
+                {{if item.Language=='cn'}}
+                {{#item.League+'&nbsp;&nbsp;'}}共{{#'&nbsp;'+item.Match.length+'&nbsp;'}}场比赛可投
+                {{else}}
+                {{#item.League+'&nbsp;&nbsp;'}}Total of {{#'&nbsp;'+item.Match.length+'&nbsp;'}} games can be cast
+                {{/if}}
+            </div>
+        </div>
+        <div class="item-media">
+            <i class="icon icon-browser"></i>
+        </div>
+    </li>
+    <div class="detail-product-content">
+        {{each item.Match as items j}}
+        {{each items.Odds as odd}}
+        {{if odd.BetType=='61'}}
+        <li class="item-content row matchrow-61">
+            <div class="item-media col-20">
+                <span>{{items.MatchDate}}</span>
+            </div>
+            <div class="col-80">
+                <div class="row">
+                    <div class="col-33 text-center">
+                        {{#items.HTeam}}
+                    </div>
+                    <div class="col-33 text-center">
+                        VS
+                    </div>
+                    <div class="col-33 text-center">
+                        {{#items.CTeam}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-33 text-center match-bettype bettype-61" onclick="match.bettypeSelect('O', '{{#item.League}}', '{{#items.HTeam}}', '{{#items.CTeam}}', '{{items.MatchId}}', '{{#odd.BetIOR.split('|')[0]}}', 61, '{{#odd.BetKey}}', this, 0, '{{#items.CurrentScore}}')">
+                        {{ouball 'O' odd.BetKey odd.BetIOR.split('|')[0] item.Language}}
+                    </div>
+                    <div class="col-33 text-center match-bettype bettype-61 match_noborder">
+
+                    </div>
+                    <div class="col-33 text-center match-bettype bettype-61" onclick="match.bettypeSelect('U', '{{#item.League}}', '{{#items.HTeam}}', '{{#items.CTeam}}', '{{items.MatchId}}', '{{#odd.BetIOR.split('|')[1]}}', 61, '{{#odd.BetKey}}', this, 1, '{{#items.CurrentScore}}')">
+                        {{ouball 'U' odd.BetKey odd.BetIOR.split('|')[1] item.Language}}
+                    </div>
+                </div>
+            </div>
+        </li>
+        {{/if}}
+        {{/each}}
+        {{/each}}
+    </div>
+    {{/each}}
+    {{else}}
+    <li>
+        <div class="content-padded content-nodata">
+            <p></p>
+        </div>
+    </li>
+    {{/if}}
+</script>
+<!--用户交易单-->
+<div class="popup popup-useret userBetemplate">
+</div>
+@section style
+    {
+    <link href="~/Areas/Mobile/Content/css/ft.match.css" rel="stylesheet" />
+    <style type="text/css">
+        .tabs {
+            margin-top: 0rem;
+        }
+    </style>
+}
+@section script
+    {
+    <script src="~/Areas/Mobile/Scripts/sm-extend.js"></script>
+    <script src="~/Areas/Mobile/Scripts/template.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.rollball.match.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.template.helper.js"></script>
+}

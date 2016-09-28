@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "绑定银行卡";
+}
+<div id="banklist" class="page">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/m/user/ucenter">
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class="title">@ViewBag.Title</h1>
+        <a class="button button-link button-nav pull-right add-bank langue-change">
+            <span class="add">新增</span>
+        </a>
+    </header>
+    <div class="content">
+        <div class="list-block media-list">
+            <ul class="bank_ul"></ul>
+        </div>
+    </div>
+</div>
+<div class="popup popup-userbank">
+</div>
+<script type="text/html" id="bank_tpl">
+    {{each data as item}}
+    <li>
+        <a href="javascript:void(0)" class="item-link item-content" data-id="{{item.Id}}" data-realname="{{item.RealName}}" data-banktype="{{item.BankType}}" data-bankcardnum="{{item.BankCardNum}}" data-bankbranch="{{item.BankBranch}}" onclick="bank.popopOperate($.i18n.prop('bank_edit_bankcard_title'), 'edit', this)">
+            <div class="item-inner">
+                <div class="item-title-row">
+                    <div class="item-title">{{item.RealName}}</div>
+                </div>
+                <div class="item-subtitle">{{#item.BankType+'('+item.BankCardNum+')'}}</div>
+            </div>
+        </a>
+    </li>
+    {{/each}}
+</script>
+@section style
+{
+    <link href="~/Areas/Mobile/Content/css/ft.user.css" rel="stylesheet" />
+}
+@section script
+{
+    <script src="~/Areas/Mobile/Scripts/template.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.user.bank.js"></script>
+}

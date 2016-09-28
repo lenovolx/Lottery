@@ -1,0 +1,346 @@
+﻿@using FT.Model.ViewModel
+@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+    var admin = (AdminViewModel)Model;
+}
+@section scripts{
+
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.validbox.ext.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.ext.linkbutton.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding: 5px;" fit="true">
+        <table style="margin: 10px" id="dg" title="" toolbar="#toolbar"></table>
+    </div>
+</div>
+<div id="dlg" class="easyui-dialog" style="width:400px;height:320px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" novalidate>
+        <div class="fitem">
+            <label class="LoginName">登录帐号:</label>
+            <input id="LoginName" name="LoginName" class="easyui-validatebox easyui-textbox" data-options="required:true,validType:['username']">
+            <input id="Id" name="Id" type="hidden">
+            <input id="ParentPath" name="ParentPath" type="hidden">
+        </div>
+        <div class="fitem">
+            <label class="selType">帐号类型:</label>
+            <input id="selType" name="selType" data-options="
+				method: 'get',
+				panelWidth: 150,
+				panelHeight: 'auto'" required="true">
+            <input type="hidden" id="Type" name="Type" value="0" />
+        </div>
+        <div class="fitem">
+            <label class="selLevel">帐号等级:</label>
+            <input id="selLevel" name="selLevel" data-options="
+				method: 'get',
+				panelWidth: 150,
+				panelHeight: 'auto',disabled:true">
+            <input type="hidden" id="Level" name="Level" value="0" />
+        </div>
+        <div class="fitem addpass">
+            <label class="Password">登录密码:</label>
+            <input type="password" id="Password" name="Password" class="easyui-validatebox easyui-textbox" data-options="validType:'length[6,12]'">
+        </div>
+        <div class="fitem">
+            <label class="Phone">联系电话:</label>
+            <input id="Phone" name="Phone" class="easyui-textbox" data-options="validType:'length[6,14]'">
+        </div>
+        <div class="fitem">
+            <label class="email">电子邮箱:</label>
+            <input id="email" name="email" class="easyui-textbox" data-options="validType:'email'">
+        </div>
+        <div class="fitem appendmoney">
+            <label class="ReturnRate">返水比例:</label>
+            <input id="ReturnRate" name="ReturnRate" class="easyui-numberbox" data-options="precision:0,groupSeparator:',',required:false,min:0,max:100,width:70,disabled: true" value="0" />%
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="user.saveForm('fm', 'dlg', 'dg',this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlg').dialog('close');" style="width:90px">取消</a>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<script language="javascript">
+    var MenuId = '@(ViewBag.MenuId)';
+    var level = '@admin.AgentLevel';
+    var agentid = '@(admin.AgentId.HasValue?admin.AgentId.Value:0)';
+    var path = '@admin.ParentPath';
+    var url = "";
+    var selLevel = $('#selLevel');
+    var selType = $('#selType');
+    $(function () {
+        $('#btn_LockUser').linkbutton("disable");
+        $('#btn_UnLockUser').linkbutton("disable");
+        user.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+        $('#dg').datagrid({
+            title: "",
+            url: "/PlatAdmin/User/UserGrid",
+            width: "100%",
+            method: 'post',
+            height: "100%",
+            fitColumns: true,
+            sortName: 'Id',
+            sortOrder: 'desc',
+            idField: 'Id',
+            pageSize: 50,
+            pagination: true,
+            striped: true,
+            singleSelect: true,
+            rownumbers: true,
+            checkOnSelect: true,
+            selectOnCheck: true,
+            columns: [[
+                        { field: 'chk', align: 'center', width: 10, checkbox: true },
+                        { field: 'Id', align: 'center', width: 10, title: $.i18n.prop('user_id_title') },
+                        { field: 'LoginName', width: 30, align: 'center', sortable: true, title: $.i18n.prop('user_loginname_title') },
+                        { field: 'CreateDate', width: 25, align: 'center', sortable: true, formatter: formatDateBoxFull, title: $.i18n.prop('user_createdate_title') },
+                        { field: 'Type', width: 30, align: 'center', sortable: true, title: $.i18n.prop('user_typename_title') },
+                        { field: 'BalanceAmount', width: 15, align: 'right', sortable: true, formatter: formatMoney, title: $.i18n.prop('user_balanceamount_title') },
+                        { field: 'Phone', width: 15, align: 'center', title: $.i18n.prop('user_phone_title') },
+                        { field: 'email', width: 15, align: 'center', title: $.i18n.prop('user_email_title') },
+                        { field: 'Level', width: 15, align: 'center', sortable: true, title: $.i18n.prop('user_levelname_title') },
+                        { field: 'ReturnRate', width: 15, align: 'center', sortable: true, title: $.i18n.prop('user_levelname_title') },
+                        { field: 'StatusName', width: 15, align: 'center', title: $.i18n.prop('user_statusname_title') }
+            ]],
+            onClickRow: function (index, row) {
+                switch (row.Status) {
+                    case 0:
+                        $('#btn_LockUser').linkbutton("enable");
+                        $('#btn_UnLockUser').linkbutton("disable");
+                        $('#btn_DelUser').linkbutton("enable");
+                        break;
+                    case 1:
+                        $('#btn_LockUser').linkbutton("disable");
+                        $('#btn_UnLockUser').linkbutton("enable");
+                        $('#btn_DelUser').linkbutton("enable");
+                        break;
+                    case 2:
+                        $('#btn_LockUser').linkbutton("disable");
+                        $('#btn_UnLockUser').linkbutton("disable");
+                        $('#btn_DelUser').linkbutton("disable");
+                        $('#btn_EditUser').linkbutton("disable");
+                        break;
+                }
+            },
+            queryParams: { MenuId: MenuId }
+        });
+        $("#btn_AddUser").on("click", function () {
+            user.addUser();
+        });
+        $("#btn_EditUser").on("click", function () {
+            user.editUser();
+        });
+        $("#btn_DelUser").on("click", function () {
+            user.delUser();
+        });
+        $("#btn_LockUser").on("click", function () {
+            user.editStaus(1);
+        });
+        $("#btn_UnLockUser").on("click", function () {
+            user.editStaus(0);
+        });
+        selType.combobox({
+            url: '/PlatAdmin/System/ComBoxUserType',
+            valueField: 'Id',
+            textField: 'Name',
+            editable: false,
+            onSelect: function (pars) {
+                $("#Type").val(pars.Id);
+                if (pars.Id === '0') {
+                    selLevel.combobox({ disabled: true, required: false });
+                    $('#ReturnRate').numberbox({ disabled: true, required: false });
+                } else {
+                    selLevel.combobox({ disabled: false, required: true });
+                    $('#ReturnRate').numberbox({ disabled: false, required: true });
+                    //等级
+                    selLevel.combobox({
+                        url: '/PlatAdmin/System/ComBoxUserLevel?level=' + level,
+                        valueField: 'Id',
+                        textField: 'Name',
+                        editable: false,
+                        onSelect: function (level) {
+                            $("#Level").val(level.Id);
+                        }
+                    }).combobox('clear');
+                }
+            }
+        });
+    });
+    var user = user || {};
+    (function () {
+        user.loadLanguage = function (language) {
+            jQuery.i18n.properties({
+                name: 'language',
+                path: '/i18n/admin/',
+                mode: 'map',
+                language: language,
+                callback: function () {
+                    //$("#btn_Search").children("span:first").children("span:first").text($.i18n.prop('common_search_text'));
+                    $(".LoginName").text($.i18n.prop('user_loginname_title'));
+                    $(".selType").text($.i18n.prop('user_typename_title'));
+                    $(".selLevel").text($.i18n.prop('user_levelname_title'));
+                    $(".Password").text($.i18n.prop('user_loginpass_text'));
+                    $(".Phone").text($.i18n.prop('user_phone_title'));
+                    $(".email").text($.i18n.prop('user_email_title'));
+                }
+            });
+        };
+        user.addUser = function () {
+            $('#fm').form('clear');
+            if (level === "1")
+                $("#ParentPath").val(agentid);
+            if (level === "2")
+                $("#ParentPath").val(path + "|" + agentid);
+            selType.combobox({
+                disabled: false, required: true, onLoadSuccess: function (data) {
+                    selType.combobox('setValue', '');
+                }
+            });
+            selLevel.combobox({
+                url: '/PlatAdmin/System/ComBoxUserLevel?level=' + level,
+                valueField: 'Id',
+                textField: 'Name',
+                editable: false,
+                disabled: false,
+                required: true,
+                onSelect: function (level) {
+                    $("#Level").val(level.Id);
+                },
+                onLoadSuccess: function (data) {
+                    selLevel.combobox('setValue', '');
+                }
+            }).combobox('clear');
+            $("#Password").textbox({ required: true, disabled: false });
+            $('#dlg').dialog('open').dialog('setTitle', '账户新增');
+            url = '/PlatAdmin/User/Add';
+        };
+        user.editUser = function () {
+            $('#fm').form('clear');
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                selType.combobox({
+                    disabled: true,
+                    required: false,
+                    onLoadSuccess: function (data) {
+                        selType.combobox('setValue', node.Type);
+                    }
+                });
+                if (node.TypeName === 1) {
+                    selLevel.combobox({
+                        url: '/PlatAdmin/System/ComBoxUserLevel?all=' + true,
+                        valueField: 'Id',
+                        textField: 'Name',
+                        editable: false,
+                        disabled: true,
+                        required: false,
+                        onSelect: function (level) {
+                            $("#Level").val(level.Id);
+                        },
+                        onLoadSuccess: function (data) {
+                            selLevel.combobox('setValue', node.Level);
+                        }
+                    }).combobox('clear');
+                    $('#ReturnRate').numberbox({ disabled: false, required: true });
+                } else {
+                    selLevel.combobox({
+                        disabled: true,
+                        required: false,
+                        onLoadSuccess: function (data) {
+                            selLevel.combobox('setValue', '');
+                        }
+                    });
+                    $("#ReturnRate").textbox({ required: false, disabled: true });
+                }
+                $("#Password").textbox({ required: false, disabled: true });
+                $("#Id").val(node.Id);
+                $('#dlg').dialog('open').dialog('setTitle', '账户编辑');
+                $('#fm').form('load', node);
+                url = '/PlatAdmin/User/Edit';
+            }
+        };
+        user.delUser = function () {
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                $.messager.confirm($.i18n.prop('common_systips_text'), '确定要删除这个帐号吗(删除不可恢复)?', function (r) {
+                    if (r) {
+                        $.post('/PlatAdmin/User/Delete', { id: node.Id }, function (result) {
+                            if (result.code === 0) {
+                                $('#dg').datagrid('reload');
+                                $.messager.show({
+                                    title: $.i18n.prop('common_systips_text'),
+                                    msg: $.i18n.prop('common_success_text')
+                                });
+                            } else {
+                                $.messager.show({
+                                    title: $.i18n.prop('common_systips_text'),
+                                    msg: result.errors
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            }
+        };
+        user.editStaus = function (lock) {
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                $.post('/PlatAdmin/User/SetUserLock', { id: node.Id, Lock: lock }, function (result) {
+                    if (result.code === 0) {
+                        $('#dg').datagrid('reload');
+                        $.messager.show({
+                            title: $.i18n.prop('common_systips_text'),
+                            msg: $.i18n.prop('common_success_text')
+                        });
+                    } else {
+                        $.messager.show({
+                            title: $.i18n.prop('common_systips_text'),
+                            msg: result.errors
+                        });
+                    }
+                }, 'json').complete(function () {
+                    $('#btn_LockUser').linkbutton("disable");
+                    $('#btn_UnLockUser').linkbutton("disable");
+                });
+            }
+        };
+        user.saveForm = function (frmid, dlgid, tbgrid, obj) {
+            $(obj).linkbutton("disable");
+            setTimeout(function () {
+                $(obj).linkbutton("enable");
+            }, 2000);
+            $('#' + frmid).form('submit', {
+                url: url,
+                onSubmit: function () {
+                    $(this).attr({ "enabled": true });
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                    result = eval('(' + result + ')');
+                    if (result.code !== 0) {
+                        $.messager.show({
+                            title: $.i18n.prop('common_systips_text'),
+                            msg: result.errors
+                        });
+                    } else {
+                        $('#' + dlgid).dialog('close');
+                        $('#' + tbgrid).datagrid('reload');
+                        $.messager.show({
+                            title: $.i18n.prop('common_systips_text'),
+                            msg: $.i18n.prop('common_success_text')
+                        });
+                    }
+                }
+            });
+        };
+    })();
+</script>

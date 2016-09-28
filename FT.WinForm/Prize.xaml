@@ -1,0 +1,51 @@
+﻿<Controls:MetroWindow x:Class="FT.WinForm.Prize"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Width="335" Height="142" FontSize="13" Icon="/Image/favicon.ico"  ShowInTaskbar="False"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None" TitlebarHeight="0"
+      >
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+        </Style>
+        <Style x:Key="ValidButtonStyle" TargetType="Button" BasedOn="{StaticResource  AccentedSquareButtonStyle}">
+            <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+            <Setter Property="Foreground" Value="#423429"></Setter>
+            <Setter Property="Background" Value="#FFDAB5"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0855AD"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#02447e"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Margin="0" Background="#003261" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+            <TextBlock Text="{DynamicResource str_UserBetGetTitle}" Foreground="White" Margin="10" FontSize="18"></TextBlock>
+            <Button Click="BtnCancel_Click" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Background="Transparent" BorderThickness="0" Style="{StaticResource AccentedSquareButtonStyle}">
+                <Path  Margin="0" Data="M50,25 L25,50 M25,25 50,50" Fill="White" Stretch="Fill" Stroke="White" StrokeThickness="1" HorizontalAlignment="Right"/>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"></RowDefinition>
+                <RowDefinition Height="48"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Name="txtUserBetGet" Text="" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.ColumnSpan="2" HorizontalAlignment="Center">
+                <Button Margin="8" Content="{DynamicResource str_Close}" Width="100" Style="{StaticResource WinCancelButtonStyle}" Name="BtnCancel" Click="BtnCancel_Click"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

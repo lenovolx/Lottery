@@ -1,0 +1,178 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar"></table>
+    </div>
+</div>
+
+<div id="toolbar" style="padding: 2px 5px;">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<div id="card_dlg" class="easyui-dialog" style="width:320px;height:200px;padding:10px 20px" closed="true" buttons="#card_dlg-buttons" modal="true">
+    <form id="card_fm" method="post" novalidate>
+        <div class="fitem">
+            <label>卡组名称:</label>
+            <input id="GroupName" name="GroupName" class="easyui-validatebox easyui-textbox" data-options="required:true">
+        </div>
+        <div class="fitem">
+            <label>卡金额:</label>
+            <input id="Amount" name="Amount" class="easyui-validatebox easyui-numberbox" data-options="required:true,validType:'length[1,9]'" />
+        </div>
+        <div class="fitem">
+            <label>卡数量:</label>
+            <input id="Number" name="Number" class="easyui-validatebox easyui-numberbox" data-options="required:true">
+        </div>
+    </form>
+</div>
+<div id="card_dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="card.saveForm('card_fm', 'card_dlg', this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#card_dlg').dialog('close');" style="width:90px">取消</a>
+</div>
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.datagrid.detailview.js"></script>
+    <script language="javascript">
+        var MenuId = '@(ViewBag.MenuId)';
+        var url = "";
+        var variable = { matchid: 0, datasource: 0 };
+        $(function () {
+            card.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+            card.initGrid({ menuid: MenuId, sdate: '@DateTime.Today', edate: '@DateTime.Today', language: $.cookie('FT.PlatAdmin.Langue') });
+            $("#btn_AddCard").on("click", function () {
+                card.addCard();
+            });
+            $("#btn_EditCard").on("click", function () {
+                //card.editCard();
+            });
+        });
+        var card = card || {};
+        (function () {
+            card.loadLanguage = function (language) {
+                jQuery.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/admin/',
+                    mode: 'map',
+                    language: language
+                });
+            };
+            //初始化
+            card.initGrid = function (params) {
+                $('#dg').datagrid({
+                    title: "",
+                    url: "/PlatAdmin/System/CardGrid",
+                    width: "100%",
+                    method: 'post',
+                    height: "100%",
+                    fitColumns: true,
+                    sortName: 'CreateDate',
+                    sortOrder: 'desc',
+                    idField: 'GroupId',
+                    pageSize: 50,
+                    pagination: true,
+                    striped: true, //奇偶行是否区分
+                    singleSelect: true, //单选模式
+                    rownumbers: true, //行号
+                    checkOnSelect: false,
+                    selectOnCheck: true,
+                    columns: [[
+                            { field: 'chk', align: 'center', width: 10, checkbox: true },
+                            { field: 'GroupId', align: 'center', width: 10, title: $.i18n.prop('match_id_title') },
+                            { field: 'GroupName', width: 30, align: 'left', sortable: true, title: $.i18n.prop('card_name_title') },
+                            { field: 'Amount', width: 20, align: 'left', formatter: formatMoney, sortable: true, title: $.i18n.prop('card_amount_title') },
+                            { field: 'Number', width: 30, align: 'left', sortable: true, title: $.i18n.prop('card_number_title') },
+                            { field: 'CreateDate', width: 20, align: 'left', formatter: formatDateBoxFull, sortable: true, title: $.i18n.prop('match_creatdate_title') }
+                    ]],
+                    queryParams: params,
+                    view: detailview,
+                    detailFormatter: function (index, row) {
+                        return '<div class="ddv_' + index + '" style="padding:5px 0"></div>';
+                    },
+                    onExpandRow: function (index, row) {
+                        card.cardDetail(this, index, row.GroupId);
+                    }
+                });
+            };
+            //卡明细
+            card.cardDetail = function (obj, index, groupid) {
+                $('.ddv_' + index + ' table').remove();
+                var ddv = $(obj).datagrid('getRowDetail', index).find('div.ddv_' + index + '');
+                ddv.datagrid({
+                    url: '/PlatAdmin/System/CardDetail?groupId=' + groupid,
+                    sortName: 'UseDate',
+                    sortOrder: 'desc',
+                    idField: 'Id',
+                    fitColumns: true,
+                    singleSelect: true,
+                    rownumbers: true,
+                    height: 'auto',
+                    pageSize: 20,
+                    pagination: true,
+                    striped: true, //奇偶行是否区分
+                    columns: [[
+                        //{ field: 'chk', align: 'center', width: 10, checkbox: true },
+                        { field: 'CardNum', title: $.i18n.prop('card_cardnum_title'), width: 80, align: 'center' },
+                        { field: 'CardPwd', title: $.i18n.prop('card_cardpwd_title'), width: 80, align: 'center' },
+                        { field: 'IsUsed', title: $.i18n.prop('card_isuse_title'), width: 80, align: 'center' },
+                        { field: 'UseDate', title: $.i18n.prop('card_usedate_title'), width: 80, align: 'center', formatter: formatDateBoxFull }
+                        //{ field: 'Status', title: $.i18n.prop('card_status_title'), width: 80, align: 'center' }
+                    ]],
+                    onResize: function () {
+                        $('#dg').datagrid('fixDetailRowHeight', index);
+                    },
+                    onLoadSuccess: function () {
+                        setTimeout(function () {
+                            $('#dg').datagrid('fixDetailRowHeight', index);
+                        }, 0);
+                        //$('#dg').datagrid("unselectAll");
+                    }
+                });
+                $('#dg').datagrid('fixDetailRowHeight', index);
+            };
+            card.saveForm = function (fmid, dlgid, obj) {
+                $(obj).linkbutton("disable");
+                setTimeout(function () {
+                    $(obj).linkbutton("enable");
+                }, 2000);
+                $('#' + fmid).form('submit', {
+                    url: url,
+                    onSubmit: function () {
+                        $(this).attr({ "enabled": true });
+                        return $(this).form('validate');
+                    },
+                    success: function (result) {
+                        result = eval('(' + result + ')');
+                        if (result.code !== 0) {
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.errors
+                            });
+                        } else {
+                            $('#' + dlgid).dialog('close');
+                            $('#dg').datagrid('reload');
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.message
+                            });
+                        }
+                    }
+                });
+            };
+            card.addCard = function () {
+                url = '/PlatAdmin/System/CardAdd';
+                $("#card_dlg").dialog("open").dialog('setTitle', '新增卡');;
+                $('#card_fm').form('clear');
+            };
+        })();
+    </script>
+}
+
+
+

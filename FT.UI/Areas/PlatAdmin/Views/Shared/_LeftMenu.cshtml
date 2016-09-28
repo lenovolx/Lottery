@@ -1,0 +1,18 @@
+﻿@using FT.Model.ViewModel
+@{
+    var menulist = (List<MenuViewModel>)Model;
+}
+<div class="easyui-accordion" fit="true" data-options="animate:true">
+    @foreach (var items in menulist.Where(s => s._parentId == 0))
+    {
+        <div title="@items.Name" iconcls="@items.Icon" style="overflow:auto;padding:10px;">
+
+            @foreach (var item in menulist.Where(s => s._parentId == items.Id))
+            {
+                <div style="overflow:auto;padding:0px;">
+                    <a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'@(item.Icon)'" onclick="home.addTab('@(item.Name)', '@(item.Url)', '@(item.Icon)','@(item.Id)')" menuid="@(item.Id)" menuname="@(item.Name)" menurl="@(item.Url)" menuicon="@(item.Icon)">@(item.Name)</a>
+                </div>
+            }
+        </div>
+    }
+</div>

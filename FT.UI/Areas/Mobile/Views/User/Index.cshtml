@@ -1,0 +1,298 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "我的帐户";
+}
+@section style
+{
+    <link href="~/Areas/Mobile/Content/css/ft.user.css" rel="stylesheet" />
+}
+<div id="ucenter" class="page">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/m/match/match-list">
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class="title">@ViewBag.Title</h1>
+        <a class="icon icon-browser pull-right langue-change open-panel"><span>简体中文</span></a>
+    </header>
+    <div class="content">
+        <div class="list-block media-list ">
+            <ul class="user-infomation">
+                <li>
+                    <a href="#" class="item-content">
+                        <div class="item-media item-avta">
+                            <img src="/Areas/Mobile/Content/img/user.png"/>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-subtitle">
+                                <em class="item-account">{{username}}</em>
+                            </div>
+                            <div class="item-text">
+                                <span class="user_amount">{{amounttitle}}</span>：<em class="item-amount">{{amount.toFixed(2)}}</em>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="content-block content-menu">
+            <div class="buttons-row">
+                <a href="javascript:void(0)" class="button-menu user_recharge">充值</a>
+                <a href="javascript:void(0)" class="button-menu user_cash">提现</a>
+                <a href="javascript:void(0)" class="button-menu user_trad">转账</a>
+            </div>
+        </div>
+        <div class="list-block">
+            <ul>
+                <a href="/m/user/deal">
+                    <li class="item-content item-link item_li">
+                        <div class="item-inner">
+                            <div class="item-title">
+                                <span class="icon_box"><i class="icon icon-trad"></i></span><em class="trad_li">交易状况</em>
+                            </div>
+                        </div>
+                    </li>
+                </a>
+
+                <a href="/m/user/history">
+                    <li class="item-content item-link item_li item_mb15">
+                        <div class="item-inner">
+                            <div class="item-title">
+                                <span class="icon_box"><i class="icon icon-his"></i></span><em class="history_li">账户历史</em>
+                            </div>
+                        </div>
+                    </li>
+                </a>
+                <a href="/m/user/bank">
+                    <li class="item-content item-link item_li">
+                        <div class="item-inner">
+                            <div class="item-title">
+                                <span class="icon_box"><i class="icon icon-bank"></i></span><em class="bank_li">绑定银行卡</em>
+                            </div>
+                        </div>
+                    </li>
+                </a>
+
+                <a href="javascript:void(0)" class="user_modifypass">
+                    <li class="item-content item-link item_li">
+                        <div class="item-inner">
+                            <div class="item-title">
+                                <span class="icon_box"><i class="icon icon-password"></i></span><em class="password_li">修改密码</em>
+                            </div>
+                        </div>
+                    </li>
+                </a>
+
+                <a href="javascript:void(0)" class="user_safepass">
+                    <li class="item-content item-link item_li">
+                        <div class="item-inner">
+                            <div class="item-title">
+                                <span class="icon_box"><i class="icon icon-safe"></i></span><em class="safepass_li">安全密码</em>
+                            </div>
+                        </div>
+                    </li>
+                </a>
+            </ul>
+        </div>
+    </div>
+    <nav class="bar bar-tab">
+        <div class="content-block user_logout">
+            <a href="javascript:void(0)" class="user-logout">退出登录</a>
+        </div>
+    </nav>
+</div>
+<div class="popup popup-usercenter">
+</div>
+<!--账户充值-->
+<script type="text/html" id="User_Recharge">
+    <li class="noborder recharge_name">
+        <em class="card-account">账户</em>：{{account}}
+</li>
+    <li class="noborder">
+        <div class="item-content">
+            <div class="item-inner no-paddingright">
+                <div class="item-input ">
+                    <div class="row recharge_card">
+                        <div class="col-75">
+                            <input type="number" placeholder="请输入充值卡号" class="cardNum" />
+                        </div>
+                        <div class="col-25">
+                            <a class="button-flot" href="javascript:void(0)" onclick="user.validCrad(this)">验证</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="noborder recharge_numbox">
+        <em class="card-amount">金额</em>：<span class="recharge_num">0</span>
+    </li>
+</script>
+<!--账户转账-->
+<script type="text/html" id="User_Transfer">
+    <li style="margin-top: 1rem;">
+        <div class="item-content">
+            <div class="item-inner recharge_card">
+                <div class="item-title label lab-account">转账帐号：</div>
+                <div class="item-input">
+                    <input type="text" class="account" placeholder="请输入转账帐号"/>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="item-content">
+            <div class="item-inner recharge_card no-bordert">
+                <div class="item-title label lab-amount">金额：</div>
+                <div class="item-input">
+                    <input type="number" class="amount" placeholder="请输入转账金额"/>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="item-content">
+            <div class="item-inner recharge_card  thname no-bordert">
+                <div class="item-title label div-safecode">安全码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入安全码" class="safecode" />
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+<!--修改密码-->
+<script type="text/html" id="Modify_Pass">
+    <li>
+        <div class="item-content">
+            <div class="item-inner">
+                <div class="item-title label lab-old">旧密码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入旧密码" class="oldpass" />
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="item-content">
+            <div class="item-inner">
+                <div class="item-title label lab-new">新密码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入新密码" class="newpass" />
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="addafter">
+        <div class="item-content">
+            <div class="item-inner">
+                <div class="item-title label lab-confirm">确认密码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入确认密码" class="renewpass" />
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+<!--用户提现-->
+<script type="text/html" id="User_Cash">
+    <li style="margin-top: 1rem;">
+        <div class="item-content">
+            <div class="item-inner recharge_card thname">
+                <div class="item-title label cash-card">卡号：</div>
+                <div class="item-input">
+                    <div class="row">
+                        <div class="col-75">
+                            <input type="number" placeholder="请选择银行卡号" class="bankcardnum" id="bankPicker" readonly="readonly"/>
+                        </div>
+                        <div class="col-30">
+                            <a class="button-flot open-bank-modal" href="javascript:void(0)" onclick="user.openCashModal();">已存卡号</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="item-content">
+            <div class="item-inner recharge_card  thname no-bordert">
+                <div class="item-title label cash-amount">金额：</div>
+                <div class="item-input">
+                    <input type="number" placeholder="请输入提现金额" class="cashamount"/>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="item-content">
+            <div class="item-inner recharge_card  thname no-bordert">
+                <div class="item-title label div-safecode">安全码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入安全码" class="safecode" />
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+<!--用户中心-->
+<script type="text/html" id="userInfomation">
+    <li>
+        <a href="#" class="item-content">
+            <div class="item-media item-avta">
+                <img src="/Areas/Mobile/Content/img/user.png" width="80"/>
+            </div>
+            <div class="item-inner">
+                <div class="item-subtitle">
+                    <em class="item-account">{{username}}</em>
+                </div>
+                <div class="item-text">
+                    <span class="user_amount">{{amounttitle}}</span>：<em class="item-amount">{{amount.toFixed(2)}}</em>
+                </div>
+            </div>
+        </a>
+    </li>
+</script>
+<!--安全密码-->
+<script type="text/html" id="Modify_SafePass">
+    <li>
+        <div class="item-content">
+            <div class="item-inner">
+                <div class="item-title label lab-old">旧安全码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入旧密码" class="oldpass"/>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li>
+        <div class="item-content">
+            <div class="item-inner">
+                <div class="item-title label lab-safe">安全密码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入安全密码" class="newpass" />
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="addafter">
+        <div class="item-content">
+            <div class="item-inner">
+                <div class="item-title label lab-confirm">确认密码：</div>
+                <div class="item-input">
+                    <input type="password" placeholder="请输入确认密码" class="renewpass"/>
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+<div class="panel panel-right panel-reveal theme-dark close-panel" id='panel-right-lang'>
+    <div class="content-block panel-template">
+    </div>
+</div>
+@section script
+    {
+    <script src="~/Areas/Mobile/Scripts/template.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.user.js"></script>
+}
+

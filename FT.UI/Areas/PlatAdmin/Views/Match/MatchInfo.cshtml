@@ -1,0 +1,445 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar"></table>
+    </div>
+</div>
+
+<div id="toolbar" style="padding:2px 5px;">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+    <div class="search-div">
+        <label for="SDate" class="SDate">比赛时间：</label>
+        <input id="SDate" name="SDate" class="easyui-datebox" value="true" style="width: 100px">
+        <label for="EDate">-</label>
+        <input id="EDate" name="EDate" class="easyui-datebox" value="true" style="width: 100px">
+        <label for="LeagueName" class="LeagueName">联赛名称：</label>
+        <input id="LeagueName" name="LeagueName" class="easyui-textbox" panelheight="auto" style="width: 120px" />
+        <label for="Team" class="Team">球队：</label>
+        <input id="Team" name="Team" class="easyui-textbox" panelheight="auto" style="width: 100px" />
+        <label for="IsOpen" class="IsOpen">是否开奖：</label>
+        <input id="IsOpen" name="IsOpen" data-options="
+				method: 'get',
+				panelWidth: 120,
+				panelHeight: 'auto'" style="width: 70px;"/>
+        <label for="IsSettle" class="IsSettle">是否结算：</label>
+        <input id="IsSettle" name="IsSettle" data-options="
+				method: 'get',
+				panelWidth: 120,
+				panelHeight: 'auto'" style="width: 70px;"/>
+        <label for="DataSource" class="DataSource">比赛来源：</label>
+        <input id="DataSource" name="DataSource" data-options="
+				method: 'get',
+				panelWidth: 120,
+				panelHeight: 'auto'" style="width: 70px;" />
+        <a href="javascript:void(0)" id="btn_Search" class="easyui-linkbutton" iconcls="icon-search">查询</a>
+    </div>
+</div>
+
+<!--比赛投注信息-->
+<div id="dlgbet" class="easyui-dialog" style="width: 800px; height: 600px; padding: 10px 20px"
+     closed="true" modal="true" buttons="#dlgrole-buttons">
+    <table style="margin:10px" class="easyui-datagrid" id="tbgbet" title="" toolbar="#toolbarbet"></table>
+</div>
+<div id="dlgrole-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlgbet').dialog('close');" style="width:90px">关闭</a>
+</div>
+<div id="toolbarbet" style="padding: 2px 5px;">
+    <div class="search-div">
+        <label for="BetId" class="BetId">投注单号：</label>
+        <input id="BetId" name="BetId" class="easyui-textbox" panelheight="auto" style="width: 100px" />
+        <label for="UserName" class="UserName">投注用户：</label>
+        <input id="UserName" name="UserName" class="easyui-textbox" panelheight="auto" style="width: 100px" />
+        <a href="javascript:void(0)" id="btn_SearchBet" class="easyui-linkbutton" iconcls="icon-search">查询</a>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.datagrid.detailview.js"></script>
+    <script language="javascript">
+        var MenuId = '@(ViewBag.MenuId)';
+        var variable = { matchid: 0, datasource: 0 };
+        $(function () {
+            match.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+            match.initGrid({ menuid: MenuId, sdate: '@DateTime.Today', edate: '@DateTime.Today', language: $.cookie('FT.PlatAdmin.Langue') });
+            $("#btn_Search").on("click", function () {
+                match.refushGrid();
+            });
+            $("#btn_SearchBet").on("click", function () {
+                match.refushBetGrid();
+            });
+            $("#btn_CleaningMatch").on("click", function () {
+                match.cleanMatch();
+            });
+            $("#btn_CancelMatch").on("click", function () {
+                match.cacelMatch();
+            });
+            $('#IsOpen').combobox({
+                url: '/PlatAdmin/System/ComBoxYesNoType',
+                valueField: 'Id',
+                textField: 'Name',
+                editable: false
+            });
+            $('#IsSettle').combobox({
+                url: '/PlatAdmin/System/ComBoxOpenType',
+                valueField: 'Id',
+                textField: 'Name',
+                editable: false
+            });
+            $('#DataSource').combobox({
+                url: '/PlatAdmin/System/ComDataSourceType',
+                valueField: 'Id',
+                textField: 'Name',
+                editable: false
+            });
+            $("#btn_MatchBlacklist").on("click", function () {
+                match.blackInfo();
+            });
+            $("#SDate").datebox({
+                formatter: function (date) {
+                    var y = date.getFullYear();
+                    var m = date.getMonth() + 1;
+                    var d = date.getDate();
+                    return y + "-" + (m < 10 ? ("0" + m) : m) + "-" + (d < 10 ? ("0" + d) : d) + "";
+                }
+            });
+            $('#EDate').datebox({
+                formatter: function (date) {
+                    var y = date.getFullYear();
+                    var m = date.getMonth() + 1;
+                    var d = date.getDate();
+                    return y + "-" + (m < 10 ? ("0" + m) : m) + "-" + (d < 10 ? ("0" + d) : d) + "";
+                },
+                onSelect: function (date) {
+                    var end = $("#EDate").datebox('getValue');
+                    var start = $("#SDate").datebox('getValue');
+                    if (end) {
+                        if (start > end) { $("#EDate").datebox('setValue', start); }
+                    }
+                }
+            });
+            $('#btn_ExportMatch').on("click", function() {
+                alert('123');
+            });
+        });
+        var match = match || {};
+        (function () {
+            match.loadLanguage = function (language) {
+                jQuery.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/admin/',
+                    mode: 'map',
+                    language: language,
+                    callback: function () {
+                        $("#btn_Search").children("span:first").children("span:first").text($.i18n.prop('common_search_text'));
+                        $(".SDate").text($.i18n.prop('match_date_title'));
+                        $(".Team").text($.i18n.prop('team_hcteam_title'));
+                        $(".LeagueName").text($.i18n.prop('match_leaguename_title'));
+                        $(".IsOpen").text($.i18n.prop('match_isopen_title'));
+                        $(".IsSettle").text($.i18n.prop('match_issettle_title'));
+
+                    }
+                });
+            };
+            //初始化
+            match.initGrid = function (params) {
+                $('#dg').datagrid({
+                    title: "",
+                    url: "/PlatAdmin/Match/MatchGrid",
+                    width: "100%",
+                    method: 'post',
+                    height: "100%",
+                    fitColumns: true,
+                    sortName: 'CreateDate',
+                    sortOrder: 'asc',
+                    idField: 'MatchId',
+                    pageSize: 50,
+                    pagination: true,
+                    striped: true, //奇偶行是否区分
+                    singleSelect: true, //单选模式
+                    rownumbers: true, //行号
+                    checkOnSelect: true,
+                    selectOnCheck: true,
+                    columns: [[
+                            { field: 'chk', align: 'center', width: 10, checkbox: true },
+                            { field: 'MatchId', align: 'center', width: 10, title: $.i18n.prop('match_id_title') },
+                            { field: 'LeagueName', width: 70, align: 'center', sortable: true, title: $.i18n.prop('match_leaguename_title') },
+                            { field: 'MatchDate', width: 20, align: 'left', sortable: true, title: $.i18n.prop('match_date_title') },
+                            //{ field: 'HTeam', width: 30, align: 'left', sortable: true, title: $.i18n.prop('match_hteam_title') },
+                            //{ field: 'CTeam', width: 15, align: 'left', sortable: true, title: $.i18n.prop('match_cteam_title') },
+                            { field: 'TeamVs', width: 70, align: 'center', sortable: true, title: $.i18n.prop('team_hcteam_title') },
+                            { field: 'IsSettleName', width: 15, align: 'center', sortable: true, title: $.i18n.prop('match_issettle_title') },
+                            { field: 'IsOpenName', width: 15, align: 'center', title: $.i18n.prop('match_isopen_title') },
+                            { field: 'Finished', width: 15, align: 'center', title: $.i18n.prop('match_finished_title') },
+                            { field: 'CreateDate', width: 20, align: 'left', formatter: formatDateBoxFull, sortable: true, title: $.i18n.prop('match_creatdate_title') },
+                            { field: 'UpdateDate', width: 20, align: 'left', formatter: formatDateBoxFull, sortable: true, title: $.i18n.prop('common_editdate_title') }
+                    ]],
+                    queryParams: params,
+                    //onLoadSuccess: function (data) {
+                    //    console.log(data);
+                    //},
+                    view: detailview,
+                    detailFormatter: function (index, row) {
+                        return '<div class="ddv_' + index + '" style="padding:5px 0"></div>';
+                    },
+                    onExpandRow: function (index, row) {
+                        match.matchResult(this, index, row.MatchId);
+                    },
+                    onDblClickRow: function (index, row) {
+                        variable.matchid = row.MatchId;
+                        $("#BetId").textbox("setValue", "");
+                        $("#UserName").textbox("setValue", "");
+                        $('#dlgbet').dialog('open').dialog('setTitle', $.i18n.prop('match_betdetail_title'));
+                        match.initMatchBet(row.MatchId);
+                    }
+                });
+            };
+            //刷新
+            match.refushGrid = function () {
+                var params = { MenuId: MenuId };
+                params.leagueName = $("#LeagueName").textbox("getValue");
+                params.sdate = $("#SDate").datebox("getValue");
+                params.edate = $("#EDate").datebox("getValue");
+                params.team = $("#Team").textbox("getValue");
+                params.isOpen = $("#IsOpen").combobox("getValue");
+                params.isSet = $("#IsSettle").combobox("getValue");
+                params.language = $.cookie('FT.PlatAdmin.Langue');
+                params.datasource = $("#DataSource").combobox("getValue");
+                $("#dg").datagrid('reload', params);
+            };
+            //投注搜索
+            match.refushBetGrid = function () {
+                $("#tbgbet").datagrid('reload', {
+                    betid: $("#BetId").textbox("getValue"),
+                    username: $("#UserName").textbox("getValue"),
+                    matchid: variable.matchid
+                });
+            };
+            //编辑
+            match.editMatch = function () { };
+            //结算
+            match.cleanMatch = function () {
+                var matchids = [], pass = false;
+                var list = getSelectionsRows("dg");
+                if (list != null && list.length > 0) {
+                    $.each(list, function (i, v) {
+                        console.log(v);
+                        if (v.IsSettle === 0 && v.IsOpen > 0)
+                            matchids.push(v.MatchId);
+                        else {
+                            $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('match_settleerror_title'));
+                            pass = true;
+                            return false;
+                        }
+                        return false;
+                    });
+                    if (matchids.length > 0 && !pass) {
+                        $.messager.confirm($.i18n.prop('common_systips_text'), $.i18n.prop('match_settle_title'), function (r) {
+                            if (r) {
+                                $.messager.progress({
+                                    title: '',
+                                    text: $.i18n.prop('common_loading_text')
+                                });
+                                $.post('/PlatAdmin/Match/BatchSettleMatch', {
+                                    matchid: matchids.join(','),
+                                    source: $("#DataSource").combobox("getValue")
+                                }, function (result) {
+                                    if (result.code === 0)
+                                        $('#dg').datagrid('reload');
+                                    else
+                                        $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_failure_text'));
+                                }, 'json').complete(function () {
+                                    $.messager.progress('close');
+                                    $('#dg').datagrid('clearSelections');
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_selectdata_text'));
+                    return false;
+                }
+                return false;
+            };
+            //取消
+            match.cacelMatch = function () {
+                var matchids = [], pass = false;
+                var list = getSelectionsRows("dg");
+                if (list != null && list.length > 0) {
+                    $.each(list, function (i, v) {
+                        console.log(v);
+                        if (v.IsSettle === 0 && v.IsOpen === 0)
+                            matchids.push(v.MatchId);
+                        else {
+                            $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('match_clearerror_title'));
+                            pass = true;
+                            return false;
+                        }
+                        return false;
+                    });
+                    if (matchids.length > 0 && !pass) {
+                        $.messager.confirm($.i18n.prop('common_systips_text'), $.i18n.prop('match_cancel_title'), function (r) {
+                            if (r) {
+                                $.messager.progress({
+                                    title: '',
+                                    text: $.i18n.prop('common_loading_text')
+                                });
+                                $.post('/PlatAdmin/Match/BatchCancelMatch', {
+                                    matchids: matchids.join(','),
+                                    source: $("#DataSource").combobox("getValue")
+                                }, function (result) {
+                                    if (result.code === 0)
+                                        $('#dg').datagrid('reload');
+                                    else $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_failure_text'));
+
+                                }, 'json').complete(function () {
+                                    $.messager.progress('close');
+                                    $('#dg').datagrid('clearSelections');
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_selectdata_text'));
+                    return false;
+                }
+                return false;
+            };
+            //赛果
+            match.matchResult = function (obj, index, matchid) {
+                $('.ddv_' + index + ' table').remove();
+                var ddv = $(obj).datagrid('getRowDetail', index).find('div.ddv_' + index + '');
+                ddv.datagrid({
+                    url: '/PlatAdmin/Match/MatchResult?matchId=' + matchid + '&source=' + $("#DataSource").combobox("getValue"),
+                    fitColumns: true,
+                    singleSelect: true,
+                    rownumbers: false,
+                    height: 'auto',
+                    columns: [[
+                        { field: 'Result1', title: $.i18n.prop('match_firsthalf_title'), width: 80, align: 'center' },
+                        { field: 'Result2', title: $.i18n.prop('match_fullcourt_title'), width: 80, align: 'center' }
+                    ]],
+                    onResize: function () {
+                        $('#dg').datagrid('fixDetailRowHeight', index);
+                    },
+                    onLoadSuccess: function () {
+                        setTimeout(function () {
+                            $('#dg').datagrid('fixDetailRowHeight', index);
+                        }, 0);
+                    }
+                });
+                $('#dg').datagrid('fixDetailRowHeight', index);
+            };
+            //投注
+            match.initMatchBet = function (matchid) {
+                $('#tbgbet').datagrid({
+                    title: "",
+                    url: "/PlatAdmin/Match/BetMatchGrid",
+                    width: "100%",
+                    methord: 'post',
+                    height: "100%",
+                    fitColumns: true,
+                    sortName: 'BetValue',
+                    sortOrder: 'desc',
+                    idField: 'OrderId',
+                    pageSize: 50,
+                    pagination: true,
+                    striped: true, //奇偶行是否区分
+                    singleSelect: true, //单选模式
+                    rownumbers: true, //行号
+                    checkOnSelect: true,
+                    selectOnCheck: true,
+                    columns: [[
+                            { field: 'OrderDate', width: 30, align: 'center', title: $.i18n.prop('match_orderdate_title') },
+                            { field: 'OrderId', width: 30, align: 'center', title: $.i18n.prop('match_orderid_title') },
+                            { field: 'UserName', width: 20, align: 'center', title: $.i18n.prop('match_username_title') },
+                            { field: 'BetValue', width: 20, align: 'left', sortable: true, formatter: formatMoney, title: $.i18n.prop('match_betvalue_title') },
+                            { field: 'AchieveAmount', width: 20, align: 'left', formatter: formatMoney, title: $.i18n.prop('match_achieveamount_title') },
+                            { field: 'BetBonus', width: 20, align: 'left', formatter: formatMoney, title: $.i18n.prop('match_betbonus_title') },
+                            { field: 'BetStatus', width: 10, align: 'center', formatter: match.settleFormat, title: $.i18n.prop('match_betstatus_title') }
+                    ]],
+                    queryParams: { matchid: matchid, source: $("#DataSource").combobox("getValue") },
+                    view: detailview,
+                    detailFormatter: function (index, row) {
+                        return '<div class="ddv_' + index + '" style="padding:5px 0"></div>';
+                    },
+                    onExpandRow: function (index, row) {
+                        match.betDetail(this, index, row.OrderId);
+                    }
+                });
+            };
+            //投注明细
+            match.betDetail = function (obj, index, betid) {
+                $('.ddv_' + index + ' table').remove();
+                var ddv = $(obj).datagrid('getRowDetail', index).find('div.ddv_' + index + '');
+                ddv.datagrid({
+                    url: '/PlatAdmin/Match/BetDetail?betid=' + betid,
+                    fitColumns: true,
+                    singleSelect: true,
+                    rownumbers: false,
+                    loadMsg: 'Loading......',
+                    height: 'auto',
+                    columns: [[
+                        { field: 'LeagueName', title: $.i18n.prop('match_leaguename_title'), width: 80, align: 'center' },
+                        { field: 'TeamVs', title: $.i18n.prop('match_team_title'), width: 30, align: 'center' },
+                        { field: 'BetTypeName', title: $.i18n.prop('match_team_title'), width: 30, align: 'center' },
+                        { field: 'BetDescription', title: $.i18n.prop('match_description_title'), width: 30, align: 'center' }
+                    ]],
+                    onResize: function () {
+                        $('#tbgbet').datagrid('fixDetailRowHeight', index);
+                    },
+                    onLoadSuccess: function () {
+                        setTimeout(function () {
+                            $('#tbgbet').datagrid('fixDetailRowHeight', index);
+                        }, 0);
+                    }
+                });
+                $('#tbgbet').datagrid('fixDetailRowHeight', index);
+            };
+            //黑名单
+            match.blackInfo = function () {
+                var matchids = [];
+                var list = getSelectionsRows("dg");
+                if (list != null && list.length > 0) {
+                    $.each(list, function (i, v) {
+                        matchids.push(v.MatchId);
+                    });
+                    if (matchids.length > 0) {
+                        $.messager.confirm($.i18n.prop('common_systips_text'), $.i18n.prop('league_setblack_title'), function (r) {
+                            if (r) {
+                                $.messager.progress({
+                                    title: '',
+                                    text: $.i18n.prop('common_loading_text')
+                                });
+                                $.post('/PlatAdmin/Match/MatchBlackInfo', {
+                                    matchids: matchids.join(','),
+                                    datasource: $("#DataSource").combobox("getValue")
+                                }, function (result) {
+                                    if (result.code === 0)
+                                        $('#dg').datagrid('reload');
+                                    else
+                                        $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_failure_text'));
+                                }, 'json').complete(function () {
+                                    $.messager.progress('close');
+                                    $('#dg').datagrid('clearSelections');
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_selectdata_text'));
+                    return false;
+                }
+            };
+        })();
+    </script>
+}
+

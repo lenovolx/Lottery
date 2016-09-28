@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IAdminRepository.cs" />
+    <Compile Include="IAmountWaterRepository.cs" />
+    <Compile Include="IBaseRepository.cs" />
+    <Compile Include="ICardGroupRepository.cs" />
+    <Compile Include="ICardRepository.cs" />
+    <Compile Include="ICashRecordRepository.cs" />
+    <Compile Include="IDictionaryRepository.cs" />
+    <Compile Include="ILogInfoRepository.cs" />
+    <Compile Include="IMatchBlackListRepository.cs" />
+    <Compile Include="IMatchInfoRepository.cs" />
+    <Compile Include="IMatchUserBetContentRepository.cs" />
+    <Compile Include="IMatchUserBetRepository.cs" />
+    <Compile Include="IMenuRepository.cs" />
+    <Compile Include="IMessageRepository.cs" />
+    <Compile Include="IRoleRepository.cs" />
+    <Compile Include="ISiteAdvRepository.cs" />
+    <Compile Include="ISystemSettingRepository.cs" />
+    <Compile Include="ISystemTaskRepository.cs" />
+    <Compile Include="ITradeRecordRepository.cs" />
+    <Compile Include="IUserAccountRepository.cs" />
+    <Compile Include="IUserBankRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FT.Model\FT.Model.csproj">
+      <Project>{31e4e000-53d9-4715-abda-965457ee75ee}</Project>
+      <Name>FT.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

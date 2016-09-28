@@ -1,0 +1,202 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "历史详情";
+}
+<div id="historydetail" class="page">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/m/user/historylist">
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class="title"></h1>
+    </header>
+    <div class="content">
+        <div class="list-block media-list">
+            <div class="row head-row">
+                <div class="col-40 text-center"><span class="head0">日期/单号</span> </div>
+                <div class="col-20 text-center"><span class="head1">投注金额</span> </div>
+                <div class="col-20 text-center"><span class="head2">输/赢</span> </div>
+                <div class="col-20 text-center"><span class="head3">注单状态</span> </div>
+            </div>
+            <div class="list-container">
+            </div>
+        </div>
+    </div>
+    <nav class="bar bar-tab">
+        <div class="row head-row nav-total">
+        </div>
+    </nav>
+</div>
+<!--交易历史-->
+<script type="text/html" id="record_tpl">
+    {{each bulid.rows as item}}
+    <div class="row data-row" onclick="detail.openSearchBar(this);">
+        <div class="col-40 text-center">
+            <i style="font-size: .75rem;">{{#item.OrderDate}}</i><i>{{#item.OrderId}}</i>
+        </div>
+        <div class="col-20 text-center"><span>{{item.BetValue.toFixed(2)}}</span> </div>
+        <div class="col-20 text-center"><span>{{item.BetBonus.toFixed(2)}}</span> </div>
+        <div class="col-20 text-center"><span class="icon icon-down">{{item.BetStatus}}</span></div>
+    </div>
+    {{each item.Detail as items}}
+    <div class="row data-row-show">
+        <div class="sai-name"><span>{{#items.LeagueName}}</span> </div>
+        <div class="sai-country"><span>{{#items.TeamVs}}</span></div>
+        <div class="sai-select green"><em>[{{#items.BetTypeName}}]</em>&nbsp;&nbsp;<span>{{#items.BetDescription}}</span> </div>
+        {{if item.Detail.length>1}}
+        <span class="sai-more"><a class="button button-big button-fill button-warning" onclick="detail.showMoreDealinfo('{{item.OrderId}}');">{{more}}</a></span>
+        {{/if}}
+    </div>
+    {{/each}}
+    {{/each}}
+</script>
+<script type="text/html" id="record_total_tpl">
+    <div class="col-40 text-center"><span>{{title}}</span> </div>
+    <div class="col-20 text-center"><span>{{total.SumBetValue}}</span> </div>
+    <div class="col-20 text-center"><span>{{total.SumBetBonus}}</span> </div>
+    <div class="col-20 text-center"></div>
+</script>
+@section style
+{
+    <link href="~/Areas/Mobile/Content/css/ft.history.css" rel="stylesheet" />
+}
+@section script
+{
+    <script src="~/Areas/Mobile/Scripts/template.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            "use strict";
+            $(document).on("pageInit", "#historydetail", function(e, id, page) {
+                detail.loadLanguage();
+                var parms = app.parseUrlQuery(location.href);
+                $('.title').html(parms.date);
+                detail.loadUserHistory(parms.date);
+            });
+            $.init();
+        });
+        var detail = detail || {};
+        (function() {
+            detail.loadLanguage = function() {
+                Zepto.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/mobile/',
+                    mode: 'map',
+                    language: app.siteConfig.sitelanguage,
+                    callback: function() {
+                        $(".head0").text($.i18n.prop('deal_datebet_title'));
+                        $(".head1").text($.i18n.prop('deal_betamount_title'));
+                        $(".head2").text($.i18n.prop('deal_canwinamount_title'));
+                        $(".head3").text($.i18n.prop('deal_status_title'));
+                    }
+                });
+            };
+            detail.loadUserHistory = function(date) {
+                var params = {
+                    "ticket": app.siteConfig.siteuserticket,
+                    "userid": app.siteConfig.siteuserid,
+                    "page": 1,
+                    "size": 50,
+                    "lang": app.siteConfig.sitelanguage,
+                    "sdate": date,
+                    "edate": date,
+                    "iset": 1
+                };
+                params.sign = app.createParamSign(params);
+                $.showIndicator();
+                $.ajax({
+                    type: 'POST',
+                    url: app.siteConfig.userbetrecord,
+                    data: params,
+                    dataType: 'json',
+                    context: $('body'),
+                    success: function(data) {
+                        if (data.code === 0 && data.data != null) {
+                            var htmldata = { bulid: data.data, more: $.i18n.prop('common_more_text'), status: $.i18n.prop('deal_settle_title') };
+                            var html = template('record_tpl', htmldata);
+                            $(".list-container").append(html);
+                            html = template('record_total_tpl', { total: data.data.foot, title: $.i18n.prop('common_total_text') });
+                            $(".nav-total").html('').html(html);
+                        } else if (data.code === 98 || data.code === 99) {
+                            app.clearLogin(data.errors);
+                        } else {
+                            $.toast(data.message || data.errors);
+                        }
+                    },
+                    error: function(xhr, type) {
+                    },
+                    complete: function(xhr) {
+                        $.hideIndicator();
+                    }
+                });
+            };
+            detail.openSearchBar = function(obj) {
+                //console.log(obj);
+                if ($(obj).hasClass("zhover")) {
+                    $(obj).removeClass("zhover");
+                } else {
+                    $(obj).addClass("zhover");
+                }
+            };
+            detail.showMoreDealinfo = function(orderid) {
+                var params = {
+                    "ticket": app.siteConfig.siteuserticket,
+                    "userid": app.siteConfig.siteuserid,
+                    "lang": app.siteConfig.sitelanguage,
+                    "betid": orderid
+                };
+                params.sign = app.createParamSign(params);
+                $.showIndicator();
+                $.ajax({
+                    type: 'POST',
+                    url: app.siteConfig.betcontent,
+                    data: params,
+                    dataType: 'json',
+                    context: $('body'),
+                    success: function(data) {
+                        if (data.code === 0 && data.data != null) {
+                            var length = data.data.length;
+                            var html = [];
+                            html.push("<div class=\"cardli_box\">");
+                            html.push("<ul class=\"cardli-content\">");
+                            html.push("{{each data as item}}");
+                            html.push("<li>");
+                            html.push("<div class=\"row data-row-show\">");
+                            html.push("<div class=\"sai-name\"><span>{{#item.LeagueName}}</span> </div>");
+                            html.push("<div class=\"sai-country\"><span>{{#item.TeamVs}}</span></div>");
+                            html.push("<div class=\"sai-select green\"><span>{{#item.BetDescription}}</span> </div>");
+                            html.push("</div>");
+                            html.push("</li>");
+                            html.push("{{/each}}");
+                            html.push("</ul>");
+                            html.push("</div>");
+                            var render = template.compile(html.join(""));
+                            var renderhtml = render(data);
+                            $.modal({
+                                text: renderhtml,
+                                extraClass: length > 4 ? 'modal-height' : '',
+                                buttons: [
+                                    {
+                                        text: $.i18n.prop('common_cacel_text'),
+                                        bold: true,
+                                        onClick: function() {
+                                        }
+                                    }
+                                ]
+                            });
+                        } else if (data.code === 98 || data.code === 99) {
+                            app.clearLogin(data.errors);
+                        } else {
+                            $.toast(data.message || data.errors);
+                        }
+                    },
+                    error: function(xhr, type) {
+                    },
+                    complete: function(xhr) {
+                        $.hideIndicator();
+                    }
+                });
+            };
+        })();
+    </script>
+}

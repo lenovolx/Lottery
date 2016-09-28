@@ -1,0 +1,267 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.ext.linkbutton.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar">
+        </table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<div id="dlg" class="easyui-dialog" style="width:400px;height:180px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" novalidate>
+        <div class="fitem">
+            <label>中文名称:</label>
+            <input id="RoleName" name="RoleName" class="easyui-validatebox easyui-textbox" required="true">
+            <input id="Id" name="Id" type="hidden">
+        </div>
+        <div class="fitem">
+            <label>英文名称:</label>
+            <input id="RoleNameEn" name="RoleNameEn" class="easyui-validatebox easyui-textbox" required="true">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="role.saveForm(this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+<div id="dlgmtr" class="easyui-dialog" style="width:320px;height:380px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons-mtr" modal="true">
+    <input id="hfldRoleId" name="hfldRoleId" type="hidden" value="0">
+    <ul id="menutree" data-options="animate:true,lines:true" style="margin-top:10px;margin-left:10px;"></ul>
+</div>
+<div id="dlg-buttons-mtr">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="role.setRolePower()" style="width: 90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlgmtr').dialog('close');" style="width: 90px">取消</a>
+</div>
+<script language="javascript">
+    var MenuId = '@(ViewBag.MenuId)';
+    var _roleId = 0;
+    var url = "";
+    $(function () {
+        role.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+        $('#dg').datagrid({
+            title: "",
+            url: "/PlatAdmin/System/RoleGrid",
+            width: "100%",
+            method: 'post',
+            height: "100%",
+            fitColumns: true,
+            sortName: 'Id',
+            sortOrder: 'desc',
+            idField: 'Id',
+            pageSize: 50,
+            pagination: true,
+            striped: true, //奇偶行是否区分
+            singleSelect: true, //单选模式
+            rownumbers: true, //行号
+            checkOnSelect: true,
+            selectOnCheck: true,
+            columns: [[
+                        { field: 'chk', align: 'center', width: 10, checkbox: true },
+                        { field: 'Id', align: 'center', width: 20, title: $.i18n.prop('role_id_title') },
+                        { field: 'RoleName', width: 50, align: 'center', sortable: true, title: $.i18n.prop('role_name_title') },
+                        { field: 'IsLock', width: 20, align: 'center', title: $.i18n.prop('role_islock_title') },
+                        { field: 'Cell', width: 40, align: 'center', title: $.i18n.prop('common_celloperate_title') }
+            ]],
+            onClickRow: function (index, row) {
+                if (row.Id === 1) {
+                    $('#btn_DelRole').linkbutton("disable").attr({ "title": "系统角色不允许删除" });
+                } else {
+                    $('#btn_DelRole').linkbutton("enable").attr({ "title": "" });
+                }
+            },
+            queryParams: { MenuId: MenuId}
+        });
+        //tree加载
+        $('#menutree').tree({
+            url: '/PlatAdmin/System/GetAllMenu',
+            checkbox: true,
+            cascadeCheck: false,
+            loadFilter: function (rows) {
+                return convert(rows);
+            },
+            onLoadSuccess: function (node, data) {
+            },
+            onClick: function (node) {
+            },
+            onCheck: function (node, checked) {
+                if (checked) {
+                    var parentNode = $("#menutree").tree('getParent', node.target);
+                    if (parentNode != null) {
+                        $("#menutree").tree('check', parentNode.target);
+                    }
+                } else {
+                    var childNode = $("#menutree").tree('getChildren', node.target);
+                    if (childNode.length > 0) {
+                        for (var i = 0; i < childNode.length; i++) {
+                            $("#menutree").tree('uncheck', childNode[i].target);
+                        }
+                    }
+                }
+            }
+        });
+        $("#btn_AddRole").on("click", function () {
+            role.addRole();
+        });
+        $("#btn_EditRole").on("click", function () {
+            role.EditRole();
+        });
+        $("#btn_DelRole").on("click", function () {
+            role.delRole();
+        });
+    });
+
+
+    var role = role || {};
+    (function () {
+        role.loadLanguage = function (language) {
+            jQuery.i18n.properties({
+                name: 'language',
+                path: '/i18n/admin/',
+                mode: 'map',
+                language: language
+            });
+        };
+        role.addRole = function () {
+            $('#fm').form('clear');
+            $('#dlg').dialog('open').dialog('setTitle', '添加角色');
+            //$(".easyui-linkbutton").children("span:first").children("span:first").text($.i18n.prop('common_save_text'));
+            url = "/PlatAdmin/System/CreateRole/";
+        };
+        role.EditRole = function () {
+            $('#fm').form('clear');
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                $("#Id").val(node.Id);
+                $('#dlg').dialog('open').dialog('setTitle', '编辑角色');
+                $('#fm').form('load', node);
+                url = '/PlatAdmin/System/EditRole/?id=' + node.id;
+            }
+        };
+        role.delRole = function () {
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                $.messager.confirm($.i18n.prop('common_systips_text'), '确定要删除这个角色吗?', function (r) {
+                    if (r) {
+                        $.post('/PlatAdmin/System/DelRole ', { id: node.Id }, function (result) {
+                            if (result.code === 0) {
+                                $('#dg').datagrid('reload');
+                                $.messager.show({
+                                    title: $.i18n.prop('common_systips_text'),
+                                    msg: '操作成功'
+                                });
+                            } else {
+                                $.messager.show({
+                                    title: $.i18n.prop('common_systips_text'),
+                                    msg: result.errors
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            }
+        };
+        role.lockRole = function (id, lock) {
+            $.post('/PlatAdmin/System/SetRoleLock', { id: id, Lock: lock }, function (result) {
+                if (result.code === 0) {
+                    $('#dg').datagrid('reload');
+                    $.messager.show({
+                        title: $.i18n.prop('common_systips_text'),
+                        msg: "操作成功"
+                    });
+                } else {
+                    $.messager.show({
+                        title: $.i18n.prop('common_systips_text'),
+                        msg: result.errors
+                    });
+                }
+            }, 'json');
+        };
+        role.saveForm = function (obj) {
+            $(obj).linkbutton("disable");
+            setTimeout(function () {
+                $(obj).linkbutton("enable");
+            }, 2000);
+            $('#fm').form('submit', {
+                url: url,
+                onSubmit: function () {
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                    result = eval('(' + result + ')');
+                    if (result.code !== 0) {
+                        $.messager.show({
+                            title: $.i18n.prop('common_systips_text'),
+                            msg: result.errors
+                        });
+                    } else {
+                        $('#dlg').dialog('close');
+                        $('#dg').datagrid('reload');
+                        $.messager.show({
+                            title: $.i18n.prop('common_systips_text'),
+                            msg: '操作成功'
+                        });
+                    }
+                }
+            });
+        };
+        role.getRolePower = function (roleid) {
+            $('#dlgmtr').dialog('open').dialog('setTitle', '设置角色权限');
+            $("#hfldRoleId").val(roleid);
+            var roots = $('#menutree').tree('getRoots');
+            if (roots.length > 0) {
+                for (var i = 0; i < roots.length; i++) {
+                    var nodet = $('#menutree').tree('find', roots[i].id);
+                    $('#menutree').tree('uncheck', nodet.target);
+                }
+            }
+            $.getJSON("/PlatAdmin/System/GetRoleMenu?roleid=" + roleid, function (data) {
+                if (data.menus.length > 0) {
+                    $.each(data.menus, function (i, item) {
+                        var nodetree = $('#menutree').tree('find', item.Id);
+                        $('#menutree').tree('check', nodetree.target);
+                    });
+                }
+            });
+        };
+        role.setRolePower = function () {
+            var roleid = $("#hfldRoleId").val();
+            var nodes = $('#menutree').tree('getChecked');
+            var selectValues = '';
+            for (var i = 0; i < nodes.length; i++) {
+                if (selectValues !== '')
+                    selectValues += ',';
+                selectValues += nodes[i].id;
+            }
+            $.post('/PlatAdmin/System/SetRoleMenu ', { menuIds: selectValues, roleid: roleid }, function (result) {
+                if (result.code === 0) {
+                    $.messager.show({
+                        title: $.i18n.prop('common_systips_text'),
+                        msg: '设置成功'
+                    });
+                    $('#dlgmtr').dialog('close');
+                } else {
+                    $.messager.show({
+                        title: $.i18n.prop('common_systips_text'),
+                        msg: result.errors
+                    });
+                }
+            }, 'json');
+        };
+    })();
+
+</script>

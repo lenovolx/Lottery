@@ -1,0 +1,228 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+
+}
+@section scripts{
+
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.ext.linkbutton.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar">
+        </table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+    <div class="search-div">
+        <label for="SDate" class="SDate">申请时间：</label>
+        <input id="SDate" name="SDate" class="easyui-datebox" panelheight="auto" value="true" style="width: 100px;" />
+        <label for="EDate">至</label>
+        <input id="EDate" name="EDate" class="easyui-datebox" panelheight="auto" value="true" style="width: 100px;" />
+        <label for="SearchStatus" class="SearchStatus">审核状态:</label>
+        <input id="SearchStatus" name="SearchStatus" data-options="
+				method: 'get',
+				panelWidth: 100,
+				panelHeight: 'auto'" style="width: 100px;" />
+        <a href="javascript:void(0)" id="btn_Search" class="easyui-linkbutton" iconcls="icon-search">查询</a>
+    </div>
+</div>
+<div id="dlg" class="easyui-dialog" style="width:380px;height:220px;padding:10px 20px" closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="status_fm" method="post" novalidate>
+        <div class="fitem">
+            <label for="selStatus" class="selStatus">审核状态：</label>
+            <input id="selStatus" name="selStatus" data-options="
+				method: 'get',
+				panelWidth: 100,
+				panelHeight: 'auto'" style="width: 100px;" />
+            <input id="Id" name="Id" type="hidden">
+            <input id="UserId" name="UserId" type="hidden">
+            <input id="Status" name="Status" type="hidden">
+            <input id="Amount" name="Amount" type="hidden">
+        </div>
+        <div class="fitem">
+            <label class="RejectRemark">备注:</label>
+            <input id="RejectRemark" name="RejectRemark" class="easyui-validatebox easyui-textbox" data-options="multiline:true,disabled:true" style="height: 80px">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="cash.saveForm('status_fm', 'dlg',this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="cash.clearForm()" style="width:90px">取消</a>
+</div>
+
+<script language="javascript">
+    var url = "";
+    var menuid = @ViewBag.MenuId;
+    var params = {  };
+    $(function () {
+        cash.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+        $('#btn_ReviewCash').linkbutton("disable");
+        $("#SDate").datebox({
+            formatter: function (date) {
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                return y + "-" + (m < 10 ? ("0" + m) : m) + "-" + (d < 10 ? ("0" + d) : d) + "";
+            }
+        });
+        $('#EDate').datebox({
+            formatter: function (date) {
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                return y + "-" + (m < 10 ? ("0" + m) : m) + "-" + (d < 10 ? ("0" + d) : d) + "";
+            },
+            onSelect: function (date) {
+                var end = $("#EDate").datebox('getValue');
+                var start = $("#SDate").datebox('getValue');
+                if (end) {
+                    if (start > end) { $("#EDate").datebox('setValue', start); }
+                }
+            }
+        });
+        cash.initGrid({ menuid: menuid, sdate: $("#SDate").datebox("getValue"), edate: $("#EDate").datebox("getValue"), status: -1 });
+        $("#btn_ReviewCash").on("click",function() {
+            cash.reviewCash();
+        });
+        $('#SearchStatus').combobox({
+            url: '/PlatAdmin/System/ComBoxCashAuditType?all=false',
+            valueField: 'Id',
+            textField: 'Name',
+            editable: false
+        });
+        $("#btn_Search").on("click",function() {
+            cash.searchCash();
+        });
+    });
+    var cash = cash || {};
+    (function() {
+        cash.loadLanguage = function(language) {
+            jQuery.i18n.properties({
+                name: 'language',
+                path: '/i18n/admin/',
+                mode: 'map',
+                language: language,
+                callback:function() {
+                    $("#btn_Search").children("span:first").children("span:first").text($.i18n.prop('common_search_text'));
+                    $(".SDate").text($.i18n.prop('cash_createtime_title'));
+                    $(".SearchStatus").text($.i18n.prop('cash_status_title'));
+                }
+            });
+        };
+        cash.initGrid = function(query) {
+            $('#dg').datagrid({
+                title: "",
+                url: "/PlatAdmin/User/CashGrid",
+                width: "100%",
+                method: 'post',
+                height: "100%",
+                fitColumns: true,
+                sortName: 'CreateTime',
+                sortOrder: 'asc',
+                idField: 'Id',
+                pageSize: 50,
+                columns:[[  
+                        {field:'UserName',title:$.i18n.prop('cash_username_title'),width:15,align:'center'},  
+                        {field:'CreateTime',title:$.i18n.prop('cash_createtime_title'),width:25,formatter:formatDateBoxFull,align:'center',sortable: true},
+                        {field:'Amount',title:$.i18n.prop('cash_amount_title'),width:15,align:'right',sortable: true,formatter:formatMoney},
+                        {field:'RealName',title:$.i18n.prop('cash_realname_title'),width:15,align:'center'},
+                        {field:'UserCashAccount',title:$.i18n.prop('cash_account_title'),width:30,align:'center'},
+                        {field:'Status',title:$.i18n.prop('cash_status_title'),width:15,align:'center'}
+                ]],
+                pagination: true,
+                striped: true, //奇偶行是否区分
+                singleSelect: true, //单选模式
+                rownumbers: true, //行号
+                checkOnSelect: true,
+                selectOnCheck: true,
+                onClickRow: function (index, row) {
+                    if (row.Status==='待审核') {
+                        $('#btn_ReviewCash').linkbutton("enable");
+                    } else {
+                        $('#btn_ReviewCash').linkbutton("disable");
+                    }
+                },
+                queryParams: query,
+                onDblClickRow: function (index, row) {
+                    if (row.StatusNum == 9) {
+                        alert(111);
+                    }
+                }
+            });
+        };
+        cash.reviewCash = function() {
+            $('#status_fm').form('clear');
+            var row = $('#dg').datagrid('getSelected');
+            if (row) {
+                $("#Id").val(row.Id);
+                $("#UserId").val(row.UserId);
+                $("#Amount").val(row.Amount);
+                $('#selStatus').combobox({
+                    url: '/PlatAdmin/System/ComBoxCashAuditType?all=false&level='+row.StatusNum,
+                    valueField: 'Id',
+                    textField: 'Name',
+                    editable: false,
+                    required:true,
+                    onSelect: function(node) {
+                        $("#Status").val(node.Id);
+                        if (node.Id == "9")
+                            $('#RejectRemark').textbox({ disabled: false, required: true });
+                        else
+                            $('#RejectRemark').textbox({ disabled: true, required: false });
+                    }
+                });
+                $("#dlg").dialog("open").dialog('setTitle', '审核');
+                url = '/PlatAdmin/User/EditAduit';
+            }
+        };
+        cash.saveForm = function(fmid, dlgid, obj) {
+            $(obj).linkbutton("disable");
+            setTimeout(function() {
+                $(obj).linkbutton("enable");
+            }, 2000);
+            $('#' + fmid).form('submit', {
+                url: url,
+                onSubmit: function() {
+                    $(this).attr({ "enabled": true });
+                    return $(this).form('validate');
+                },
+                success: function(result) {
+                    result = eval('(' + result + ')');
+                    if (result.code !== 0) {
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.errors
+                        });
+                        $('#btn_ReviewCash').linkbutton("disable");
+                    } else {
+                        $('#' + dlgid).dialog('close');
+                        $('#dg').datagrid('reload');
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.message
+                        });
+                    }
+                }
+            });
+        };
+        cash.clearForm = function() {
+            $('#status_fm').form('clear');
+            $('#dlg').dialog('close');
+        };
+        cash.searchCash = function() {
+            params.menuid = menuid;
+            params.status = $("#SearchStatus").combobox("getValue");
+            params.sdate = $("#SDate").datebox("getValue");
+            params.edate = $("#EDate").datebox("getValue");
+            $("#dg").datagrid('reload', params);
+        };
+    })();
+</script>

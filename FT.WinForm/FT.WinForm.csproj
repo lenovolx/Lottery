@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon_128.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>FT.WinForm.App</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EpsonStatusAPI, Version=4.0.11.0, Culture=neutral, PublicKeyToken=46bb02e1480038cb, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Epson.print\EpsonStatusAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.2.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="CTL\PageComponent.xaml.cs">
+      <DependentUpon>PageComponent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="HistoryAccount.xaml.cs">
+      <DependentUpon>HistoryAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="LaunchUpdate.cs" />
+    <Compile Include="Print.xaml.cs">
+      <DependentUpon>Print.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Prize.xaml.cs">
+      <DependentUpon>Prize.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SecretCode.xaml.cs">
+      <DependentUpon>SecretCode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettleRecord.xaml.cs">
+      <DependentUpon>SettleRecord.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cash.xaml.cs">
+      <DependentUpon>Cash.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Charge.xaml.cs">
+      <DependentUpon>Charge.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CTL\NumericTextBox.cs" />
+    <Compile Include="DemoWindow.xaml.cs">
+      <DependentUpon>DemoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Http\HttpBase.cs" />
+    <Compile Include="Http\ProcessRequest.cs" />
+    <Compile Include="Tools\LoadingMask.cs" />
+    <Compile Include="Tools\LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\LoginCookies.cs" />
+    <Compile Include="Login\UserLogin.cs" />
+    <Compile Include="MyAccount.xaml.cs">
+      <DependentUpon>MyAccount.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\BetInfoHelper.cs" />
+    <Compile Include="Tools\CommonConverter.cs" />
+    <Compile Include="Tools\GridHelper.cs" />
+    <Compile Include="Tools\LocalizationHelper.cs" />
+    <Compile Include="Tools\Msg.cs" />
+    <Compile Include="Tools\MsgWin.xaml.cs">
+      <DependentUpon>MsgWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\PrintHelper.cs" />
+    <Compile Include="Tools\TaskAsyncHelper.cs" />
+    <Compile Include="Trade.xaml.cs">
+      <DependentUpon>Trade.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCBase.cs" />
+    <Compile Include="UC\UCHalfFinal.xaml.cs">
+      <DependentUpon>UCHalfFinal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCMultiList.xaml.cs">
+      <DependentUpon>UCMultiList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCScoreList.xaml.cs">
+      <DependentUpon>UCScoreList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCStandardGrid.xaml.cs">
+      <DependentUpon>UCStandardGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\UIHelper.cs" />
+    <Compile Include="UC\UCTotal.xaml.cs">
+      <DependentUpon>UCTotal.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpdatePasswd.xaml.cs">
+      <DependentUpon>UpdatePasswd.xaml</DependentUpon>
+    </Compile>
+    <Page Include="CTL\PageComponent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="HistoryAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Print.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Prize.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SecretCode.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettleRecord.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Cash.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Charge.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DemoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Tools\LoadingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Login\Login.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MyAccount.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Accents\Blue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Language\String_cn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Language\String_pt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Language\String_en.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Style\Controls.TabControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Tools\MsgWin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Trade.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCHalfFinal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCMultiList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCScoreList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCStandardGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCTotal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UpdatePasswd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Home\Calculator.png" />
+    <Resource Include="Resources\Home\HomeTopLine.png" />
+    <Resource Include="Resources\Home\Printer.png" />
+    <Resource Include="Resources\Home\UserTime.png" />
+    <Resource Include="Resources\Login\Lock.png" />
+    <Resource Include="Resources\Login\User.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FT.Model\FT.Model.csproj">
+      <Project>{31e4e000-53d9-4715-abda-965457ee75ee}</Project>
+      <Name>FT.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Utility\FT.Utility.csproj">
+      <Project>{f7b67599-88cc-4bde-b5d6-03f6ff60ec0c}</Project>
+      <Name>FT.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 和 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\客户头像.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\下拉箭头.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\充值.png" />
+    <Resource Include="Image\转账.png" />
+    <Resource Include="Image\提现.png" />
+    <Resource Include="Image\我的账户.png" />
+    <Resource Include="Image\修改密码.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\刷新.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\下拉箭头1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\head_cnBIG.png" />
+    <Resource Include="Image\head_enBIG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\head_ptBIG.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Search-Find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\button_begin.png" />
+    <Resource Include="Image\button_end.png" />
+    <Resource Include="Image\button_ff.png" />
+    <Resource Include="Image\button_rew.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\favicon_128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="favicon_128.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\下拉箭头2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\安全密码.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

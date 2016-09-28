@@ -1,0 +1,8 @@
+﻿.list-block{margin:0}
+.bar .icon em{font-size:.6rem;padding-left:3px}
+.list-block .item-content{border-bottom:1px solid #E5E5E5;border-top:0;background:#fff}
+html:not(.watch-active-state) .list-block .item-link:active,.list-block .item-link.active-state{background-color:#eeeeee}
+.list-block .item-content{min-height:2.2rem}
+.list-block .item-title{font-size:0.7rem}
+.page{background:#fff}
+.more{display:block;font-size:0.6rem;min-height:1.6rem;line-height:1.6rem;margin: 0.5rem auto;border: 1px solid #EAEAEA;border-radius: 0.2rem;width: 8rem;}

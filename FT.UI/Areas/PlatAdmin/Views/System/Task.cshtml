@@ -1,0 +1,217 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+@section styles
+{
+    <link href="~/Areas/PlatAdmin/Content/themes/bootstrap/switchbutton.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar">
+            <thead>
+                <tr>
+                    <th data-options="field:'chk',align:'center',width:10,checkbox:true"></th>
+                    <th data-options="field:'TaskName',width:30,align:'center',sortable: true">任务名称</th>
+                    <th data-options="field:'CronRemark',width:30,align:'center',sortable: true">运行频率</th>
+                    <th data-options="field:'StatusText',width:20,align:'center',sortable: true">任务状态</th>
+                    <th data-options="field:'RecentRunTime',width:25,align:'center',sortable: true,formatter:formatDateBoxFull">最近运行时间</th>
+                    <th data-options="field:'LastRunTime',width:25,align:'center',sortable: true,formatter:formatDateBoxFull">下次运行时间</th>
+                    <th data-options="field:'CreatedOn',width:25,align:'center',sortable: true,formatter:formatDateBoxFull">创建时间</th>
+                    <th data-options="field:'Remark',width:50,align:'center',sortable: true">说明</th>
+                    <th data-options="field:'Cell',width:40,align:'center',sortable: true">操作</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<div id="dlg" class="easyui-dialog" style="width:420px;height:380px;padding:10px 20px" closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" novalidate>
+        <div class="fitem">
+            <label>任务名称:</label>
+            <input id="TaskName" name="TaskName" class="easyui-validatebox easyui-textbox" required="true">
+            <input id="TaskID" name="TaskID" type="hidden">
+        </div>
+        <div class="fitem">
+            <label>程序集名称:</label>
+            <input id="Assembly" name="Assembly" class="easyui-validatebox easyui-textbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>任务状态:</label>
+            <input id="SwtStatus" name="SwtStatus" class="easyui-switchbutton" data-options="onText:'启动',offText:'停止',height:20">
+            <input id="Status" name="Status" type="hidden" value="0">
+        </div>
+        <div class="fitem">
+            <label>Cron表达式:</label>
+            <input id="CronExpressionString" name="CronExpressionString" class="easyui-validatebox easyui-textbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>表达式说明:</label>
+            <input id="CronRemark" name="CronRemark" class="easyui-validatebox easyui-textbox" data-options="multiline:true,required:true" style="height: 40px">
+        </div>
+        <div class="fitem">
+            <label>类名:</label>
+            <input id="Class" name="Class" class="easyui-validatebox easyui-textbox" required="true">
+        </div>
+        <div class="fitem">
+            <label class="Remark">说明:</label>
+            <input id="Remark" name="Remark" class="easyui-validatebox easyui-textbox" data-options="multiline:true" style="height: 60px">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="task.saveForm('fm', 'dlg',this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="task.clearForm()" style="width:90px">取消</a>
+</div>
+<script language="javascript">
+    var params = { MenuId: @ViewBag.MenuId };
+    var url = "";
+    $(function () {
+        $('#dg').datagrid({
+            title: "",
+            url: "/PlatAdmin/System/TaskGrid",
+            width: "100%",
+            methord: 'post',
+            height: "100%",
+            fitColumns: true,
+            sortName: 'CreatedOn',
+            sortOrder: 'desc',
+            idField: 'TaskID',
+            pageSize: 50,
+            pagination: true,
+            striped: true, //奇偶行是否区分
+            singleSelect: false,//单选模式
+            rownumbers: true,//行号
+            checkOnSelect: true,
+            selectOnCheck: true,
+            queryParams: params,
+            onLoadSuccess: function () {
+                $('#dg').datagrid('uncheckAll');
+            }
+        });
+        $("#btn_AddTask").on("click",function() {
+            task.Add();
+        });
+        $("#btn_EditTask").on("click",function() {
+            task.Edit();
+        });
+        $("#btn_DelTask").on("click",function() {
+            task.Delete();
+        });
+    });
+    var task = task || {};
+    (function() {
+        task.Add = function() {
+            $('#fm').form('clear');
+            $("#dlg").dialog("open").dialog('setTitle', '新增任务');
+            $('#Status').val($('#SwtStatus').switchbutton("options").checked ? 0 : 1);
+            $('#SwtStatus').switchbutton({
+                checked: false,
+                onChange: function (checked) {
+                    if (checked) {
+                        $('#Status').val("0");
+                        return;
+                    }
+                    if (!checked) {
+                        $('#Status').val("1");
+                    }
+                }
+            });
+            url = '/PlatAdmin/System/AddTask';
+        };
+        task.Edit = function() {
+            $('#fm').form('clear');
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                $('#dlg').dialog('open').dialog('setTitle', '编辑任务');
+                $('#SwtStatus').switchbutton({
+                    checked: node.Status==0,
+                    onChange: function (checked) {
+                        if (checked) {
+                            $('#Status').val("0");
+                            return;
+                        }
+                        if (!checked) {
+                            $('#Status').val("1");
+                        }
+                    }
+                });
+                $('#fm').form('load', node);
+                url = '/PlatAdmin/System/EditTask';
+            }
+        };
+        task.Delete = function() {
+            var taskIds = getCheckedIds("dg");
+            if (taskIds) {
+                $.messager.confirm('系统提示', '确定要删除选中记录吗?', function(r) {
+                    if (r) {
+                        $.post('/PlatAdmin/System/DelTask', { ids: taskIds }, function (result) {
+                            if (result.code === 0) {
+                                $('#dg').datagrid('reload');
+                                $.messager.show({
+                                    title: '系统提示',
+                                    msg: '操作成功'
+                                });
+                            } else {
+                                $.messager.show({
+                                    title: '系统提示',
+                                    msg: result.errors
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            } else
+                $.messager.show({
+                    title: '系统提示',
+                    msg: "未选择操作数据"
+                });
+        };
+        task.saveForm = function (fmid, dlgid, obj) {
+            $(obj).linkbutton("disable");
+            setTimeout(function () {
+                $(obj).linkbutton("enable");
+            }, 2000);
+            $('#' + fmid).form('submit', {
+                url: url,
+                onSubmit: function () {
+                    $(this).attr({ "enabled": true });
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                    result = eval('(' + result + ')');
+                    if (result.code !== 0) {
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.errors
+                        });
+                    } else {
+                        $('#' + dlgid).dialog('close');
+                        $('#dg').datagrid('reload');
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.message
+                        });
+                    }
+                }
+            });
+        };
+        task.clearForm = function() {
+            $('#fm').form('clear');
+            $('#dlg').dialog('close');
+        };
+    })();
+</script>
+
+

@@ -1,0 +1,276 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+@section styles
+{
+    <link href="~/Areas/PlatAdmin/Content/themes/bootstrap/switchbutton.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/easyui/easyui.ext.linkbutton.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar"></table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<div id="setting_dlg" class="easyui-dialog" style="width:320px;height:260px;padding:10px 20px" closed="true" buttons="#setting_dlg-buttons" modal="true">
+    <form id="setting_fm" method="post" novalidate>
+        <div class="fitem">
+            <label>是否网站关闭:</label>
+            <input id="SwtCloseWebSite" name="SwtCloseWebSite" class="easyui-switchbutton" data-options="onText:'Yes',offText:'No',height:20">
+            <input id="CloseWebSite" name="CloseWebSite" type="hidden" value="0">
+        </div>
+        <div class="fitem">
+            <label>最小投注额:</label>
+            <input id="MinBetAmount" name="MinBetAmount" class="easyui-validatebox easyui-numberbox" data-options="required:true,labelPosition:'top',precision:0,groupSeparator:',',min:0">
+        </div>
+        <div class="fitem">
+            <label>最大中奖额:</label>
+            <input id="MaxBetAmount" name="MaxBetAmount" class="easyui-validatebox easyui-numberbox" data-options="required:true,labelPosition:'top',precision:0,groupSeparator:','" />
+        </div>
+        <div class="fitem">
+            <label>危险注单时长:</label>
+            <input id="DangerBall" name="DangerBall" class="easyui-validatebox easyui-numberbox" data-options="required:true,width:80,min:20" />秒
+        </div>
+    </form>
+</div>
+<div id="setting_dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="admin.saveForm('setting_fm', 'setting_dlg', this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#setting_dlg').dialog('close');" style="width:90px">取消</a>
+</div>
+<div id="dlg" class="easyui-dialog" style="width:400px;height:200px;padding:10px 20px" closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" novalidate>
+        <div class="fitem">
+            <label>登录帐号:</label>
+            <input id="LoginName" name="LoginName" class="easyui-validatebox easyui-textbox" data-options="required:true,validType:'length[3,30]'">
+            <input id="Id" name="Id" type="hidden">
+        </div>
+        <div class="fitem">
+            <label>隶属角色:</label>
+            <input id="RoleName" name="RoleName" data-options="
+				method: 'get',
+				panelWidth: 150,
+				panelHeight: 'auto'" required="true" />
+            <input type="hidden" id="RoleId" name="RoleId" value="" />
+        </div>
+        <div class="fitem">
+            <label>登录密码:</label>
+            <input type="Password" id="Password" name="Password" class="easyui-validatebox easyui-textbox" data-options="validType:'length[6,12]'">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="admin.saveForm('fm', 'dlg',this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlg').dialog('close');" style="width:90px">取消</a>
+</div>
+<script language="javascript">
+    var MenuId = '@(ViewBag.MenuId)';
+    var url = "";
+    $(function () {
+        admin.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+        $('#dg').datagrid({
+            title: "",
+            url: "/PlatAdmin/System/AdminGrid",
+            width: "100%",
+            method: 'post',
+            height: "100%",
+            fitColumns: true,
+            sortName: 'CreateDate',
+            sortOrder: 'asc',
+            idField: 'Id',
+            pageSize: 50,
+            pagination: true,
+            striped: true,
+            singleSelect: true,
+            rownumbers: true,
+            checkOnSelect: true,
+            selectOnCheck: true,
+            columns: [[
+                        { field: 'chk', align: 'center', width: 10, checkbox: true },
+                        { field: 'Id', align: 'center', width: 20, title: $.i18n.prop('admin_id_title') },
+                        { field: 'LoginName', width: 30, align: 'left', sortable: true, title: $.i18n.prop('admin_loginname_title') },
+                        { field: 'CreateDate', width: 35, align: 'center', sortable: true, formatter: formatDateBoxFull, title: $.i18n.prop('admin_createdate_title') },
+                        { field: 'RoleName', width: 30, align: 'center', title: $.i18n.prop('admin_rolename_title') },
+                        { field: 'Status', width: 15, align: 'center', title: $.i18n.prop('role_islock_title') },
+                        { field: 'Cell', width: 40, align: 'center', title: $.i18n.prop('common_celloperate_title') }
+            ]],
+            queryParams: { MenuId: MenuId }
+        });
+        $('#RoleName').combobox({
+            url: '/PlatAdmin/System/ComBoxRoleType',
+            valueField: 'Id',
+            textField: 'Name',
+            editable: false,
+            onSelect: function (pars) {
+                $("#RoleId").val(pars.Id);
+            }
+        });
+        $("#btn_AddAdmin").on("click", function () {
+            admin.addAdmin();
+        });
+        $("#btn_EditAdmin").on("click", function () {
+            admin.editAdmin();
+        });
+        $("#btn_DelAdmin").on("click", function () {
+            admin.delAdmin();
+        });
+        $("#btn_SysSetting").on("click", function () {
+            admin.settings();
+        });
+    });
+    var admin = admin || {};
+    (function () {
+        admin.loadLanguage = function (language) {
+            jQuery.i18n.properties({
+                name: 'language',
+                path: '/i18n/admin/',
+                mode: 'map',
+                language: language
+            });
+        };
+        admin.settings = function () {
+            $('#setting_fm').form('clear');
+            $('#setting_dlg').dialog('open').dialog('setTitle', '系统设置');
+            $.getJSON("/PlatAdmin/System/GetSetting", function (data) {
+                if (data) {
+                    $("#MinBetAmount").numberbox("setValue", data.MinBetAmount);
+                    $("#MaxBetAmount").numberbox("setValue", data.MaxBetAmount);
+                    $("#DangerBall").numberbox("setValue", data.DangerBall);
+                    $("#CloseWebSite").val(data.CloseWebSite);
+                    $('#SwtCloseWebSite').switchbutton({
+                        checked: data.CloseWebSite,
+                        onChange: function (checked) {
+                            if (checked) {
+                                $('#CloseWebSite').val("True");
+                                return;
+                            }
+                            if (!checked) {
+                                $('#CloseWebSite').val("False");
+                            }
+                        }
+                    });
+                }
+            });
+            url = '/PlatAdmin/System/Setting';
+        };
+        admin.addAdmin = function () {
+            $('#fm').form('clear');
+            $('#Password').textbox({ disabled: false, required: true });
+            $('#RoleName').combobox({ disabled: false, required: true });
+            $('#dlg').dialog('open').dialog('setTitle', '账户新增');
+            url = '/PlatAdmin/System/CreateAdmin';
+        };
+        admin.editAdmin = function (obj) {
+            $('#fm').form('clear');
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                $('#Password').textbox({ disabled: true, required: false });
+                $('#RoleName').combobox('setValue', node.RoleId);
+                $('#RoleName').combobox({ disabled: true });
+                $("#Id").val(node.Id);
+                $('#dlg').dialog('open').dialog('setTitle', '账户编辑');
+                $('#fm').form('load', node);
+                url = '/PlatAdmin/System/EditAdmin';
+            }
+        };
+        admin.saveForm = function (fmid, dlgid, obj) {
+            $(obj).linkbutton("disable");
+            setTimeout(function () {
+                $(obj).linkbutton("enable");
+            }, 2000);
+            $('#' + fmid).form('submit', {
+                url: url,
+                onSubmit: function () {
+                    $(this).attr({ "enabled": true });
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                    result = eval('(' + result + ')');
+                    if (result.code !== 0) {
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.errors
+                        });
+                    } else {
+                        $('#' + dlgid).dialog('close');
+                        $('#dg').datagrid('reload');
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.message
+                        });
+                    }
+                }
+            });
+        };
+        admin.delAdmin = function () {
+            var node = $('#dg').datagrid('getSelected');
+            if (node) {
+                $.messager.confirm('系统提示', '确定要删除这个帐号吗(删除不可恢复)?', function (r) {
+                    if (r) {
+                        $.post('/PlatAdmin/System/DelAdmin', { id: node.Id }, function (result) {
+                            if (result.code === 0) {
+                                $('#dg').datagrid('reload');
+                                $.messager.show({
+                                    title: '系统提示',
+                                    msg: "操作成功"
+                                });
+                            } else {
+                                $.messager.show({
+                                    title: '系统提示',
+                                    msg: result.errors
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            }
+        };
+        admin.editStaus = function (id, lock) {
+            $.post('/PlatAdmin/System/SetAdminLock', { id: id, Lock: lock }, function (result) {
+                if (result.code === 0) {
+                    $('#dg').datagrid('reload');
+                    $.messager.show({
+                        title: '系统提示',
+                        msg: "操作成功"
+                    });
+                } else {
+                    $.messager.show({
+                        title: '系统提示',
+                        msg: result.errors
+                    });
+                }
+            }, 'json');
+        };
+        admin.resetPass = function (id) {
+            $.messager.confirm('系统提示', '确定重置当前选择帐号密码?', function (r) {
+                if (r) {
+                    $.post('/PlatAdmin/System/SetDefaultPass', { adminid: id }, function (result) {
+                        if (result.code === 0) {
+                            $('#dg').datagrid('reload');
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: "操作成功"                                            
+                            });
+                        } else {
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.errors
+                            });
+                        }
+                    }, 'json');
+                }
+            });
+        };
+    })();
+
+</script>

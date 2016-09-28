@@ -1,0 +1,63 @@
+时间：2016-09-09 17:18:19,047 
+级别：ERROR 
+类名：FT.UI.API.BaseApiController.ApiFunc  
+描述：---User---Bet接口---异常 
+
+System.Collections.Generic.KeyNotFoundException: 给定关键字不在字典中。
+   在 System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   在 FT.UI.API.UserController.<>c__DisplayClassc.<Bet>b__a(JObject d, String p) 位置 f:\TFS\FT\FT.UI\API\UserController.cs:行号 126
+   在 FT.UI.API.BaseApiController.ApiFunc(JObject data, String p, Func`3 func) 位置 f:\TFS\FT\FT.UI\API\BaseApiController.cs:行号 73
+时间：2016-09-09 17:18:26,822 
+级别：ERROR 
+类名：FT.UI.API.BaseApiController.ApiFunc  
+描述：---User---Bet接口---异常 
+
+System.Collections.Generic.KeyNotFoundException: 给定关键字不在字典中。
+   在 System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   在 FT.UI.API.UserController.<>c__DisplayClassc.<Bet>b__a(JObject d, String p) 位置 f:\TFS\FT\FT.UI\API\UserController.cs:行号 126
+   在 FT.UI.API.BaseApiController.ApiFunc(JObject data, String p, Func`3 func) 位置 f:\TFS\FT\FT.UI\API\BaseApiController.cs:行号 73
+时间：2016-09-09 18:19:46,268 
+级别：ERROR 
+类名：FT.Repository.FtContext.QueryDb  
+描述：System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__21(MatchUserBetContent item) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 232
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   在 System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__20(MatchUserBet s) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 227
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   在 System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__1f(Entity context) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 223
+   在 FT.Repository.FtContext.QueryDb(Func`2 func, Object def) 位置 f:\TFS\FT\FT.Repository\FtContext.cs:行号 37 
+
+时间：2016-09-09 18:19:50,982 
+级别：ERROR 
+类名：FT.Repository.FtContext.QueryDb  
+描述：System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__21(MatchUserBetContent item) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 232
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   在 System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__20(MatchUserBet s) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 227
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   在 System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__1f(Entity context) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 223
+   在 FT.Repository.FtContext.QueryDb(Func`2 func, Object def) 位置 f:\TFS\FT\FT.Repository\FtContext.cs:行号 37 
+
+时间：2016-09-09 18:20:20,343 
+级别：ERROR 
+类名：FT.Repository.FtContext.QueryDb  
+描述：System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__21(MatchUserBetContent item) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 232
+   在 System.Linq.Enumerable.WhereSelectEnumerableIterator`2.MoveNext()
+   在 System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   在 System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__20(MatchUserBet s) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 227
+   在 System.Linq.Enumerable.WhereSelectArrayIterator`2.MoveNext()
+   在 System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   在 System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   在 FT.Repository.MatchUserBetRepository.<>c__DisplayClass25.<GetUserBetBonusList>b__1f(Entity context) 位置 f:\TFS\FT\FT.Repository\MatchUserBetRepository.cs:行号 223
+   在 FT.Repository.FtContext.QueryDb(Func`2 func, Object def) 位置 f:\TFS\FT\FT.Repository\FtContext.cs:行号 37 
+

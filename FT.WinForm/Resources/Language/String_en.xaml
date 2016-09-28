@@ -1,0 +1,180 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="wintitle">Wanli Lottery</sys:String>
+    <sys:String x:Key="Enum.BetType.1">1X2&amp;Handicap&amp;Over/Under&amp;Odd/Even</sys:String>
+    <sys:String x:Key="Enum.BetType.10">FT.1X2</sys:String>
+    <sys:String x:Key="Enum.BetType.11">1H.1X2</sys:String>
+    <sys:String x:Key="Enum.BetType.12">FT.HDP</sys:String>
+    <sys:String x:Key="Enum.BetType.13">1H.HDP</sys:String>
+    <sys:String x:Key="Enum.BetType.14">FT.O/U</sys:String>
+    <sys:String x:Key="Enum.BetType.15">1H.O/U</sys:String>
+    <sys:String x:Key="Enum.BetType.16">O/E</sys:String>
+    <sys:String x:Key="Enum.BetType.2">Total Goal</sys:String>
+    <sys:String x:Key="Enum.BetType.20">Total Goal</sys:String>
+    <sys:String x:Key="Enum.BetType.3">Correct Score</sys:String>
+    <sys:String x:Key="Enum.BetType.30">Correct Score</sys:String>
+    <sys:String x:Key="Enum.BetType.4">HT/FT</sys:String>
+    <sys:String x:Key="Enum.BetType.40">HT/FT</sys:String>
+    <sys:String x:Key="Enum.BetType.5">Parlay</sys:String>
+    <sys:String x:Key="Enum.BetType.50">FT.1X2</sys:String>
+    <sys:String x:Key="Enum.BetType.51">1H.1X2</sys:String>
+    <sys:String x:Key="Enum.BetType.52">FT.HDP</sys:String>
+    <sys:String x:Key="Enum.BetType.53">1H.HDP</sys:String>
+    <sys:String x:Key="Enum.BetType.54">FT.O/U</sys:String>
+    <sys:String x:Key="Enum.BetType.55">1H.O/U</sys:String>
+    <sys:String x:Key="Enum.BetType.56">O/E</sys:String>
+
+    <sys:String x:Key="Enum.HalfFinal.HH">H/H</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.HN">H/D</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.HC">H/A</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.NH">D/H</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.NN">D/D</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.NC">D/A</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.CH">A/H</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.CN">A/D</sys:String>
+    <sys:String x:Key="Enum.HalfFinal.CC">A/A</sys:String>
+    <sys:String x:Key="Enum.HCN.N">Draw</sys:String>
+    <sys:String x:Key="Enum.Score.OVH">Others</sys:String>
+    <sys:String x:Key="Enum.OU.O">O</sys:String>
+    <sys:String x:Key="Enum.OU.U">U</sys:String>
+    <sys:String x:Key="Enum.EO.E">E</sys:String>
+    <sys:String x:Key="Enum.EO.O">O</sys:String>
+
+    <sys:String x:Key="Enum.IsSettle.0">Open</sys:String>
+    <sys:String x:Key="Enum.IsSettle.1">Settled</sys:String>
+    <sys:String x:Key="Enum.IsSettle.2">Cancelled</sys:String>
+    <!--登录-->
+    <sys:String x:Key="str_LoginTitle">LOGIN</sys:String>
+    <sys:String x:Key="str_Login">LOGIN</sys:String>
+    <sys:String x:Key="str_RememberPassword">Remember Me</sys:String>
+    <sys:String x:Key="str_Require_LoginName">Please enter your login account</sys:String>
+    <sys:String x:Key="str_Require_Password">Please enter your login password</sys:String>
+    <!--主界面-->
+    <sys:String x:Key="str_HeaderTime">TIME</sys:String>
+    <sys:String x:Key="str_HeaderMatch">EVENT</sys:String>
+    <sys:String x:Key="str_MyBalance">Balance：</sys:String>
+    <sys:String x:Key="str_UserBet">Bets</sys:String>
+    <sys:String x:Key="str_BetNoMsg">Please click on the odds to add your selection into the betslip</sys:String>
+    <sys:String x:Key="str_BetValue">BetAmount：</sys:String>
+    <sys:String x:Key="str_BetBonus">Est. Win：</sys:String>
+    <sys:String x:Key="str_SubmitBet">Bet</sys:String>
+    <sys:String x:Key="str_Cancel">Cancel</sys:String>
+    <sys:String x:Key="str_TodayMatch">Today's Soccer</sys:String>
+    <sys:String x:Key="str_IndexTitle">Tip: the results are subject to the full 90 minutes, including goal</sys:String>
+    <sys:String x:Key="str_Submit">Submit</sys:String>
+    <sys:String x:Key="str_Delete">Delete</sys:String>
+    <sys:String x:Key="str_Return">Back</sys:String>
+    <sys:String x:Key="str_Add">Add</sys:String>
+    <sys:String x:Key="str_Exit">Exit</sys:String>
+    <sys:String x:Key="str_Continue">Continue</sys:String>
+    <sys:String x:Key="str_Reprint">Re print</sys:String>
+    <sys:String x:Key="str_Msg_Reprint">Betting success, Do you want to continue betting?</sys:String>
+    <sys:String x:Key="str_BetMin">Bet min：</sys:String>
+    <sys:String x:Key="str_BetMax">Bet max：</sys:String>
+    <sys:String x:Key="str_Valid_BetMin">The min bet is </sys:String>
+    <sys:String x:Key="str_Valid_BetMax">The max bet is</sys:String>
+    <sys:String x:Key="str_MinLimit">({0} in 1)</sys:String>
+    <!--主界面提示框-->
+    <sys:String x:Key="str_Msg_Exit">Do you want to exit the system?</sys:String>
+    <sys:String x:Key="str_Msg_Msg">Tip</sys:String>
+    <sys:String x:Key="str_Require_SelectOne">Please select at least one game</sys:String>
+    <sys:String x:Key="str_Require_BetValue">Please enter the amount of bets</sys:String>
+    <sys:String x:Key="str_Valid_NoMoney">Sorry, your credit is running low</sys:String>
+    <sys:String x:Key="str_Success_Bet">Betting success</sys:String>
+    <sys:String x:Key="str_Error_ChangeLang">Switch language error:</sys:String>
+    <sys:String x:Key="str_Error_Print">Printer is not available</sys:String>
+    <!--提现-->
+    <sys:String x:Key="str_CashTitle">Withdraw</sys:String>
+    <sys:String x:Key="str_RealName">Name：</sys:String>
+    <sys:String x:Key="str_BankCardNum">CardNumber：</sys:String>
+    <sys:String x:Key="str_BankType">BankName：</sys:String>
+    <sys:String x:Key="str_MyAccount">MyAccount</sys:String>
+    <sys:String x:Key="str_CashAmount">Amount：</sys:String>
+    <sys:String x:Key="str_CashMax">Balance</sys:String>
+    <!--提现提示框-->
+    <sys:String x:Key="str_Msg_CashSubmit">Are you sure you want to cash?</sys:String>
+    <sys:String x:Key="str_Require_Amount">Please enter the correct amount</sys:String>
+    <sys:String x:Key="str_Require_BankCardNum">Please enter the card number</sys:String>
+    <sys:String x:Key="str_Require_BankType">Please enter the bank of deposit</sys:String>
+    <sys:String x:Key="str_Require_RealName">Please enter your name</sys:String>
+    <sys:String x:Key="str_Success_Cash">success</sys:String>
+
+    <!--充值-->
+    <sys:String x:Key="str_ChargeTitle">Recharge</sys:String>
+    <sys:String x:Key="str_LoginName">Login Name：</sys:String>
+    <sys:String x:Key="str_CardNum">Card Number：</sys:String>
+    <sys:String x:Key="str_ChargeAmount">Amount：</sys:String>
+    <sys:String x:Key="str_Valid">Check</sys:String>
+    <!--充值提示框-->
+    <sys:String x:Key="str_Msg_ChargeSubmit">Are you sure you want to recharge?</sys:String>
+    <sys:String x:Key="str_Require_CardNum">Please enter the card number</sys:String>
+    <sys:String x:Key="str_Success_Charge">Recharge success</sys:String>
+    <sys:String x:Key="str_Error_UnValidCard">Invalid card: this card has expired</sys:String>
+    <sys:String x:Key="str_Error_IsUsed">Invalid card: this card has been used</sys:String>
+    <sys:String x:Key="str_Error_UnExists">Invalid card：This card does not exist</sys:String>
+
+    <!--提现账户管理-->
+    <sys:String x:Key="str_MyAccountTitle">My Account</sys:String>
+    <sys:String x:Key="str_HeaderRealName">Name</sys:String>
+    <sys:String x:Key="str_HeaderBankCardNum">Account Info</sys:String>
+    <sys:String x:Key="str_AddAccount">Add Account</sys:String>
+    <!--提现账户管理提示框-->
+    <sys:String x:Key="str_Require_DeleteOne">Please select the account you want to delete</sys:String>
+    <sys:String x:Key="str_Msg_DeleteAccount">Do you want to delete the selected account?</sys:String>
+    <sys:String x:Key="str_Success_DeleteAccount">Delete account success</sys:String>
+    <sys:String x:Key="str_Success_AddAccount">Add account success</sys:String>
+
+    <!--转账-->
+    <sys:String x:Key="str_TradeTitle">Transfer</sys:String>
+    <sys:String x:Key="str_FromLoginName">Payment account：</sys:String>
+    <sys:String x:Key="str_ToLoginName">Collection account：</sys:String>
+    <sys:String x:Key="str_TradeAmount">Amount：</sys:String>
+    <!--转账提示框-->
+    <sys:String x:Key="str_Msg_TradeSubmit">Are you sure you want to transfer the money?</sys:String>
+    <sys:String x:Key="str_Require_ToUserName">Please enter the payment account</sys:String>
+    <sys:String x:Key="str_Success_Trade">Transfer success</sys:String>
+
+    <!--修改密码-->
+    <sys:String x:Key="str_UpdateTitle">Modify Password</sys:String>
+    <sys:String x:Key="str_OldPasswd">original password：</sys:String>
+    <sys:String x:Key="str_NewPasswd">new password：</sys:String>
+    <sys:String x:Key="str_NewPasswd1">confirmation password：</sys:String>
+    <!--修改密码提示框-->
+    <sys:String x:Key="str_Msg_UpdatePasswordSubmit">Are you sure you want to change your password?</sys:String>
+    <sys:String x:Key="str_Require_OldPasswd">Please enter the original password</sys:String>
+    <sys:String x:Key="str_Require_NewPasswd">Please enter the password</sys:String>
+    <sys:String x:Key="str_Require_NewPasswd1">Please enter the confirmation password</sys:String>
+    <sys:String x:Key="str_Require_NotSame">The confirmation password is not identical</sys:String>
+    <sys:String x:Key="str_Success_UpdatePassword">success</sys:String>
+
+    <!--交易状况-->
+    <sys:String x:Key="str_SettleTitle">Open Bets</sys:String>
+    <sys:String x:Key="str_Date">Date</sys:String>
+    <sys:String x:Key="str_HeaderTradeNo">BET DETAIL</sys:String>
+    <sys:String x:Key="str_HeaderBetType">BET TYPE</sys:String>
+    <sys:String x:Key="str_HeaderBetContent">SELECTION</sys:String>
+    <sys:String x:Key="str_HeaderBetValue">STAKE AMOUNT</sys:String>
+    <sys:String x:Key="str_HeaderCanBetBonus">Est.Win</sys:String>
+    <sys:String x:Key="str_HeaderBetStatus">STATUS</sys:String>
+    <sys:String x:Key="str_BetPageSum">Total</sys:String>
+    <sys:String x:Key="str_Require_Date">Please select a Date</sys:String>
+    <!--账户历史-->
+    <sys:String x:Key="str_HistoryBetTitle">STATEMENT</sys:String>
+    <sys:String x:Key="str_HeaderValidValue">EFFECTIVE STAKE</sys:String>
+    <sys:String x:Key="str_HeaderBetBonus">WIN / LOSS</sys:String>
+    <sys:String x:Key="str_Sum">Total</sys:String>
+
+    <!--兑奖-->
+    <sys:String x:Key="str_UserBetGetTitle">Prize</sys:String>
+    <sys:String x:Key="str_Msg_UserBetGet">Awarding successful。Winning amount is {0}</sys:String>
+    <sys:String x:Key="str_Close">Close</sys:String>
+
+    <!--安全密码-->
+    <sys:String x:Key="str_SecretCode">Security password：</sys:String>
+    <sys:String x:Key="str_SecretCodeTitle">Security password</sys:String>
+    <sys:String x:Key="str_OldSecretCode">Original security password：</sys:String>
+    <sys:String x:Key="str_NewSecretCode">new security password：</sys:String>
+    <sys:String x:Key="str_NewSecretCode1">confirmation password：</sys:String>
+    <sys:String x:Key="str_Require_SecretCode">Please enter the security password</sys:String>
+</ResourceDictionary>

@@ -1,0 +1,37 @@
+﻿@using FT.Utility.CacheHelper
+@using FT.Utility.Helper
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <link href="~/Areas/PlatAdmin/Content/themes/bootstrap/easyui.css" rel="stylesheet" />
+    <link href="~/Areas/PlatAdmin/Content/themes/icon.css" rel="stylesheet" />
+    <link href="~/Areas/PlatAdmin/Content/custom.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Areas/PlatAdmin/Scripts/easyui/jquery.easyui.min.js"></script>
+    @{
+        var language = CookieHelper.GetCookieValue(Constant.PlatAdminLanguage);
+        if (language.Equals("en"))
+        {
+            @Html.Raw("<script src=\"/Areas/PlatAdmin/Scripts/easyui/easyui-lang-en.js\"></script>")
+        }
+        else if (language.Equals("cn"))
+        {
+            @Html.Raw("<script src=\"/Areas/PlatAdmin/Scripts/easyui/easyui-lang-zh_CN.js\"></script>")
+        }
+        else
+        {
+            @Html.Raw("<script src=\"/Areas/PlatAdmin/Scripts/easyui/easyui-lang-pt_BR.js\"></script>")
+        }
+    }
+    <script src="~/Areas/PlatAdmin/Scripts/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
+</head>
+<body>
+    @RenderBody()
+    @RenderSection("scripts", required: false)
+</body>
+</html>

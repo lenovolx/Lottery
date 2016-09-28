@@ -1,0 +1,18 @@
+﻿#fm{margin:0;padding:10px 30px}
+.ftitle{font-size:14px;font-weight:bold;padding:5px 0;margin-bottom:10px;border-bottom:1px solid #ccc}
+.fitem{margin-bottom:5px}
+.fitem label{display:inline-block;width:80px}
+.fitem input{width:160px}
+.search-div{width:100%}
+.webuploader-container{position:relative}
+.webuploader-element-invisible{position:absolute !important;clip:rect(1px 1px 1px 1px);clip:rect(1px,1px,1px,1px)}
+.webuploader-pick{position:relative;display:inline-block;width:65px;line-height:20px;height:20px;border:1px solid #e1e1e1;cursor:pointer;background:#fff;color:#333;text-align:center;overflow:hidden;zoom:1;*display:inline}
+.webuploader-pick-hover{background:#fafafa}
+.webuploader-pick-disable{opacity:0.6;pointer-events:none}
+.upload-box{position:relative;display:inline-block;height:22px;vertical-align:middle;zoom:1;*display:inline}
+.upload-box .upload-btn{display:inline-block;height:22px;zoom:1;*display:inline}
+.upload-box .upload-progress{position:absolute;top:0;left:0;padding:2px 5px;width:115px;height:16px;border:1px solid #d7d7d7;background:#fff;overflow:hidden}
+.upload-box .upload-progress .txt{display:block;padding-right:10px;font-weight:normal;font-style:normal;font-size:11px;line-height:18px;height:18px;text-overflow:ellipsis;overflow:hidden}
+.upload-box .upload-progress .bar{position:relative;display:block;width:112px;height:4px;border:1px solid #1da76b}
+.upload-box .upload-progress .bar b{display:block;width:0%;height:4px;font-weight:normal;text-indent:-99em;background:#28B779;overflow:hidden}
+.upload-box .upload-progress .close{position:absolute;display:block;top:1px;right:1px;width:14px;height:14px;text-indent:-99em;background:url(images/skin_icons.png) -56px -196px no-repeat;cursor:pointer;overflow:hidden}

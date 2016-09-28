@@ -1,0 +1,157 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar"></table>
+    </div>
+</div>
+
+<div id="toolbar" style="padding: 2px 5px;">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+    <div class="search-div">
+        <label for="LeagueName" class="LeagueName">联赛名称：</label>
+        <input id="LeagueName" name="LeagueName" class="easyui-textbox" panelheight="auto" style="width: 120px" />
+        <label for="IsBan" class="IsBan">是否黑名单：</label>
+        <input id="IsBan" name="IsBan" data-options="
+				method: 'get',
+				panelWidth: 100,
+				panelHeight: 'auto'" style="width: 100px;" />
+        <a href="javascript:void(0)" id="btn_Search" class="easyui-linkbutton" iconcls="icon-search">查询</a>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/easyui/easyui.ext.linkbutton.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script language="javascript">
+        var MenuId = '@(ViewBag.MenuId)';
+        var params = {};
+        $(function() {
+            $('#btn_MatchBlacklist').linkbutton("disable");
+            $('#btn_SetLeagueBlack').linkbutton("disable");
+            blackInfo.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+            blackInfo.initGrid(params);
+            $("#btn_Search").on("click", function() {
+                blackInfo.refushGrid(params);
+            });
+            $('#IsBan').combobox({
+                url: '/PlatAdmin/System/ComBoxYesNoType',
+                valueField: 'Id',
+                textField: 'Name',
+                editable: false
+            });
+            $("#btn_MatchBlacklist").on("click", function() {
+                blackInfo.blackInfo(0);
+            });
+            $("#btn_SetLeagueBlack").on("click", function() {
+                blackInfo.blackInfo(1);
+            });
+        });
+        var blackInfo = blackInfo || {};
+        (function() {
+            blackInfo.loadLanguage = function(language) {
+                jQuery.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/admin/',
+                    mode: 'map',
+                    language: language,
+                    callback: function() {
+                        $("#btn_Search").children("span:first").children("span:first").text($.i18n.prop('common_search_text'));
+                        $(".LeagueName").text($.i18n.prop('match_leaguename_title'));
+                    }
+                });
+            };
+            //初始化
+            blackInfo.initGrid = function(_params) {
+                $('#dg').datagrid({
+                    title: "",
+                    url: "/PlatAdmin/Match/BlackLeague",
+                    width: "100%",
+                    method: 'post',
+                    height: "100%",
+                    fitColumns: true,
+                    sortName: 'LastOperateDate',
+                    sortOrder: 'asc',
+                    idField: 'Id',
+                    pageSize: 50,
+                    pagination: true,
+                    striped: true, //奇偶行是否区分
+                    singleSelect: true, //单选模式
+                    rownumbers: true, //行号
+                    checkOnSelect: true,
+                    selectOnCheck: true,
+                    columns: [
+                        [
+                            { field: 'Id', align: 'center', width: 10, title: $.i18n.prop('match_id_title') },
+                            { field: 'LeagueName', width: 30, align: 'left', sortable: true, title: $.i18n.prop('match_leaguename_title') },
+                            { field: 'DataSource', width: 20, align: 'center', sortable: true, title: $.i18n.prop('match_leaguename_title') },
+                            { field: 'OperateUserId', width: 15, align: 'center', sortable: true, title: $.i18n.prop('league_balckoperater_title') },
+                            { field: 'IsBan', width: 15, align: 'center', sortable: true, title: $.i18n.prop('league_blackisban_title') },
+                            { field: 'LastOperateDate', width: 20, align: 'center', formatter: formatDateBoxFull, sortable: true, title: $.i18n.prop('league_blackoperatetime_title') }
+                        ]
+                    ],
+                    onClickRow: function(index, row) {
+                        if (row.IsBanNum === 1) {
+                            $('#btn_MatchBlacklist').linkbutton("enable");
+                            $('#btn_SetLeagueBlack').linkbutton("disable");
+                        } else {
+                            $('#btn_MatchBlacklist').linkbutton("disable");
+                            $('#btn_SetLeagueBlack').linkbutton("enable");
+                        }
+                    },
+                    queryParams: _params
+                });
+            };
+            //刷新
+            blackInfo.refushGrid = function() {
+                params.leagueName = $("#LeagueName").textbox("getValue");
+                params.isBan = $("#IsBan").combobox("getValue");
+                $("#dg").datagrid('reload', params);
+            };
+            //黑名单
+            blackInfo.blackInfo = function(type) {
+                var matchids = [];
+                var list = getSelectionsRows("dg");
+                if (list != null && list.length > 0) {
+                    var str = type == 0 ? $.i18n.prop('league_removeblack_title') : $.i18n.prop('league_setblack_title');
+                    $.each(list, function(i, v) {
+                        matchids.push(v.Id);
+                    });
+                    if (matchids.length > 0) {
+                        $.messager.confirm($.i18n.prop('common_systips_text'), str, function(r) {
+                            if (r) {
+                                $.post('/PlatAdmin/Match/LeagueRemoveBlack', {
+                                    matchids: matchids.join(','),
+                                    type: type
+                                }, function(result) {
+                                    if (result.code === 0) {
+                                        $('#dg').datagrid('reload');
+                                        $.messager.show({
+                                            title: $.i18n.prop('common_systips_text'),
+                                            msg: $.i18n.prop('common_success_text')
+                                        });
+                                    } else
+                                        $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_failure_text'));
+                                }, 'json').complete(function() {
+                                    $('#dg').datagrid('clearSelections');
+                                    $('#btn_MatchBlacklist').linkbutton("disable");
+                                    $('#btn_SetLeagueBlack').linkbutton("disable");
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    $.messager.alert($.i18n.prop('common_systips_text'), $.i18n.prop('common_selectdata_text'));
+                    return false;
+                }
+            };
+        })();
+    </script>
+}

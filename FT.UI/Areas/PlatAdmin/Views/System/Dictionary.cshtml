@@ -1,0 +1,194 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+@section styles
+{
+    <link href="~/Areas/PlatAdmin/Content/themes/bootstrap/switchbutton.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.ext.linkbutton.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table id="tg" title="" style="width:100%;height:100%;" toolbar="#toolbar"></table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<div id="dlg" class="easyui-dialog" style="width:400px;height:320px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" novalidate>
+        <div class="fitem">
+            <label>根节点:</label>
+            <input id="selParent" name="selParent" data-options="
+				method: 'get',
+				panelWidth: 150,
+				panelHeight: 'auto'" required="true">
+            <input id="ParentId" name="ParentId" type="hidden" value="0">
+        </div>
+        <div class="fitem">
+            <label>中文名称:</label>
+            <input id="DictionaryName" name="DictionaryName" class="easyui-textbox" required="true">
+            <input id="Id" name="Id" type="hidden">
+        </div>
+        <div class="fitem">
+            <label>英文名称:</label>
+            <input id="DictionaryNameEn" name="DictionaryNameEn" class="easyui-textbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>葡文名称:</label>
+            <input id="DictionaryNamePt" name="DictionaryNamePt" class="easyui-textbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>字典值:</label>
+            <input id="DictionaryValue" name="DictionaryValue" class="easyui-numberbox" data-options="precision:2" value="0" required="true">
+        </div>
+        <div class="fitem">
+            <label>排序:</label>
+            <input id="Sort" name="Sort" class="easyui-numberspinner" value="0" data-options="increment:1" required="true" />
+        </div>
+        <div class="fitem">
+            <label>状态:</label>
+            <input id="SwtIsLock" name="SwtIsLock" class="easyui-switchbutton" data-options="onText:'冻结',offText:'启用',height:20">
+            <input id="IsLock" name="IsLock" type="hidden" value="0">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="menu.saveMenu(this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlg').dialog('close');" style="width:90px">取消</a>
+</div>
+<script type="text/javascript">
+    var url;
+    $(function () {
+        menu.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+        $('#tg').treegrid({
+            url: '/PlatAdmin/System/DictionaryGrid/0',
+            method: 'post',
+            idField: 'Id',
+            treeField: 'Name',
+            rownumbers: true,
+            parentField: '_parentId',
+            fit: true,
+            fitColumns: true,
+            border: true,
+            columns: [[
+                        { field: 'Id', width: 10, title: $.i18n.prop('menu_id_title') },
+                        { field: 'Name', width: 50, title: $.i18n.prop('menu_name_title') },
+                        { field: 'Value', width: 50, title: $.i18n.prop('menu_name_title') },
+                        { field: 'Sort', width: 20, title: $.i18n.prop('menu_sortnum_title') },
+                        { field: 'Lock', width: 50, title: $.i18n.prop('menu_name_title') }
+            ]],
+            onBeforeExpand: function (row) {
+                var url = '/PlatAdmin/System/DictionaryGrid/' + row.Id;
+                $("#tg").treegrid("options").url = url;
+                return true;
+            },
+            onClickRow: function (row) {
+                $('#badd').linkbutton("enable");
+                $('#bedit').linkbutton("enable");
+                if ($('#tg').treegrid('isLeaf', row.Id)) {
+                    $('#bdel').linkbutton("enable");
+                } else { $('#bdel').linkbutton("disable"); }
+            }
+        });
+        $('#selParent').combobox({
+            url: '/PlatAdmin/System/ComDictionaryType',
+            valueField: 'Id',
+            textField: 'Name',
+            editable: false,
+            onSelect: function (pars) {
+                $("#ParentId").val(pars.Id);
+            }
+        });
+        $("#btn_AddDictionary").on("click", function () {
+            $('#fm').form('clear');
+            $("#SortNum").textbox('setValue', "0");
+            $('#SwtIsLock').switchbutton({
+                checked: false,
+                onChange: function (checked) {
+                    if (checked) {
+                        $('#IsLock').val(1);
+                        return;
+                    }
+                    if (!checked) {
+                        $('#IsLock').val(0);
+                    }
+                }
+            });
+            $('#dlg').dialog('open').dialog('setTitle', '添加模块');
+            url = '/PlatAdmin/System/CreateDictionary/';
+        });
+        $("#btn_EditDictionary").on("click", function () {
+            var node = $('#tg').treegrid('getSelected');
+            if (node) {
+                $('#dlg').dialog('open').dialog('setTitle', '编辑字典');
+                $('#fm').form('load', node);
+                $("#selParent").combobox('setValue', node._parentId);
+                $("#Id").val(node.Id);
+                $("#ParentId").val(node._parentId);
+                $("#IsLock").val(node.IsLock);
+                $('#SwtIsLock').switchbutton({
+                    checked: node.IsLock===1,
+                    onChange: function (checked) {
+                        if (checked) {
+                            $('#IsLock').val(1);
+                            return;
+                        }
+                        if (!checked) {
+                            $('#IsLock').val(0);
+                        }
+                    }
+                });
+                url = '/PlatAdmin/System/EditDictionary/';
+            }
+        });
+    });
+    var menu = menu || {};
+    (function () {
+        menu.loadLanguage = function (language) {
+            jQuery.i18n.properties({
+                name: 'language',
+                path: '/i18n/admin/',
+                mode: 'map',
+                language: language
+            });
+        };
+        menu.saveMenu = function (obj) {
+            $(obj).linkbutton("disable");
+            setTimeout(function () {
+                $(obj).linkbutton("enable");
+            }, 2000);
+            $('#fm').form('submit', {
+                url: url,
+                onSubmit: function () {
+                    return $(this).form('validate');
+                },
+                success: function (result) {
+                    result = eval('(' + result + ')');
+                    if (result.code !== 0) {
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.errors
+                        });
+                    } else {
+                        $('#dlg').dialog('close');
+                        $('#tg').treegrid("reload", 0);
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: '操作成功'
+                        });
+                    }
+                }
+            });
+        };
+    })();
+</script>

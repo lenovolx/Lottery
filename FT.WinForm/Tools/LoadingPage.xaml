@@ -1,0 +1,18 @@
+﻿<Window x:Class="FT.WinForm.LoadingPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="LoadingPage"  Height="100" Width="550" WindowStartupLocation="CenterScreen" WindowStyle="None" 
+        Background="{x:Null}"  BorderBrush="#FF848484" BorderThickness="1" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True" Foreground="#FF464646" >
+    <Grid>
+        <Grid>
+            <Rectangle Fill="#FFE2E2E2" RadiusX="3" RadiusY="3" Margin="0" VerticalAlignment="Top" Height="62">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="9" Opacity="0.6" ShadowDepth="1"/>
+                </Rectangle.Effect>
+            </Rectangle>
+            <Rectangle Fill="White" RadiusX="3" RadiusY="3" Margin="60,21,70,26" Height="48"/>
+            <TextBlock Name="TebMessage" Margin="30,0,0,0" Text="数据正在处理中........" TextWrapping="Wrap" FontSize="14.667"/>
+            <!--<Image HorizontalAlignment="Left" Width="32" Source="/Images/cup.png" Stretch="Fill" Margin="78,30.5,0,0"/>-->
+        </Grid>
+    </Grid>
+</Window>

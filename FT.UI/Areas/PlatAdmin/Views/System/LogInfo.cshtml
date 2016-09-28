@@ -1,0 +1,129 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar">
+            <thead>
+                <tr>
+                    <th data-options="field:'chk',align:'center',width:10,checkbox:true"></th>
+                    <th data-options="field:'LogTime',width:30,align:'center',sortable: true,formatter:formatDateBoxFull">操作日期</th>
+                    <th data-options="field:'LogUser',width:30,align:'center',sortable: true">操作人</th>
+                    <th data-options="field:'LogUserIp',width:20,align:'center',sortable: true">操作IP</th>
+                    <th data-options="field:'LogType',width:25,align:'center',sortable: true">操作类型</th>
+                    <th data-options="field:'LogController',width:25,align:'center',sortable: true">Controller</th>
+                    <th data-options="field:'LogAction',width:25,align:'center',sortable: true">Action</th>
+                    <th data-options="field:'LogOperate',width:100,align:'left',sortable: true">操作记录</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+    <div class="biak">
+        <span>操作日期:</span>
+        <input id="LogStartDate" name="LogStartDate" type="text" style="width: 120px;">
+        <span>至</span>
+        <input id="LogEndDate" name="LogEndDate" type="text" style="width: 120px;">
+        <span>操作人:</span>
+        <input type="text" id="LogUser" name="LogUser" class="easyui-textbox" style="width: 120px;">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="log.searchLog()" id="Search" iconcls="icon-search">查询</a>
+    </div>
+</div>
+<script language="javascript">
+    var params = { MenuId: @ViewBag.MenuId };
+    $(function () {
+        $('#dg').datagrid({
+            title: "",
+            url: "/PlatAdmin/System/LogGrid",
+            width: "100%",
+            methord: 'post',
+            height: "100%",
+            fitColumns: true,
+            sortName: 'LogTime',
+            sortOrder: 'desc',
+            idField: 'Id',
+            pageSize: 50,
+            pagination: true,
+            striped: true, //奇偶行是否区分
+            singleSelect: false,//单选模式
+            rownumbers: true,//行号
+            checkOnSelect: true,
+            selectOnCheck: true,
+            queryParams: params
+        });
+        $("#btn_DelLog").on("click",function() {
+            log.delLoginfo();
+        });
+        $("#LogStartDate").datebox({
+            formatter: function (date) {
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                return y + "-" + (m < 10 ? ("0" + m) : m) + "-" + (d < 10 ? ("0" + d) : d) + "";
+            }
+        });
+        $('#LogEndDate').datebox({
+            formatter: function (date) {
+                var y = date.getFullYear();
+                var m = date.getMonth() + 1;
+                var d = date.getDate();
+                return y + "-" + (m < 10 ? ("0" + m) : m) + "-" + (d < 10 ? ("0" + d) : d) + "";
+            },
+            onSelect: function (date) {
+                var end = $("#LogEndDate").datebox('getValue');
+                var start = $("#LogStartDate").datebox('getValue');
+                if (end) {
+                    if (start > end) { $("#LogEndDate").datebox('setValue', start); }
+                }
+            }
+        });
+    });
+    var log = log || {};
+    (function() {
+        log.delLoginfo = function() {
+            var nodeIds = getCheckedIds("dg");
+            if (nodeIds) {
+                $.messager.confirm('系统提示', '确定要删除选中记录吗?', function(r) {
+                    if (r) {
+                        $.post('/PlatAdmin/System/DelLogInfo', { ids: nodeIds }, function (result) {
+                            if (result.code === 0) {
+                                $('#dg').datagrid('reload');
+                                $.messager.show({
+                                    title: '系统提示',
+                                    msg: '操作成功'
+                                });
+                            } else {
+                                $.messager.show({
+                                    title: '系统提示',
+                                    msg: result.errors
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            } else
+                $.messager.show({
+                    title: '系统提示',
+                    msg: "未选择操作数据"
+                });
+        };
+        log.searchLog = function() {
+            params.logStartDate = $("#LogStartDate").datebox("getValue");
+            params.logEndDate = $("#LogEndDate").datebox("getValue");
+            params.logUser = $("#LogUser").val();
+            $('#dg').datagrid('load', params);
+        };
+    })();
+</script>
+

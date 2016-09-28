@@ -1,0 +1,269 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "交易状况";
+}
+<div id="deallist" class="page">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/m/user/ucenter">
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class="title">@ViewBag.Title</h1>
+        <a class="button button-link button-nav pull-right langue-change">
+            <span class="span-search" onclick="deal.openSearchBar('.searchExist');">搜寻</span>
+        </a>
+    </header>
+    <div class="content infinite-scroll infinite-scroll-bottom" data-distance="100">
+        <div class="list-block media-list">
+            <div class="row head-row">
+                <div class="col-40 text-center"><span class="head0">日期/单号</span> </div>
+                <div class="col-20 text-center"><span class="head1">投注金额</span> </div>
+                <div class="col-20 text-center"><span class="head2">可赢金额</span> </div>
+                <div class="col-20 text-center"><span class="head3">注单状态</span> </div>
+            </div>
+            <!--搜索条件-->
+            <div class="searchExist openbox">
+                <span>时间</span>
+                <span><input type="text" placeholder="开始时间" class="sdate" /></span>
+                <span>-</span>
+                <span><input type="text" placeholder="结束时间" class="edate" /></span>
+                <span><a href="javascript:void(0);" class="button button-big button-fill button-success btn-search">搜索</a></span>
+            </div>
+            <!--/搜索条件-->
+            <div class="list-container">
+
+            </div>
+        </div>
+        <!-- 加载提示符 -->
+        <div class="infinite-scroll-preloader">
+            <div class="preloader"></div>
+        </div>
+    </div>
+</div>
+<!--交易历史-->
+<script type="text/html" id="record_tpl">
+    {{each bulid.rows as item}}
+    <div class="row data-row buttons-tab" onclick="deal.openSearchBar(this);">
+        <div class="col-40 text-center">
+            <i style="font-size: .75rem;">{{#item.OrderDate}}</i><i>{{#item.OrderId}}</i>
+        </div>
+        <div class="col-20 text-center"><span>{{item.BetValue.toFixed(2)}}</span> </div>
+        <div class="col-20 text-center"><span>{{item.AchieveAmount.toFixed(2)}}</span> </div>
+        <div class="col-20 text-center"><span class="icon icon-down">{{status}}</span></div>
+    </div>
+    {{each item.Detail as items}}
+    <div class="row data-row-show">
+        <div class="sai-name"><span>{{#items.LeagueName}}</span> </div>
+        <div class="sai-country"><span>{{#items.TeamVs}}</span></div>
+        <div class="sai-select green"><em>[{{#items.BetTypeName}}]</em>&nbsp;&nbsp;<span>{{#items.BetDescription}}</span> </div>
+        {{if item.Detail.length>1}}
+        <span class="sai-more"><a class="button button-big button-fill button-warning" onclick="deal.showMoreDealinfo('{{item.OrderId}}');">{{more}}</a></span>
+        {{/if}}
+    </div>
+    {{/each}}
+    {{/each}}
+</script>
+@section style
+{
+    <link href="~/Areas/Mobile/Content/css/ft.history.css" rel="stylesheet" />
+}
+@section script
+{
+    <script src="~/Areas/Mobile/Scripts/sm-extend.js"></script>
+    <script src="~/Areas/Mobile/Scripts/template.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.template.helper.js"></script>
+    <script type="text/javascript">
+        var pageseting = {
+            page: 1,
+            size: 15,
+            maxpage: 1,
+            loading: false,
+            sdate: '',
+            edate: ''
+        };
+        var maxDate = new Date(new Date().getTime()).format('yyyy-mm-dd');
+        var minDate = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).format('yyyy-mm-dd');
+        $(function() {
+            "use strict";
+            $(document).on("pageInit", "#deallist", function(e, id, page) {
+                deal.loadLanguage();
+                deal.loadUserHistory(pageseting.page);
+                $(page).on('infinite', '.infinite-scroll-bottom', function() {
+                    if (pageseting.loading) return;
+                    pageseting.loading = true;
+                    setTimeout(function() {
+                        pageseting.loading = false;
+                        if (pageseting.page > pageseting.maxpage) {
+                            $.detachInfiniteScroll($('.infinite-scroll'));
+                            $('.infinite-scroll-preloader').remove();
+                            return;
+                        } else {
+                            pageseting.page = pageseting.page + 1;
+                            deal.loadUserHistory(pageseting.page);
+                            $.refreshScroller();
+                        }
+                    }, 500);
+                });                
+                $(".sdate").calendar({
+                    inputReadOnly: true,
+                    dateFormat: 'yyyy-mm-dd',
+                    maxDate: maxDate,
+                    minDate:minDate,
+                    onChange: function(p, values, displayValues) {
+                        pageseting.sdate = displayValues[0];
+                    },
+                    onClose: function(p) {
+
+                    }
+                });
+                $(".edate").calendar({
+                    inputReadOnly: true,
+                    dateFormat: 'yyyy-mm-dd',
+                    maxDate: maxDate,
+                    minDate: minDate,
+                    onChange: function (p, values, displayValues) {
+                        pageseting.edate = displayValues[0];
+                    }
+                });
+            });
+            $.init();
+            $(".btn-search").on("click", function () {
+                deal.openSearchBar('.searchExist');
+                $(".list-container").html("");
+                deal.loadUserHistory(1);
+            });
+        });
+        var deal = deal || {};
+        (function() {
+            deal.loadLanguage = function() {
+                Zepto.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/mobile/',
+                    mode: 'map',
+                    language: app.siteConfig.sitelanguage,
+                    callback: function() {
+                        $(".title").html($.i18n.prop('deal_head_title'));
+                        $(".btn-search").text($.i18n.prop('common_search_text'));
+                        $(".span-search").text($.i18n.prop('common_search_text'));
+                        $(".head0").text($.i18n.prop('deal_datebet_title'));
+                        $(".head1").text($.i18n.prop('deal_betamount_title'));
+                        $(".head2").text($.i18n.prop('deal_canwinamount_title'));
+                        $(".head3").text($.i18n.prop('deal_status_title'));
+                    }
+                });
+            };
+            deal.loadUserHistory = function (page) {
+                var params = {
+                    "ticket": app.siteConfig.siteuserticket,
+                    "userid": app.siteConfig.siteuserid,
+                    "page": page,
+                    "size": pageseting.size,
+                    "lang": app.siteConfig.sitelanguage
+                };
+                if (pageseting.sdate !== '' && pageseting.edate !== '') {
+                    params.sdate = pageseting.sdate;
+                    params.edate = pageseting.edate;
+                }
+                params.sign = app.createParamSign(params);
+                $.showIndicator();
+                $.ajax({
+                    type: 'POST',
+                    url: app.siteConfig.userbetrecord,
+                    data: params,
+                    dataType: 'json',
+                    context: $('body'),
+                    success: function(data) {
+                        if (data.code === 0 && data.data != null) {
+                            pageseting.total = data.total;
+                            pageseting.maxpage = Math.ceil(data.total / pageseting.size);
+                            if (pageseting.page >= pageseting.maxpage) {
+                                $.detachInfiniteScroll($('.infinite-scroll'));
+                                $('.infinite-scroll-preloader').remove();
+                            }
+                            var htmldata = { bulid: data.data, more: $.i18n.prop('common_more_text'), status: $.i18n.prop('deal_settle_title') };
+                            var html = template('record_tpl', htmldata);
+                            $(".list-container").append(html);
+                        } else if (data.code === 98 || data.code === 99) {
+                            app.clearLogin(data.errors);
+                        } else {
+                            $.toast(data.message || data.errors);
+                        }
+                    },
+                    error: function(xhr, type) {
+                    },
+                    complete: function(xhr) {
+                        $.hideIndicator();
+                    }
+                });
+            };
+            deal.openSearchBar = function(obj) {
+                if ($(obj).hasClass("zhover")) {
+                    $(obj).removeClass("zhover");
+                } else {
+                    $(obj).addClass("zhover");
+                }
+            };
+            deal.showMoreDealinfo = function(orderid) {
+                var params = {
+                    "ticket": app.siteConfig.siteuserticket,
+                    "userid": app.siteConfig.siteuserid,
+                    "lang": app.siteConfig.sitelanguage,
+                    "betid": orderid
+                };
+                params.sign = app.createParamSign(params);
+                $.showIndicator();
+                $.ajax({
+                    type: 'POST',
+                    url: app.siteConfig.betcontent,
+                    data: params,
+                    dataType: 'json',
+                    context: $('body'),
+                    success: function(data) {
+                        if (data.code === 0 && data.data != null) {
+                            var length = data.data.length;
+                            var html = [];
+                            html.push("<div class=\"cardli_box\">");
+                            html.push("<ul class=\"cardli-content\">");
+                            html.push("{{each data as item}}");
+                            html.push("<li>");
+                            html.push("<div class=\"row data-row-show\">");
+                            html.push("<div class=\"sai-name\"><span>{{#item.LeagueName}}</span> </div>");
+                            html.push("<div class=\"sai-country\"><span>{{#item.TeamVs}}</span></div>");
+                            html.push("<div class=\"sai-select cheng\"><span>{{#item.BetDescription}}</span> </div>");
+                            html.push("</div>");
+                            html.push("</li>");
+                            html.push("{{/each}}");
+                            html.push("</ul>");
+                            html.push("</div>");
+                            var render = template.compile(html.join(""));
+                            var renderhtml = render(data);
+                            $.modal({
+                                text: renderhtml,
+                                extraClass: length > 4 ? 'modal-height' : '',
+                                buttons: [
+                                    {
+                                        text: $.i18n.prop('common_cacel_text'),
+                                        bold: true,
+                                        onClick: function() {
+                                        }
+                                    }
+                                ]
+                            });
+                        } else if (data.code === 98 || data.code === 99) {
+                            app.clearLogin(data.errors);
+                        } else {
+                            $.toast(data.message || data.errors);
+                        }
+                    },
+                    error: function(xhr, type) {
+                    },
+                    complete: function(xhr) {
+                        $.hideIndicator();
+                    }
+                });
+            };
+        })();
+    </script>
+}
+

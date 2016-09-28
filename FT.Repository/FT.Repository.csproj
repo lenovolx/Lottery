@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.Extended">
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminRepository.cs" />
+    <Compile Include="AmountWaterRepository.cs" />
+    <Compile Include="BaseRepository.cs" />
+    <Compile Include="CardGroupRepository.cs" />
+    <Compile Include="CardRepository.cs" />
+    <Compile Include="CashRecordRepository.cs" />
+    <Compile Include="CookieOperate.cs" />
+    <Compile Include="DictionaryRepository.cs" />
+    <Compile Include="FtContext.cs" />
+    <Compile Include="LogInfoRepository.cs" />
+    <Compile Include="MatchBlackListRepository.cs" />
+    <Compile Include="MatchInfoRepository.cs" />
+    <Compile Include="MatchUserBetContentRepository.cs" />
+    <Compile Include="MatchUserBetRepository.cs" />
+    <Compile Include="MenuRepository.cs" />
+    <Compile Include="MessageRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleRepository.cs" />
+    <Compile Include="SiteAdvRepository.cs" />
+    <Compile Include="SystemSettingRepository.cs" />
+    <Compile Include="SystemTaskRepository.cs" />
+    <Compile Include="TradeRecordRepository.cs" />
+    <Compile Include="UserAccountRepository.cs" />
+    <Compile Include="UserBankRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FT.Entities\FT.Entities.csproj">
+      <Project>{8bf650af-5912-4bb0-8ad8-db02da50608d}</Project>
+      <Name>FT.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.IRepository\FT.IRepository.csproj">
+      <Project>{54eef4e9-790b-463e-b7cc-f5b92903b729}</Project>
+      <Name>FT.IRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Model\FT.Model.csproj">
+      <Project>{31e4e000-53d9-4715-abda-965457ee75ee}</Project>
+      <Name>FT.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Plugins\FT.Plugin.Cache\FT.Plugin.Cache.csproj">
+      <Project>{19669c00-ec17-4853-93c5-e01f8aaeb617}</Project>
+      <Name>FT.Plugin.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Utility\FT.Utility.csproj">
+      <Project>{f7b67599-88cc-4bde-b5d6-03f6ff60ec0c}</Project>
+      <Name>FT.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

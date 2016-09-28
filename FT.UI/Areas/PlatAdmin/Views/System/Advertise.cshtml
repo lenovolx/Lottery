@@ -1,0 +1,238 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table id="dg" title="" style="width:100%;height:100%;" toolbar="#toolbar"></table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<div id="dlg" class="easyui-dialog" style="width:500px;height:230px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" enctype="multipart/form-data" novalidate>
+        <div class="fitem">
+            <label>标题:</label>
+            <input id="AdvTitle" name="AdvTitle" class="easyui-textbox" required="true">
+            <input id="Id" name="Id" type="hidden">
+        </div>
+        <div class="fitem">
+            <label>展示:</label>
+            <input id="TypePlat" name="TypePlat" data-options="
+				method: 'get',
+				panelWidth: 150,
+				panelHeight: 'auto'" required="true" />
+            <input type="hidden" id="Type" name="Type" value="" />
+        </div>
+        <div class="fitem">
+            <label>图片:</label>
+            <input name="AdvImg" id="AdvImg" class="easyui-textbox upload-path" data-options="required:true,readonly:true" style="width: 200px"/>
+            <div class="upload-box upload-img"></div>
+        </div>
+        <div class="fitem">
+            <label>排序:</label>
+            <input id="Sort" name="Sort" class="easyui-numberspinner" value="0" data-options="increment:1" required="true" />
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="adv.saveForm('fm', 'dlg', this)" style="width: 90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlg').dialog('close');" style="width: 90px">取消</a>
+</div>
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/easyui/easyui.ext.linkbutton.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/webuploader/webuploader.min.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.uploader.js"></script>
+    <script language="javascript">
+        var url = "";
+        var isLoadUploadify = false;
+        $(function() {
+            $('#btn_AdvEnable').linkbutton("disable");
+            $('#btn_AdvDisable').linkbutton("disable");
+            adv.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+            $('#dg').datagrid({
+                title: "",
+                url: "/PlatAdmin/System/AdvGrid",
+                width: "100%",
+                method: 'post',
+                height: "100%",
+                fitColumns: true,
+                sortName: 'Sort',
+                sortOrder: 'desc',
+                idField: 'Id',
+                pageSize: 50,
+                pagination: true,
+                striped: true,
+                singleSelect: true,
+                rownumbers: true,
+                checkOnSelect: true,
+                selectOnCheck: true,
+                columns: [
+                    [
+                        { field: 'chk', align: 'center', width: 10, checkbox: true },
+                        { field: 'Id', align: 'center', width: 20, sortable: true, title: $.i18n.prop('admin_id_title') },
+                        { field: 'AdvTitle', width: 30, align: 'center', sortable: true, title: $.i18n.prop('adv_name_title') },
+                        { field: 'Type', width: 20, align: 'center', sortable: true, title: $.i18n.prop('adv_platfor_title') },
+                        { field: 'Sort', width: 20, align: 'center', sortable: true, title: $.i18n.prop('adv_sort_title') },
+                        { field: 'IsShow', width: 20, align: 'center', sortable: true, title: $.i18n.prop('adv_isshow_title') }
+                    ]
+                ],
+                onClickRow: function(index, row) {
+                    if (row.IsShowNum === 1) {
+                        $('#btn_AdvEnable').linkbutton("disable");
+                        $('#btn_AdvDisable').linkbutton("enable");
+                    } else {
+                        $('#btn_AdvEnable').linkbutton("enable");
+                        $('#btn_AdvDisable').linkbutton("disable");
+                    }
+                }
+            });
+            $('#TypePlat').combobox({
+                url: '/PlatAdmin/System/ComBoxPlatFromType',
+                valueField: 'Id',
+                textField: 'Name',
+                editable: false,
+                onSelect: function(pars) {
+                    $("#Type").val(pars.Id);
+                }
+            });
+            $("#btn_AddAdv").on("click", function() {
+                adv.addAdv();
+            });
+            $("#btn_EditAdv").on("click", function() {
+                adv.editAdv();
+            });
+            $("#btn_DelAdv").on("click", function() {
+                adv.delAdv();
+            });
+            $("#btn_AdvEnable").on("click", function() {
+                adv.editStaus(1);
+            });
+            $("#btn_AdvDisable").on("click", function() {
+                adv.editStaus(0);
+            });
+        });
+        var adv = adv || {};
+        (function() {
+            adv.loadLanguage = function(language) {
+                jQuery.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/admin/',
+                    mode: 'map',
+                    language: language
+                });
+            };
+            adv.addAdv = function() {
+                $('#fm').form('clear');
+                $('#dlg').dialog('open').dialog('setTitle', '轮播新增');
+                url = '/PlatAdmin/System/CreateAdv';
+                adv.loadUploadify();
+            };
+            adv.editAdv = function(obj) {
+                $('#fm').form('clear');
+                var node = $('#dg').datagrid('getSelected');
+                if (node) {
+                    $("#Id").val(node.Id);
+                    $('#dlg').dialog('open').dialog('setTitle', '轮播编辑');
+                    $('#fm').form('load', node);
+                    $('#TypePlat').combobox('setValue', node.Type);
+                    url = '/PlatAdmin/System/EditAdv';
+                    adv.loadUploadify();
+                }
+            };
+            adv.saveForm = function(fmid, dlgid, obj) {
+                $(obj).linkbutton("disable");
+                setTimeout(function() {
+                    $(obj).linkbutton("enable");
+                }, 2000);
+                $('#' + fmid).form('submit', {
+                    url: url,
+                    onSubmit: function() {
+                        $(this).attr({ "enabled": true });
+                        return $(this).form('validate');
+                    },
+                    success: function(result) {
+                        result = eval('(' + result + ')');
+                        if (result.code !== 0) {
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.errors
+                            });
+                        } else {
+                            $('#' + dlgid).dialog('close');
+                            $('#dg').datagrid('reload');
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.message
+                            });
+                        }
+                    }
+                });
+            };
+            adv.delAdv = function() {
+                var node = $('#dg').datagrid('getSelected');
+                if (node) {
+                    $.messager.confirm('系统提示', '确定删除轮播?', function(r) {
+                        if (r) {
+                            $.post('/PlatAdmin/System/DelAdv', { id: node.Id }, function (result) {
+                                if (result.code === 0) {
+                                    $('#dg').datagrid('reload');
+                                    $.messager.show({
+                                        title: '系统提示',
+                                        msg: "操作成功"
+                                    });
+                                } else {
+                                    $.messager.show({
+                                        title: '系统提示',
+                                        msg: result.errors
+                                    });
+                                }
+                            }, 'json').complete(function () {
+                                $('#dg').datagrid('clearSelections');
+                            });
+                        }
+                    });
+                }
+            };
+            adv.editStaus = function(isshow) {
+                var node = $('#dg').datagrid('getSelected');
+                if (node) {
+                    $.post('/PlatAdmin/System/SetAdvShow', { id: node.Id, show: isshow }, function (result) {
+                        if (result.code === 0) {                            
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: "操作成功"
+                            });
+                        } else {
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.errors
+                            });
+                        }
+                    }, 'json').complete(function () {
+                        $('#dg').datagrid('reload');
+                        $('#dg').datagrid('clearSelections');
+                        $('#btn_AdvEnable').linkbutton("disable");
+                        $('#btn_AdvDisable').linkbutton("disable");
+                    });
+                }
+            };
+            adv.loadUploadify = function() {
+                $(".upload-img").InitUploader({
+                    filesize: "10240",
+                    sendurl: "/PlatAdmin/System/UploadFiles",
+                    swf: "/Areas/PlatAdmin/Scripts/webuploader/uploader.swf",
+                    filetypes: "gif,jpg,png,bmp,jpeg"
+                });
+            };
+        })();
+    </script>
+}

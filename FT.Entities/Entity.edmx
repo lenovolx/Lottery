@@ -1,0 +1,2091 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="FT.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginName" Type="varchar" MaxLength="32" />
+          <Property Name="Password" Type="varchar" MaxLength="32" />
+          <Property Name="PasswordSalt" Type="varchar" MaxLength="50" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="AgentId" Type="bigint" />
+        </EntityType>
+        <EntityType Name="AdminMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageId" Type="bigint" Nullable="false" />
+          <Property Name="AdminId" Type="int" Nullable="false" />
+          <Property Name="IsRead" Type="int" Nullable="false" />
+          <Property Name="ReadDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AmountWater">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BeiJingKL8Archive">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OriginalId" Type="bigint" Nullable="false" />
+          <Property Name="TermNumber" Type="varchar" MaxLength="50" />
+          <Property Name="LotteryNumber" Type="varchar" MaxLength="200" />
+          <Property Name="SortedNumber" Type="varchar" MaxLength="200" />
+          <Property Name="SingleNumber" Type="varchar" MaxLength="10" />
+          <Property Name="LotteryTime" Type="datetime" />
+          <Property Name="ArchiveTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="BeiJingKL8Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TermNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="LotteryNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="SortedLotNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="SingleNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="LotteryTime" Type="datetime" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CardNum" Type="varchar" MaxLength="50" />
+          <Property Name="CardPwd" Type="varchar" MaxLength="16" />
+          <Property Name="GroupID" Type="bigint" />
+          <Property Name="UseDate" Type="datetime" />
+          <Property Name="IsUsed" Type="int" Nullable="false" />
+          <Property Name="Status" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="CardGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GroupName" Type="varchar" MaxLength="100" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CashRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="BankType" Type="varchar" MaxLength="50" />
+          <Property Name="BankCardNum" Type="varchar" MaxLength="50" />
+          <Property Name="RealName" Type="varchar" MaxLength="50" />
+          <Property Name="BankBranch" Type="varchar" MaxLength="200" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="AuditorName" Type="varchar" MaxLength="50" />
+          <Property Name="RejectRemark" Type="varchar" MaxLength="200" />
+          <Property Name="AuditTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="GameBeijing16Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TermNumber" Type="varchar" MaxLength="50" />
+          <Property Name="LotteryNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="FirstAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NextAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstAreaResult" Type="int" />
+          <Property Name="NextAreaResult" Type="int" />
+          <Property Name="LastAreaResult" Type="int" />
+          <Property Name="LotteryTime" Type="datetime" />
+          <Property Name="IsSynch" Type="bit" />
+        </EntityType>
+        <EntityType Name="GameBeijing28Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TermNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="LotteryNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="SortNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="FirstAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NextAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstAreaResult" Type="int" />
+          <Property Name="NextAreaResult" Type="int" />
+          <Property Name="LastAreaResult" Type="int" />
+          <Property Name="LotteryTime" Type="datetime" />
+          <Property Name="IsSync" Type="bit" />
+          <Property Name="SyncTime" Type="datetime" />
+          <Property Name="FirstAreaMantissa" Type="int" />
+          <Property Name="NextAreaMantissa" Type="int" />
+          <Property Name="LastAreaMantissa" Type="int" />
+        </EntityType>
+        <EntityType Name="LogInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogTime" Type="datetime" Nullable="false" />
+          <Property Name="LogUser" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogUserIp" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="LogController" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogAction" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LogType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LogOperate" Type="varchar" MaxLength="4000" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatchBlackList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="LeagueNameEn" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="IsBan" Type="int" Nullable="false" />
+          <Property Name="LastOperateDate" Type="datetime" Nullable="false" />
+          <Property Name="OperateUserId" Type="int" Nullable="false" />
+          <Property Name="DataSource" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatchInfo">
+          <Key>
+            <PropertyRef Name="MatchId" />
+          </Key>
+          <Property Name="MatchId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="100" />
+          <Property Name="LeagueNameEn" Type="varchar" MaxLength="300" />
+          <Property Name="MatchDate" Type="bigint" Nullable="false" />
+          <Property Name="MatchNumber" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="bigint" />
+          <Property Name="MatchType" Type="int" Nullable="false" />
+          <Property Name="MatchEndTime" Type="bigint" Nullable="false" />
+          <Property Name="HTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="CTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="BetType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Odds" Type="text" Nullable="false" />
+          <Property Name="OddsUpdateTime" Type="bigint" Nullable="false" />
+          <Property Name="IsSettle" Type="tinyint" Nullable="false" />
+          <Property Name="SettleTime" Type="datetime" />
+          <Property Name="SettleUserId" Type="bigint" />
+          <Property Name="MinLimit" Type="int" />
+          <Property Name="MaxLimit" Type="int" />
+          <Property Name="IsMaster" Type="int" Nullable="false" />
+          <Property Name="CurrentScore" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="MatchInfoLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Version" Type="int" />
+          <Property Name="MatchId" Type="bigint" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="100" />
+          <Property Name="LeagueNameEn" Type="varchar" MaxLength="300" />
+          <Property Name="MatchDate" Type="bigint" Nullable="false" />
+          <Property Name="MatchNumber" Type="int" Nullable="false" />
+          <Property Name="MatchType" Type="int" Nullable="false" />
+          <Property Name="MatchEndTime" Type="bigint" Nullable="false" />
+          <Property Name="HTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="CTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="BetType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Odds" Type="text" Nullable="false" />
+          <Property Name="OddsUpdateTime" Type="bigint" />
+        </EntityType>
+        <EntityType Name="MatchResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MatchId" Type="bigint" Nullable="false" />
+          <Property Name="ResultTime" Type="bigint" Nullable="false" />
+          <Property Name="Odds" Type="text" />
+          <Property Name="Result1" Type="text" Nullable="false" />
+          <Property Name="Result2" Type="text" Nullable="false" />
+          <Property Name="StartOpen" Type="text" />
+        </EntityType>
+        <EntityType Name="MatchUserBet">
+          <Key>
+            <PropertyRef Name="BetId" />
+          </Key>
+          <Property Name="BetId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="BetValue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BetType" Type="int" Nullable="false" />
+          <Property Name="BetBonus" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BetTime" Type="bigint" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="IsSettle" Type="tinyint" Nullable="false" />
+          <Property Name="SettleTime" Type="datetime" />
+          <Property Name="IsGetPrize" Type="int" Nullable="false" />
+          <Property Name="GetTime" Type="datetime" />
+          <Property Name="BetSource" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="ValidAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatchUserBetContent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BetId" Type="bigint" Nullable="false" />
+          <Property Name="MatchID" Type="bigint" Nullable="false" />
+          <Property Name="BetType" Type="int" Nullable="false" />
+          <Property Name="BetContent" Type="text" Nullable="false" />
+          <Property Name="BetKey" Type="varchar" MaxLength="200" />
+          <Property Name="IsSettle" Type="int" />
+          <Property Name="SettleIor" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="BetScore" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="MatchUserBetContentLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BetId" Type="bigint" Nullable="false" />
+          <Property Name="MatchID" Type="bigint" Nullable="false" />
+          <Property Name="BetType" Type="int" Nullable="false" />
+          <Property Name="BetContent" Type="text" Nullable="false" />
+          <Property Name="BetKey" Type="varchar" MaxLength="200" />
+          <Property Name="IsSettle" Type="int" />
+          <Property Name="SettleIor" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="BetScore" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="MatchUserBetLog">
+          <Key>
+            <PropertyRef Name="BetId" />
+          </Key>
+          <Property Name="BetId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="BetValue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BetType" Type="int" Nullable="false" />
+          <Property Name="BetBonus" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BetTime" Type="bigint" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="IsSettle" Type="tinyint" Nullable="false" />
+          <Property Name="SettleTime" Type="datetime" />
+          <Property Name="IsGetPrize" Type="int" Nullable="false" />
+          <Property Name="GetTime" Type="datetime" />
+          <Property Name="BetSource" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Menus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="NameEn" Type="varchar" MaxLength="200" />
+          <Property Name="IsLock" Type="tinyint" Nullable="false" />
+          <Property Name="SortNum" Type="tinyint" Nullable="false" />
+          <Property Name="Url" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ButtonLink" Type="varchar" MaxLength="50" />
+          <Property Name="MenuType" Type="int" Nullable="false" />
+          <Property Name="Icon" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Annexes" Type="nvarchar" MaxLength="100" />
+          <Property Name="Descriptions" Type="text" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdateDate" Type="datetime" />
+          <Property Name="CreateUser" Type="int" Nullable="false" />
+          <Property Name="CreateUserName" Type="nvarchar" MaxLength="100" />
+          <Property Name="SendTo" Type="int" Nullable="false" />
+          <Property Name="IsDrafts" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleNameEn" Type="varchar" MaxLength="100" />
+          <Property Name="IsLock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="MenuId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolePrivilege">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" Nullable="false" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="Privilege" Type="int" />
+        </EntityType>
+        <EntityType Name="SiteAdv">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdvImg" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="AdvTitle" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="IsShow" Type="int" Nullable="false" />
+          <Property Name="Sort" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemDictionary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentId" Type="bigint" Nullable="false" />
+          <Property Name="DictionaryValue" Type="float" Nullable="false" />
+          <Property Name="DictionaryName" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="DictionaryNameEn" Type="varchar" MaxLength="300" />
+          <Property Name="DictionaryNamePt" Type="varchar" MaxLength="300" />
+          <Property Name="Sort" Type="int" Nullable="false" />
+          <Property Name="IsLock" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Key" Type="varchar" MaxLength="50" />
+          <Property Name="Value" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="SystemTask">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TaskName" Type="nvarchar" MaxLength="300" />
+          <Property Name="CronExpressionString" Type="nvarchar" MaxLength="200" />
+          <Property Name="Assembly" Type="nvarchar" MaxLength="150" />
+          <Property Name="Class" Type="nvarchar" MaxLength="150" />
+          <Property Name="Status" Type="int" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="ModifyOn" Type="datetime" />
+          <Property Name="RecentRunTime" Type="datetime" />
+          <Property Name="LastRunTime" Type="datetime" />
+          <Property Name="CronRemark" Type="nvarchar" MaxLength="300" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="TradeRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="FromId" Type="bigint" />
+          <Property Name="FromUserName" Type="varchar" MaxLength="50" />
+          <Property Name="ToId" Type="bigint" Nullable="false" />
+          <Property Name="ToUserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="TradeAmount" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="CardNum" Type="varchar" MaxLength="50" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="CreateUserId" Type="bigint" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LoginName" Type="varchar" MaxLength="32" />
+          <Property Name="Password" Type="varchar" MaxLength="32" />
+          <Property Name="PasswordSalt" Type="varchar" MaxLength="50" />
+          <Property Name="SafePassword" Type="varchar" MaxLength="50" />
+          <Property Name="BalanceAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="32" />
+          <Property Name="email" Type="varchar" MaxLength="32" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="PlatFrom" Type="int" Nullable="false" />
+          <Property Name="ParentPath" Type="varchar" MaxLength="50" />
+          <Property Name="CreditLimit" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+          <Property Name="ReturnRate" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserBankInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="RealName" Type="varchar" MaxLength="50" />
+          <Property Name="BankType" Type="varchar" MaxLength="100" />
+          <Property Name="BankCardNum" Type="varchar" MaxLength="50" />
+          <Property Name="BankBranch" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="UserMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageId" Type="bigint" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="IsRead" Type="int" Nullable="false" />
+          <Property Name="ReadDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="XBETMatchInfo">
+          <Key>
+            <PropertyRef Name="MatchId" />
+          </Key>
+          <Property Name="MatchId" Type="bigint" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="100" />
+          <Property Name="LeagueNameEn" Type="varchar" MaxLength="300" />
+          <Property Name="MatchDate" Type="bigint" Nullable="false" />
+          <Property Name="MatchNumber" Type="int" Nullable="false" />
+          <Property Name="EventId" Type="bigint" />
+          <Property Name="MatchType" Type="int" Nullable="false" />
+          <Property Name="MatchEndTime" Type="bigint" Nullable="false" />
+          <Property Name="HTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="CTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="BetType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" />
+          <Property Name="Odds" Type="varchar(max)" Nullable="false" />
+          <Property Name="OddsUpdateTime" Type="bigint" Nullable="false" />
+          <Property Name="IsSettle" Type="tinyint" Nullable="false" />
+          <Property Name="SettleTime" Type="datetime" />
+          <Property Name="SettleUserId" Type="bigint" />
+          <Property Name="MinLimit" Type="int" />
+          <Property Name="MaxLimit" Type="int" />
+          <Property Name="IsMaster" Type="int" Nullable="false" />
+          <Property Name="CurrentScore" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TimeSec" Type="int" Nullable="false" />
+          <Property Name="TimeRun" Type="bit" Nullable="false" />
+          <Property Name="Finished" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XBETMatchInfoLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LeagueName" Type="varchar" MaxLength="100" />
+          <Property Name="LeagueNameEn" Type="varchar" MaxLength="300" />
+          <Property Name="MatchDate" Type="bigint" Nullable="false" />
+          <Property Name="MatchNumber" Type="int" Nullable="false" />
+          <Property Name="MatchType" Type="int" Nullable="false" />
+          <Property Name="MatchEndTime" Type="bigint" Nullable="false" />
+          <Property Name="HTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="HTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="CTeamNum" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeam" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CTeamEn" Type="varchar" MaxLength="300" />
+          <Property Name="BetType" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Odds" Type="text" Nullable="false" />
+          <Property Name="OddsUpdateTime" Type="bigint" />
+          <Property Name="CurrentScore" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TimeSec" Type="int" />
+          <Property Name="TimeRun" Type="bit" Nullable="false" />
+          <Property Name="Finished" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="XBETMatchResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MatchId" Type="bigint" Nullable="false" />
+          <Property Name="ResultTime" Type="bigint" Nullable="false" />
+          <Property Name="Odds" Type="text" />
+          <Property Name="Result1" Type="text" Nullable="false" />
+          <Property Name="Result2" Type="text" Nullable="false" />
+          <Property Name="StartOpen" Type="text" />
+        </EntityType>
+        <Association Name="FK_CARD_REFERENCE_CARDGROU">
+          <End Role="CardGroup" Type="Self.CardGroup" Multiplicity="0..1" />
+          <End Role="Card" Type="Self.Card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Card">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_matchid">
+          <End Role="MatchInfo" Type="Self.MatchInfo" Multiplicity="1" />
+          <End Role="MatchResult" Type="Self.MatchResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchInfo">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="MatchResult">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_xbetmatchid">
+          <End Role="XBETMatchInfo" Type="Self.XBETMatchInfo" Multiplicity="1" />
+          <End Role="XBETMatchResult" Type="Self.XBETMatchResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XBETMatchInfo">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="XBETMatchResult">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FTModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdminMessage" EntityType="Self.AdminMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AmountWater" EntityType="Self.AmountWater" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BeiJingKL8Archive" EntityType="Self.BeiJingKL8Archive" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BeiJingKL8Source" EntityType="Self.BeiJingKL8Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Card" EntityType="Self.Card" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CardGroup" EntityType="Self.CardGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CashRecord" EntityType="Self.CashRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameBeijing16Source" EntityType="Self.GameBeijing16Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameBeijing28Source" EntityType="Self.GameBeijing28Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogInfo" EntityType="Self.LogInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchBlackList" EntityType="Self.MatchBlackList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchInfo" EntityType="Self.MatchInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchInfoLog" EntityType="Self.MatchInfoLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchResult" EntityType="Self.MatchResult" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchUserBet" EntityType="Self.MatchUserBet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchUserBetContent" EntityType="Self.MatchUserBetContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchUserBetContentLog" EntityType="Self.MatchUserBetContentLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MatchUserBetLog" EntityType="Self.MatchUserBetLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Menus" EntityType="Self.Menus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleMenu" EntityType="Self.RoleMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolePrivilege" EntityType="Self.RolePrivilege" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SiteAdv" EntityType="Self.SiteAdv" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemDictionary" EntityType="Self.SystemDictionary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemSetting" EntityType="Self.SystemSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SystemTask" EntityType="Self.SystemTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TradeRecord" EntityType="Self.TradeRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserAccount" EntityType="Self.UserAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserBankInfo" EntityType="Self.UserBankInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserMessage" EntityType="Self.UserMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XBETMatchInfo" EntityType="Self.XBETMatchInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XBETMatchInfoLog" EntityType="Self.XBETMatchInfoLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="XBETMatchResult" EntityType="Self.XBETMatchResult" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CARD_REFERENCE_CARDGROU" Association="Self.FK_CARD_REFERENCE_CARDGROU">
+            <End Role="CardGroup" EntitySet="CardGroup" />
+            <End Role="Card" EntitySet="Card" />
+          </AssociationSet>
+          <AssociationSet Name="fk_matchid" Association="Self.fk_matchid">
+            <End Role="MatchInfo" EntitySet="MatchInfo" />
+            <End Role="MatchResult" EntitySet="MatchResult" />
+          </AssociationSet>
+          <AssociationSet Name="fk_xbetmatchid" Association="Self.fk_xbetmatchid">
+            <End Role="XBETMatchInfo" EntitySet="XBETMatchInfo" />
+            <End Role="XBETMatchResult" EntitySet="XBETMatchResult" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FT.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admin" EntityType="FT.Model.Admin" />
+          <EntitySet Name="Card" EntityType="FT.Model.Card" />
+          <EntitySet Name="CardGroup" EntityType="FT.Model.CardGroup" />
+          <EntitySet Name="MatchInfo" EntityType="FT.Model.MatchInfo" />
+          <EntitySet Name="MatchInfoLog" EntityType="FT.Model.MatchInfoLog" />
+          <EntitySet Name="MatchUserBet" EntityType="FT.Model.MatchUserBet" />
+          <EntitySet Name="MatchUserBetContent" EntityType="FT.Model.MatchUserBetContent" />
+          <EntitySet Name="Role" EntityType="FT.Model.Role" />
+          <EntitySet Name="RolePrivilege" EntityType="FT.Model.RolePrivilege" />
+          <EntitySet Name="UserAccount" EntityType="FT.Model.UserAccount" />
+          <AssociationSet Name="FK_CARD_REFERENCE_CARDGROU" Association="FT.Model.FK_CARD_REFERENCE_CARDGROU">
+            <End Role="CardGroup" EntitySet="CardGroup" />
+            <End Role="Card" EntitySet="Card" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MATCHUSE_REFERENCE_MATCHUSE" Association="FT.Model.FK_MATCHUSE_REFERENCE_MATCHUSE">
+            <End Role="MatchUserBet" EntitySet="MatchUserBet" />
+            <End Role="MatchUserBetContent" EntitySet="MatchUserBetContent" />
+          </AssociationSet>
+          <EntitySet Name="Menus" EntityType="FT.Model.Menus" />
+          <EntitySet Name="RoleMenu" EntityType="FT.Model.RoleMenu" />
+          <AssociationSet Name="RoleRoleMenu" Association="FT.Model.RoleRoleMenu">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleMenu" EntitySet="RoleMenu" />
+          </AssociationSet>
+          <AssociationSet Name="MenusRoleMenu" Association="FT.Model.MenusRoleMenu">
+            <End Role="Menus" EntitySet="Menus" />
+            <End Role="RoleMenu" EntitySet="RoleMenu" />
+          </AssociationSet>
+          <AssociationSet Name="RoleAdmin" Association="FT.Model.RoleAdmin">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Admin" EntitySet="Admin" />
+          </AssociationSet>
+          <AssociationSet Name="UserAccountMatchUserBet" Association="FT.Model.UserAccountMatchUserBet">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="MatchUserBet" EntitySet="MatchUserBet" />
+          </AssociationSet>
+          <EntitySet Name="MatchResult" EntityType="FT.Model.MatchResult" />
+          <AssociationSet Name="MatchInfoMatchUserBetContent" Association="FT.Model.MatchInfoMatchUserBetContent">
+            <End Role="MatchInfo" EntitySet="MatchInfo" />
+            <End Role="MatchUserBetContent" EntitySet="MatchUserBetContent" />
+          </AssociationSet>
+          <EntitySet Name="CashRecord" EntityType="FT.Model.CashRecord" />
+          <EntitySet Name="UserBankInfo" EntityType="FT.Model.UserBankInfo" />
+          <EntitySet Name="TradeRecord" EntityType="FT.Model.TradeRecord" />
+          <AssociationSet Name="UserAccountUserBankInfo" Association="FT.Model.UserAccountUserBankInfo">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="UserBankInfo" EntitySet="UserBankInfo" />
+          </AssociationSet>
+          <AssociationSet Name="UserAccountCashRecord" Association="FT.Model.UserAccountCashRecord">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="CashRecord" EntitySet="CashRecord" />
+          </AssociationSet>
+          <AssociationSet Name="fk_matchid" Association="FT.Model.fk_matchid">
+            <End Role="MatchInfo" EntitySet="MatchInfo" />
+            <End Role="MatchResult" EntitySet="MatchResult" />
+          </AssociationSet>
+          <AssociationSet Name="UserAccountAdmin" Association="FT.Model.UserAccountAdmin">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="Admin" EntitySet="Admin" />
+          </AssociationSet>
+          <EntitySet Name="LogInfo" EntityType="FT.Model.LogInfo" />
+          <AssociationSet Name="TradeRecordUserAccount" Association="FT.Model.TradeRecordUserAccount">
+            <End Role="TradeRecord" EntitySet="TradeRecord" />
+            <End Role="UserAccount" EntitySet="UserAccount" />
+          </AssociationSet>
+          <EntitySet Name="SystemSetting" EntityType="FT.Model.SystemSetting" />
+          <EntitySet Name="AmountWater" EntityType="FT.Model.AmountWater" />
+          <AssociationSet Name="AmountWaterUserAccount" Association="FT.Model.AmountWaterUserAccount">
+            <End Role="AmountWater" EntitySet="AmountWater" />
+            <End Role="UserAccount" EntitySet="UserAccount" />
+          </AssociationSet>
+          <EntitySet Name="MatchBlackList" EntityType="FT.Model.MatchBlackList" />
+          <AssociationSet Name="AdminMatchBlackList" Association="FT.Model.AdminMatchBlackList">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="MatchBlackList" EntitySet="MatchBlackList" />
+          </AssociationSet>
+          <EntitySet Name="AdminMessage" EntityType="FT.Model.AdminMessage" />
+          <EntitySet Name="Message" EntityType="FT.Model.Message" />
+          <EntitySet Name="SiteAdv" EntityType="FT.Model.SiteAdv" />
+          <EntitySet Name="UserMessage" EntityType="FT.Model.UserMessage" />
+          <AssociationSet Name="AdminMessageMessage" Association="FT.Model.AdminMessageMessage">
+            <End Role="AdminMessage" EntitySet="AdminMessage" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="AdminMessageAdmin" Association="FT.Model.AdminMessageAdmin">
+            <End Role="AdminMessage" EntitySet="AdminMessage" />
+            <End Role="Admin" EntitySet="Admin" />
+          </AssociationSet>
+          <EntitySet Name="XBETMatchInfo" EntityType="FT.Model.XBETMatchInfo" />
+          <EntitySet Name="XBETMatchResult" EntityType="FT.Model.XBETMatchResult" />
+          <AssociationSet Name="fk_xbetmatchid" Association="FT.Model.fk_xbetmatchid">
+            <End Role="XBETMatchInfo" EntitySet="XBETMatchInfo" />
+            <End Role="XBETMatchResult" EntitySet="XBETMatchResult" />
+          </AssociationSet>
+          <EntitySet Name="XBETMatchInfoLog" EntityType="FT.Model.XBETMatchInfoLog" />
+          <EntitySet Name="MatchUserBetLog" EntityType="FT.Model.MatchUserBetLog" />
+          <EntitySet Name="MatchUserBetContentLog" EntityType="FT.Model.MatchUserBetContentLog" />
+          <EntitySet Name="SystemDictionary" EntityType="FT.Model.SystemDictionary" />
+          <EntitySet Name="SystemTask" EntityType="FT.Model.SystemTask" />
+          <EntitySet Name="BeiJingKL8Archive" EntityType="FT.Model.BeiJingKL8Archive" />
+          <EntitySet Name="BeiJingKL8Source" EntityType="FT.Model.BeiJingKL8Source" />
+          <EntitySet Name="GameBeijing16Source" EntityType="FT.Model.GameBeijing16Source" />
+          <EntitySet Name="GameBeijing28Source" EntityType="FT.Model.GameBeijing28Source" />
+        </EntityContainer>
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="LoginName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="FT.Model.LockEnum" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Role" Relationship="FT.Model.RoleAdmin" FromRole="Admin" ToRole="Role" />
+          <Property Name="AgentId" Type="Int64" />
+          <NavigationProperty Name="UserAccount" Relationship="FT.Model.UserAccountAdmin" FromRole="Admin" ToRole="UserAccount" />
+          <NavigationProperty Name="MatchBlackList" Relationship="FT.Model.AdminMatchBlackList" FromRole="Admin" ToRole="MatchBlackList" />
+          <NavigationProperty Name="AdminMessage" Relationship="FT.Model.AdminMessageAdmin" FromRole="Admin" ToRole="AdminMessage" />
+        </EntityType>
+        <EntityType Name="Card">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CardNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CardPwd" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="GroupID" Type="Int64" />
+          <Property Name="UseDate" Type="DateTime" Precision="3" />
+          <Property Name="IsUsed" Type="FT.Model.YesNoEnum" Nullable="false" />
+          <Property Name="Status" Type="Byte" />
+          <NavigationProperty Name="CardGroup" Relationship="FT.Model.FK_CARD_REFERENCE_CARDGROU" FromRole="Card" ToRole="CardGroup" />
+        </EntityType>
+        <EntityType Name="CardGroup">
+          <Key>
+            <PropertyRef Name="GroupId" />
+          </Key>
+          <Property Name="GroupId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Card" Relationship="FT.Model.FK_CARD_REFERENCE_CARDGROU" FromRole="CardGroup" ToRole="Card" />
+        </EntityType>
+        <EntityType Name="MatchInfo">
+          <Key>
+            <PropertyRef Name="MatchId" />
+          </Key>
+          <Property Name="MatchId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MatchDate" Type="Int64" Nullable="false" />
+          <Property Name="MatchNumber" Type="Int32" Nullable="false" />
+          <Property Name="MatchType" Type="Int32" Nullable="false" />
+          <Property Name="MatchEndTime" Type="Int64" Nullable="false" />
+          <Property Name="HTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BetType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Odds" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OddsUpdateTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="MatchUserBetContent" Relationship="FT.Model.MatchInfoMatchUserBetContent" FromRole="MatchInfo" ToRole="MatchUserBetContent" />
+          <Property Name="EventId" Type="Int64" />
+          <Property Name="LeagueNameEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="HTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IsSettle" Type="FT.Model.OpenEnum" Nullable="false" />
+          <Property Name="SettleTime" Type="DateTime" Precision="3" />
+          <Property Name="SettleUserId" Type="Int64" />
+          <NavigationProperty Name="MatchResult" Relationship="FT.Model.fk_matchid" FromRole="MatchInfo" ToRole="MatchResult" />
+          <Property Name="MinLimit" Type="Int32" />
+          <Property Name="MaxLimit" Type="Int32" />
+          <Property Name="IsMaster" Type="Int32" Nullable="false" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CurrentScore" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="true" />
+        </EntityType>
+        <EntityType Name="MatchInfoLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Version" Type="Int32" />
+          <Property Name="MatchId" Type="Int64" />
+          <Property Name="LeagueName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MatchDate" Type="Int64" Nullable="false" />
+          <Property Name="MatchNumber" Type="Int32" Nullable="false" />
+          <Property Name="MatchType" Type="Int32" Nullable="false" />
+          <Property Name="MatchEndTime" Type="Int64" Nullable="false" />
+          <Property Name="HTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BetType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Odds" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OddsUpdateTime" Type="Int64" />
+          <Property Name="LeagueNameEn" Type="String" MaxLength="300" Unicode="false" FixedLength="false" />
+          <Property Name="HTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="MatchUserBet">
+          <Key>
+            <PropertyRef Name="BetId" />
+          </Key>
+          <Property Name="BetId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="BetValue" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BetBonus" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="BetTime" Type="Int64" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MatchUserBetContent" Relationship="FT.Model.FK_MATCHUSE_REFERENCE_MATCHUSE" FromRole="MatchUserBet" ToRole="MatchUserBetContent" />
+          <NavigationProperty Name="UserAccount" Relationship="FT.Model.UserAccountMatchUserBet" FromRole="MatchUserBet" ToRole="UserAccount" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="BetType" Type="Int32" Nullable="false" />
+          <Property Name="IsSettle" Type="FT.Model.OpenEnum" Nullable="false" />
+          <Property Name="SettleTime" Type="DateTime" Precision="3" />
+          <Property Name="IsGetPrize" Type="FT.Model.YesNoEnum" Nullable="false" />
+          <Property Name="GetTime" Type="DateTime" Precision="3" />
+          <Property Name="BetSource" Type="FT.Model.DataSourceEnum" Nullable="false" />
+          <Property Name="Status" Type="FT.Model.BetStatus" Nullable="false" />
+          <Property Name="ValidAmount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="MatchUserBetContent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BetId" Type="Int64" Nullable="false" />
+          <Property Name="MatchID" Type="Int64" Nullable="false" />
+          <Property Name="BetType" Type="Int32" Nullable="false" />
+          <Property Name="BetContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MatchUserBet" Relationship="FT.Model.FK_MATCHUSE_REFERENCE_MATCHUSE" FromRole="MatchUserBetContent" ToRole="MatchUserBet" />
+          <NavigationProperty Name="MatchInfo" Relationship="FT.Model.MatchInfoMatchUserBetContent" FromRole="MatchUserBetContent" ToRole="MatchInfo" />
+          <Property Name="BetKey" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsSettle" Type="FT.Model.OpenEnum" />
+          <Property Name="SettleIor" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="BetScore" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsLock" Type="FT.Model.LockEnum" Nullable="false" />
+          <NavigationProperty Name="RoleMenu" Relationship="FT.Model.RoleRoleMenu" FromRole="Role" ToRole="RoleMenu" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="FT.Model.RoleAdmin" FromRole="Role" ToRole="Admin" />
+          <Property Name="RoleNameEn" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RolePrivilege">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="Privilege" Type="Int32" />
+        </EntityType>
+        <EntityType Name="UserAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="LoginName" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="PasswordSalt" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BalanceAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Status" Type="FT.Model.LockEnum" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="Type" Type="FT.Model.UserTypeEnum" Nullable="false" />
+          <Property Name="Level" Type="FT.Model.LevelEnum" Nullable="false" />
+          <NavigationProperty Name="MatchUserBet" Relationship="FT.Model.UserAccountMatchUserBet" FromRole="UserAccount" ToRole="MatchUserBet" />
+          <Property Name="PlatFrom" Type="FT.Model.PlatEnum" Nullable="false" />
+          <NavigationProperty Name="UserBankInfo" Relationship="FT.Model.UserAccountUserBankInfo" FromRole="UserAccount" ToRole="UserBankInfo" />
+          <NavigationProperty Name="CashRecord" Relationship="FT.Model.UserAccountCashRecord" FromRole="UserAccount" ToRole="CashRecord" />
+          <Property Name="ParentPath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Admin" Relationship="FT.Model.UserAccountAdmin" FromRole="UserAccount" ToRole="Admin" />
+          <Property Name="CreditLimit" Type="Decimal" Nullable="false" Precision="18" Scale="3" />
+          <NavigationProperty Name="TradeRecord" Relationship="FT.Model.TradeRecordUserAccount" FromRole="UserAccount" ToRole="TradeRecord" />
+          <NavigationProperty Name="AmountWater" Relationship="FT.Model.AmountWaterUserAccount" FromRole="UserAccount" ToRole="AmountWater" />
+          <Property Name="SafePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ReturnRate" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CARD_REFERENCE_CARDGROU">
+          <End Type="FT.Model.CardGroup" Role="CardGroup" Multiplicity="0..1" />
+          <End Type="FT.Model.Card" Role="Card" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardGroup">
+              <PropertyRef Name="GroupId" />
+            </Principal>
+            <Dependent Role="Card">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MATCHUSE_REFERENCE_MATCHUSE">
+          <End Type="FT.Model.MatchUserBet" Role="MatchUserBet" Multiplicity="1" />
+          <End Type="FT.Model.MatchUserBetContent" Role="MatchUserBetContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchUserBet">
+              <PropertyRef Name="BetId" />
+            </Principal>
+            <Dependent Role="MatchUserBetContent">
+              <PropertyRef Name="BetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Menus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsLock" Type="Byte" Nullable="false" />
+          <Property Name="SortNum" Type="Byte" Nullable="false" />
+          <Property Name="Url" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ButtonLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MenuType" Type="FT.Model.MenuEnum" Nullable="false" />
+          <NavigationProperty Name="RoleMenu" Relationship="FT.Model.MenusRoleMenu" FromRole="Menus" ToRole="RoleMenu" />
+          <Property Name="Icon" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="NameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="RoleMenu">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="MenuId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="FT.Model.RoleRoleMenu" FromRole="RoleMenu" ToRole="Role" />
+          <NavigationProperty Name="Menus" Relationship="FT.Model.MenusRoleMenu" FromRole="RoleMenu" ToRole="Menus" />
+        </EntityType>
+        <Association Name="RoleRoleMenu">
+          <End Type="FT.Model.Role" Role="Role" Multiplicity="1" />
+          <End Type="FT.Model.RoleMenu" Role="RoleMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleMenu">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MenusRoleMenu">
+          <End Type="FT.Model.Menus" Role="Menus" Multiplicity="1" />
+          <End Type="FT.Model.RoleMenu" Role="RoleMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Menus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleMenu">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RoleAdmin">
+          <End Type="FT.Model.Role" Role="Role" Multiplicity="1" />
+          <End Type="FT.Model.Admin" Role="Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserAccountMatchUserBet">
+          <End Type="FT.Model.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FT.Model.MatchUserBet" Role="MatchUserBet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MatchUserBet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MatchResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatchId" Type="Int64" Nullable="false" />
+          <Property Name="ResultTime" Type="Int64" Nullable="false" />
+          <Property Name="Odds" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Result1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Result2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StartOpen" Type="String" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MatchInfo" Relationship="FT.Model.fk_matchid" FromRole="MatchResult" ToRole="MatchInfo" />
+        </EntityType>
+        <Association Name="MatchInfoMatchUserBetContent">
+          <End Type="FT.Model.MatchInfo" Role="MatchInfo" Multiplicity="1" />
+          <End Type="FT.Model.MatchUserBetContent" Role="MatchUserBetContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchInfo">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="MatchUserBetContent">
+              <PropertyRef Name="MatchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="LockEnum" a:ExternalTypeName="LockEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="MenuEnum" a:ExternalTypeName="MenuEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="PlatEnum" a:ExternalTypeName="PlatEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="OpenEnum" a:ExternalTypeName="OpenEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" UnderlyingType="Byte" />
+        <EntityType Name="CashRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="AuditorName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankCardNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RealName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankBranch" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="FT.Model.CashAuditEnum" Nullable="false" />
+          <Property Name="RejectRemark" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="UserAccount" Relationship="FT.Model.UserAccountCashRecord" FromRole="CashRecord" ToRole="UserAccount" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AuditTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserBankInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="RealName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BankCardNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="BankBranch" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="UserAccount" Relationship="FT.Model.UserAccountUserBankInfo" FromRole="UserBankInfo" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="TradeRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="FromId" Type="Int64" />
+          <Property Name="ToId" Type="Int64" Nullable="false" />
+          <Property Name="Type" Type="FT.Model.TradEnum" Nullable="false" />
+          <Property Name="TradeAmount" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="CardNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateUserId" Type="Int64" />
+          <NavigationProperty Name="UserAccount" Relationship="FT.Model.TradeRecordUserAccount" FromRole="TradeRecord" ToRole="UserAccount" />
+          <Property Name="FromUserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ToUserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="FT.Model.LockEnum" Nullable="false" />
+        </EntityType>
+        <EnumType Name="TradEnum" a:ExternalTypeName="TradEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <Association Name="UserAccountUserBankInfo">
+          <End Type="FT.Model.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FT.Model.UserBankInfo" Role="UserBankInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserBankInfo">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserAccountCashRecord">
+          <End Type="FT.Model.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FT.Model.CashRecord" Role="CashRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashRecord">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="LevelEnum" a:ExternalTypeName="LevelEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="UserTypeEnum" a:ExternalTypeName="UserTypeEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <Association Name="fk_matchid">
+          <End Type="FT.Model.MatchInfo" Role="MatchInfo" Multiplicity="1" />
+          <End Type="FT.Model.MatchResult" Role="MatchResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MatchInfo">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="MatchResult">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserAccountAdmin">
+          <End Type="FT.Model.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <End Type="FT.Model.Admin" Role="Admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Admin">
+              <PropertyRef Name="AgentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LogInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LogTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LogUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LogUserIp" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LogController" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LogAction" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LogOperate" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="false" />
+          <Property Name="LogType" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <Association Name="TradeRecordUserAccount">
+          <End Type="FT.Model.TradeRecord" Role="TradeRecord" Multiplicity="*" />
+          <End Type="FT.Model.UserAccount" Role="UserAccount" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TradeRecord">
+              <PropertyRef Name="CreateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EnumType Name="CashAuditEnum" a:ExternalTypeName="CashAuditEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="SystemSetting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Value" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EnumType Name="YesNoEnum" a:ExternalTypeName="YesNoEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="AmountWater">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Amount" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Type" Type="FT.Model.TradEnum" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="UserAccount" Relationship="FT.Model.AmountWaterUserAccount" FromRole="AmountWater" ToRole="UserAccount" />
+        </EntityType>
+        <Association Name="AmountWaterUserAccount">
+          <End Type="FT.Model.AmountWater" Role="AmountWater" Multiplicity="*" />
+          <End Type="FT.Model.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AmountWater">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MatchBlackList">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LeagueNameEn" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IsBan" Type="FT.Model.YesNoEnum" Nullable="false" />
+          <Property Name="LastOperateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OperateUserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Admin" Relationship="FT.Model.AdminMatchBlackList" FromRole="MatchBlackList" ToRole="Admin" />
+          <Property Name="DataSource" Type="FT.Model.DataSourceEnum" Nullable="false" />
+        </EntityType>
+        <Association Name="AdminMatchBlackList">
+          <End Type="FT.Model.Admin" Role="Admin" Multiplicity="1" />
+          <End Type="FT.Model.MatchBlackList" Role="MatchBlackList" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MatchBlackList">
+              <PropertyRef Name="OperateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AdminMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageId" Type="Int64" Nullable="false" />
+          <Property Name="AdminId" Type="Int32" Nullable="false" />
+          <Property Name="IsRead" Type="FT.Model.YesNoEnum" Nullable="false" />
+          <Property Name="ReadDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Message" Relationship="FT.Model.AdminMessageMessage" FromRole="AdminMessage" ToRole="Message" />
+          <NavigationProperty Name="Admin" Relationship="FT.Model.AdminMessageAdmin" FromRole="AdminMessage" ToRole="Admin" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Annexes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Descriptions" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateUser" Type="Int32" Nullable="false" />
+          <Property Name="SendTo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AdminMessage" Relationship="FT.Model.AdminMessageMessage" FromRole="Message" ToRole="AdminMessage" />
+          <Property Name="IsDrafts" Type="FT.Model.YesNoEnum" Nullable="false" />
+          <Property Name="CreateUserName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SiteAdv">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdvImg" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="AdvTitle" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="FT.Model.PlatEnum" Nullable="false" />
+          <Property Name="IsShow" Type="FT.Model.YesNoEnum" Nullable="false" />
+          <Property Name="Sort" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserMessage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="IsRead" Type="Int32" Nullable="false" />
+          <Property Name="ReadDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="AdminMessageMessage">
+          <End Type="FT.Model.AdminMessage" Role="AdminMessage" Multiplicity="*" />
+          <End Type="FT.Model.Message" Role="Message" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Message">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdminMessage">
+              <PropertyRef Name="MessageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdminMessageAdmin">
+          <End Type="FT.Model.AdminMessage" Role="AdminMessage" Multiplicity="*" />
+          <End Type="FT.Model.Admin" Role="Admin" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AdminMessage">
+              <PropertyRef Name="AdminId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="XBETMatchInfo">
+          <Key>
+            <PropertyRef Name="MatchId" />
+          </Key>
+          <Property Name="MatchId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Name="LeagueName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LeagueNameEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="MatchDate" Type="Int64" Nullable="false" />
+          <Property Name="MatchNumber" Type="Int32" Nullable="false" />
+          <Property Name="EventId" Type="Int64" />
+          <Property Name="MatchType" Type="Int32" Nullable="false" />
+          <Property Name="MatchEndTime" Type="Int64" Nullable="false" />
+          <Property Name="HTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="BetType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Odds" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OddsUpdateTime" Type="Int64" Nullable="false" />
+          <Property Name="IsSettle" Type="FT.Model.OpenEnum" Nullable="false" />
+          <Property Name="SettleTime" Type="DateTime" Precision="3" />
+          <Property Name="SettleUserId" Type="Int64" />
+          <Property Name="MinLimit" Type="Int32" />
+          <Property Name="MaxLimit" Type="Int32" />
+          <Property Name="IsMaster" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="XBETMatchResult" Relationship="FT.Model.fk_xbetmatchid" FromRole="XBETMatchInfo" ToRole="XBETMatchResult" />
+          <Property Name="UpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CurrentScore" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TimeSec" Type="Int32" Nullable="false" />
+          <Property Name="Finished" Type="Boolean" Nullable="false" />
+          <Property Name="TimeRun" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EnumType Name="DataSourceEnum" a:ExternalTypeName="DataSourceEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="XBETMatchResult">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatchId" Type="Int64" Nullable="false" />
+          <Property Name="ResultTime" Type="Int64" Nullable="false" />
+          <Property Name="Odds" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Result1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Result2" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StartOpen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="XBETMatchInfo" Relationship="FT.Model.fk_xbetmatchid" FromRole="XBETMatchResult" ToRole="XBETMatchInfo" />
+        </EntityType>
+        <Association Name="fk_xbetmatchid">
+          <End Type="FT.Model.XBETMatchInfo" Role="XBETMatchInfo" Multiplicity="1" />
+          <End Type="FT.Model.XBETMatchResult" Role="XBETMatchResult" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="XBETMatchInfo">
+              <PropertyRef Name="MatchId" />
+            </Principal>
+            <Dependent Role="XBETMatchResult">
+              <PropertyRef Name="MatchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="XBETMatchInfoLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LeagueName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="LeagueNameEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="MatchDate" Type="Int64" Nullable="false" />
+          <Property Name="MatchNumber" Type="Int32" Nullable="false" />
+          <Property Name="MatchType" Type="Int32" Nullable="false" />
+          <Property Name="MatchEndTime" Type="Int64" Nullable="false" />
+          <Property Name="HTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="HTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamNum" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeam" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CTeamEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="BetType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Odds" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OddsUpdateTime" Type="Int64" />
+          <Property Name="CurrentScore" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TimeSec" Type="Int32" />
+          <Property Name="Finished" Type="Boolean" Nullable="false" />
+          <Property Name="TimeRun" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatchUserBetLog">
+          <Key>
+            <PropertyRef Name="BetId" />
+          </Key>
+          <Property Name="BetId" Type="Int64" Nullable="false" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="BetValue" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="BetType" Type="Int32" Nullable="false" />
+          <Property Name="BetBonus" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="BetTime" Type="Int64" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsSettle" Type="Byte" Nullable="false" />
+          <Property Name="SettleTime" Type="DateTime" Precision="3" />
+          <Property Name="IsGetPrize" Type="Int32" Nullable="false" />
+          <Property Name="GetTime" Type="DateTime" Precision="3" />
+          <Property Name="BetSource" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MatchUserBetContentLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BetId" Type="Int64" Nullable="false" />
+          <Property Name="MatchID" Type="Int64" Nullable="false" />
+          <Property Name="BetType" Type="Int32" Nullable="false" />
+          <Property Name="BetContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="BetKey" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IsSettle" Type="Int32" />
+          <Property Name="SettleIor" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="BetScore" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SystemDictionary">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentId" Type="Int64" Nullable="false" />
+          <Property Name="DictionaryName" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="DictionaryNameEn" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="DictionaryNamePt" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Sort" Type="Int32" Nullable="false" />
+          <Property Name="IsLock" Type="FT.Model.LockEnum" Nullable="false" />
+          <Property Name="DictionaryValue" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SystemTask">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Guid" Nullable="false" />
+          <Property Name="TaskName" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CronExpressionString" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Assembly" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Class" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="FT.Model.TaskRunEnum" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="ModifyOn" Type="DateTime" Precision="3" />
+          <Property Name="RecentRunTime" Type="DateTime" Precision="3" />
+          <Property Name="LastRunTime" Type="DateTime" Precision="3" />
+          <Property Name="CronRemark" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EnumType Name="TaskRunEnum" a:ExternalTypeName="TaskRunEnum" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EnumType Name="BetStatus" a:ExternalTypeName="BetStatus" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration" />
+        <EntityType Name="BeiJingKL8Archive">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OriginalId" Type="Int64" Nullable="false" />
+          <Property Name="TermNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LotteryNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SortedNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SingleNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="LotteryTime" Type="DateTime" Precision="3" />
+          <Property Name="ArchiveTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BeiJingKL8Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TermNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LotteryNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SortedLotNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SingleNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LotteryTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="GameBeijing16Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TermNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LotteryNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NextAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAreaResult" Type="Int32" />
+          <Property Name="NextAreaResult" Type="Int32" />
+          <Property Name="LastAreaResult" Type="Int32" />
+          <Property Name="LotteryTime" Type="DateTime" Precision="3" />
+          <Property Name="IsSynch" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="GameBeijing28Source">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TermNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LotteryNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SortNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NextAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAreaResult" Type="Int32" />
+          <Property Name="NextAreaResult" Type="Int32" />
+          <Property Name="LastAreaResult" Type="Int32" />
+          <Property Name="LotteryTime" Type="DateTime" Precision="3" />
+          <Property Name="IsSync" Type="Boolean" />
+          <Property Name="SyncTime" Type="DateTime" Precision="3" />
+          <Property Name="FirstAreaMantissa" Type="Int32" />
+          <Property Name="NextAreaMantissa" Type="Int32" />
+          <Property Name="LastAreaMantissa" Type="Int32" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FTModelStoreContainer" CdmEntityContainer="Entity">
+          <EntitySetMapping Name="Admin">
+            <EntityTypeMapping TypeName="FT.Model.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="AgentId" ColumnName="AgentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Card">
+            <EntityTypeMapping TypeName="FT.Model.Card">
+              <MappingFragment StoreEntitySet="Card">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsUsed" ColumnName="IsUsed" />
+                <ScalarProperty Name="UseDate" ColumnName="UseDate" />
+                <ScalarProperty Name="GroupID" ColumnName="GroupID" />
+                <ScalarProperty Name="CardPwd" ColumnName="CardPwd" />
+                <ScalarProperty Name="CardNum" ColumnName="CardNum" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CardGroup">
+            <EntityTypeMapping TypeName="FT.Model.CardGroup">
+              <MappingFragment StoreEntitySet="CardGroup">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchInfo">
+            <EntityTypeMapping TypeName="FT.Model.MatchInfo">
+              <MappingFragment StoreEntitySet="MatchInfo">
+                <ScalarProperty Name="CurrentScore" ColumnName="CurrentScore" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="IsMaster" ColumnName="IsMaster" />
+                <ScalarProperty Name="MaxLimit" ColumnName="MaxLimit" />
+                <ScalarProperty Name="MinLimit" ColumnName="MinLimit" />
+                <ScalarProperty Name="SettleUserId" ColumnName="SettleUserId" />
+                <ScalarProperty Name="SettleTime" ColumnName="SettleTime" />
+                <ScalarProperty Name="IsSettle" ColumnName="IsSettle" />
+                <ScalarProperty Name="CTeamEn" ColumnName="CTeamEn" />
+                <ScalarProperty Name="HTeamEn" ColumnName="HTeamEn" />
+                <ScalarProperty Name="LeagueNameEn" ColumnName="LeagueNameEn" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="OddsUpdateTime" ColumnName="OddsUpdateTime" />
+                <ScalarProperty Name="Odds" ColumnName="Odds" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="CTeam" ColumnName="CTeam" />
+                <ScalarProperty Name="CTeamNum" ColumnName="CTeamNum" />
+                <ScalarProperty Name="HTeam" ColumnName="HTeam" />
+                <ScalarProperty Name="HTeamNum" ColumnName="HTeamNum" />
+                <ScalarProperty Name="MatchEndTime" ColumnName="MatchEndTime" />
+                <ScalarProperty Name="MatchType" ColumnName="MatchType" />
+                <ScalarProperty Name="MatchNumber" ColumnName="MatchNumber" />
+                <ScalarProperty Name="MatchDate" ColumnName="MatchDate" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchInfoLog">
+            <EntityTypeMapping TypeName="FT.Model.MatchInfoLog">
+              <MappingFragment StoreEntitySet="MatchInfoLog">
+                <ScalarProperty Name="CTeamEn" ColumnName="CTeamEn" />
+                <ScalarProperty Name="HTeamEn" ColumnName="HTeamEn" />
+                <ScalarProperty Name="LeagueNameEn" ColumnName="LeagueNameEn" />
+                <ScalarProperty Name="OddsUpdateTime" ColumnName="OddsUpdateTime" />
+                <ScalarProperty Name="Odds" ColumnName="Odds" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="CTeam" ColumnName="CTeam" />
+                <ScalarProperty Name="CTeamNum" ColumnName="CTeamNum" />
+                <ScalarProperty Name="HTeam" ColumnName="HTeam" />
+                <ScalarProperty Name="HTeamNum" ColumnName="HTeamNum" />
+                <ScalarProperty Name="MatchEndTime" ColumnName="MatchEndTime" />
+                <ScalarProperty Name="MatchType" ColumnName="MatchType" />
+                <ScalarProperty Name="MatchNumber" ColumnName="MatchNumber" />
+                <ScalarProperty Name="MatchDate" ColumnName="MatchDate" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchUserBet">
+            <EntityTypeMapping TypeName="FT.Model.MatchUserBet">
+              <MappingFragment StoreEntitySet="MatchUserBet">
+                <ScalarProperty Name="ValidAmount" ColumnName="ValidAmount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BetSource" ColumnName="BetSource" />
+                <ScalarProperty Name="GetTime" ColumnName="GetTime" />
+                <ScalarProperty Name="IsGetPrize" ColumnName="IsGetPrize" />
+                <ScalarProperty Name="SettleTime" ColumnName="SettleTime" />
+                <ScalarProperty Name="IsSettle" ColumnName="IsSettle" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="BetTime" ColumnName="BetTime" />
+                <ScalarProperty Name="BetBonus" ColumnName="BetBonus" />
+                <ScalarProperty Name="BetValue" ColumnName="BetValue" />
+                <ScalarProperty Name="BetId" ColumnName="BetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchUserBetContent">
+            <EntityTypeMapping TypeName="FT.Model.MatchUserBetContent">
+              <MappingFragment StoreEntitySet="MatchUserBetContent">
+                <ScalarProperty Name="BetScore" ColumnName="BetScore" />
+                <ScalarProperty Name="SettleIor" ColumnName="SettleIor" />
+                <ScalarProperty Name="IsSettle" ColumnName="IsSettle" />
+                <ScalarProperty Name="BetKey" ColumnName="BetKey" />
+                <ScalarProperty Name="BetContent" ColumnName="BetContent" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+                <ScalarProperty Name="BetId" ColumnName="BetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="FT.Model.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleNameEn" ColumnName="RoleNameEn" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IsLock" ColumnName="IsLock" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolePrivilege">
+            <EntityTypeMapping TypeName="FT.Model.RolePrivilege">
+              <MappingFragment StoreEntitySet="RolePrivilege">
+                <ScalarProperty Name="Privilege" ColumnName="Privilege" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserAccount">
+            <EntityTypeMapping TypeName="FT.Model.UserAccount">
+              <MappingFragment StoreEntitySet="UserAccount">
+                <ScalarProperty Name="ReturnRate" ColumnName="ReturnRate" />
+                <ScalarProperty Name="SafePassword" ColumnName="SafePassword" />
+                <ScalarProperty Name="CreditLimit" ColumnName="CreditLimit" />
+                <ScalarProperty Name="ParentPath" ColumnName="ParentPath" />
+                <ScalarProperty Name="PlatFrom" ColumnName="PlatFrom" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Menus">
+            <EntityTypeMapping TypeName="FT.Model.Menus">
+              <MappingFragment StoreEntitySet="Menus">
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+                <ScalarProperty Name="Icon" ColumnName="Icon" />
+                <ScalarProperty Name="MenuType" ColumnName="MenuType" />
+                <ScalarProperty Name="ButtonLink" ColumnName="ButtonLink" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="SortNum" ColumnName="SortNum" />
+                <ScalarProperty Name="IsLock" ColumnName="IsLock" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleMenu">
+            <EntityTypeMapping TypeName="FT.Model.RoleMenu">
+              <MappingFragment StoreEntitySet="RoleMenu">
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchResult">
+            <EntityTypeMapping TypeName="FT.Model.MatchResult">
+              <MappingFragment StoreEntitySet="MatchResult">
+                <ScalarProperty Name="StartOpen" ColumnName="StartOpen" />
+                <ScalarProperty Name="Result2" ColumnName="Result2" />
+                <ScalarProperty Name="Result1" ColumnName="Result1" />
+                <ScalarProperty Name="Odds" ColumnName="Odds" />
+                <ScalarProperty Name="ResultTime" ColumnName="ResultTime" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashRecord">
+            <EntityTypeMapping TypeName="FT.Model.CashRecord">
+              <MappingFragment StoreEntitySet="CashRecord">
+                <ScalarProperty Name="AuditTime" ColumnName="AuditTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="RejectRemark" ColumnName="RejectRemark" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="BankBranch" ColumnName="BankBranch" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="BankCardNum" ColumnName="BankCardNum" />
+                <ScalarProperty Name="BankType" ColumnName="BankType" />
+                <ScalarProperty Name="AuditorName" ColumnName="AuditorName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserBankInfo">
+            <EntityTypeMapping TypeName="FT.Model.UserBankInfo">
+              <MappingFragment StoreEntitySet="UserBankInfo">
+                <ScalarProperty Name="BankBranch" ColumnName="BankBranch" />
+                <ScalarProperty Name="BankCardNum" ColumnName="BankCardNum" />
+                <ScalarProperty Name="BankType" ColumnName="BankType" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TradeRecord">
+            <EntityTypeMapping TypeName="FT.Model.TradeRecord">
+              <MappingFragment StoreEntitySet="TradeRecord">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="ToUserName" ColumnName="ToUserName" />
+                <ScalarProperty Name="FromUserName" ColumnName="FromUserName" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CardNum" ColumnName="CardNum" />
+                <ScalarProperty Name="TradeAmount" ColumnName="TradeAmount" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ToId" ColumnName="ToId" />
+                <ScalarProperty Name="FromId" ColumnName="FromId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogInfo">
+            <EntityTypeMapping TypeName="FT.Model.LogInfo">
+              <MappingFragment StoreEntitySet="LogInfo">
+                <ScalarProperty Name="LogType" ColumnName="LogType" />
+                <ScalarProperty Name="LogOperate" ColumnName="LogOperate" />
+                <ScalarProperty Name="LogAction" ColumnName="LogAction" />
+                <ScalarProperty Name="LogController" ColumnName="LogController" />
+                <ScalarProperty Name="LogUserIp" ColumnName="LogUserIp" />
+                <ScalarProperty Name="LogUser" ColumnName="LogUser" />
+                <ScalarProperty Name="LogTime" ColumnName="LogTime" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemSetting">
+            <EntityTypeMapping TypeName="FT.Model.SystemSetting">
+              <MappingFragment StoreEntitySet="SystemSetting">
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Key" ColumnName="Key" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AmountWater">
+            <EntityTypeMapping TypeName="FT.Model.AmountWater">
+              <MappingFragment StoreEntitySet="AmountWater">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchBlackList">
+            <EntityTypeMapping TypeName="FT.Model.MatchBlackList">
+              <MappingFragment StoreEntitySet="MatchBlackList">
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="OperateUserId" ColumnName="OperateUserId" />
+                <ScalarProperty Name="LastOperateDate" ColumnName="LastOperateDate" />
+                <ScalarProperty Name="IsBan" ColumnName="IsBan" />
+                <ScalarProperty Name="LeagueNameEn" ColumnName="LeagueNameEn" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdminMessage">
+            <EntityTypeMapping TypeName="FT.Model.AdminMessage">
+              <MappingFragment StoreEntitySet="AdminMessage">
+                <ScalarProperty Name="ReadDate" ColumnName="ReadDate" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="AdminId" ColumnName="AdminId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Message">
+            <EntityTypeMapping TypeName="FT.Model.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="CreateUserName" ColumnName="CreateUserName" />
+                <ScalarProperty Name="IsDrafts" ColumnName="IsDrafts" />
+                <ScalarProperty Name="SendTo" ColumnName="SendTo" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Descriptions" ColumnName="Descriptions" />
+                <ScalarProperty Name="Annexes" ColumnName="Annexes" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SiteAdv">
+            <EntityTypeMapping TypeName="FT.Model.SiteAdv">
+              <MappingFragment StoreEntitySet="SiteAdv">
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="AdvTitle" ColumnName="AdvTitle" />
+                <ScalarProperty Name="AdvImg" ColumnName="AdvImg" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserMessage">
+            <EntityTypeMapping TypeName="FT.Model.UserMessage">
+              <MappingFragment StoreEntitySet="UserMessage">
+                <ScalarProperty Name="ReadDate" ColumnName="ReadDate" />
+                <ScalarProperty Name="IsRead" ColumnName="IsRead" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MessageId" ColumnName="MessageId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XBETMatchInfo">
+            <EntityTypeMapping TypeName="FT.Model.XBETMatchInfo">
+              <MappingFragment StoreEntitySet="XBETMatchInfo">
+                <ScalarProperty Name="TimeRun" ColumnName="TimeRun" />
+                <ScalarProperty Name="Finished" ColumnName="Finished" />
+                <ScalarProperty Name="TimeSec" ColumnName="TimeSec" />
+                <ScalarProperty Name="CurrentScore" ColumnName="CurrentScore" />
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="IsMaster" ColumnName="IsMaster" />
+                <ScalarProperty Name="MaxLimit" ColumnName="MaxLimit" />
+                <ScalarProperty Name="MinLimit" ColumnName="MinLimit" />
+                <ScalarProperty Name="SettleUserId" ColumnName="SettleUserId" />
+                <ScalarProperty Name="SettleTime" ColumnName="SettleTime" />
+                <ScalarProperty Name="IsSettle" ColumnName="IsSettle" />
+                <ScalarProperty Name="OddsUpdateTime" ColumnName="OddsUpdateTime" />
+                <ScalarProperty Name="Odds" ColumnName="Odds" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="CTeamEn" ColumnName="CTeamEn" />
+                <ScalarProperty Name="CTeam" ColumnName="CTeam" />
+                <ScalarProperty Name="CTeamNum" ColumnName="CTeamNum" />
+                <ScalarProperty Name="HTeamEn" ColumnName="HTeamEn" />
+                <ScalarProperty Name="HTeam" ColumnName="HTeam" />
+                <ScalarProperty Name="HTeamNum" ColumnName="HTeamNum" />
+                <ScalarProperty Name="MatchEndTime" ColumnName="MatchEndTime" />
+                <ScalarProperty Name="MatchType" ColumnName="MatchType" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="MatchNumber" ColumnName="MatchNumber" />
+                <ScalarProperty Name="MatchDate" ColumnName="MatchDate" />
+                <ScalarProperty Name="LeagueNameEn" ColumnName="LeagueNameEn" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XBETMatchResult">
+            <EntityTypeMapping TypeName="FT.Model.XBETMatchResult">
+              <MappingFragment StoreEntitySet="XBETMatchResult">
+                <ScalarProperty Name="StartOpen" ColumnName="StartOpen" />
+                <ScalarProperty Name="Result2" ColumnName="Result2" />
+                <ScalarProperty Name="Result1" ColumnName="Result1" />
+                <ScalarProperty Name="Odds" ColumnName="Odds" />
+                <ScalarProperty Name="ResultTime" ColumnName="ResultTime" />
+                <ScalarProperty Name="MatchId" ColumnName="MatchId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="XBETMatchInfoLog">
+            <EntityTypeMapping TypeName="FT.Model.XBETMatchInfoLog">
+              <MappingFragment StoreEntitySet="XBETMatchInfoLog">
+                <ScalarProperty Name="TimeRun" ColumnName="TimeRun" />
+                <ScalarProperty Name="Finished" ColumnName="Finished" />
+                <ScalarProperty Name="TimeSec" ColumnName="TimeSec" />
+                <ScalarProperty Name="CurrentScore" ColumnName="CurrentScore" />
+                <ScalarProperty Name="OddsUpdateTime" ColumnName="OddsUpdateTime" />
+                <ScalarProperty Name="Odds" ColumnName="Odds" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="CTeamEn" ColumnName="CTeamEn" />
+                <ScalarProperty Name="CTeam" ColumnName="CTeam" />
+                <ScalarProperty Name="CTeamNum" ColumnName="CTeamNum" />
+                <ScalarProperty Name="HTeamEn" ColumnName="HTeamEn" />
+                <ScalarProperty Name="HTeam" ColumnName="HTeam" />
+                <ScalarProperty Name="HTeamNum" ColumnName="HTeamNum" />
+                <ScalarProperty Name="MatchEndTime" ColumnName="MatchEndTime" />
+                <ScalarProperty Name="MatchType" ColumnName="MatchType" />
+                <ScalarProperty Name="MatchNumber" ColumnName="MatchNumber" />
+                <ScalarProperty Name="MatchDate" ColumnName="MatchDate" />
+                <ScalarProperty Name="LeagueNameEn" ColumnName="LeagueNameEn" />
+                <ScalarProperty Name="LeagueName" ColumnName="LeagueName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchUserBetLog">
+            <EntityTypeMapping TypeName="FT.Model.MatchUserBetLog">
+              <MappingFragment StoreEntitySet="MatchUserBetLog">
+                <ScalarProperty Name="BetSource" ColumnName="BetSource" />
+                <ScalarProperty Name="GetTime" ColumnName="GetTime" />
+                <ScalarProperty Name="IsGetPrize" ColumnName="IsGetPrize" />
+                <ScalarProperty Name="SettleTime" ColumnName="SettleTime" />
+                <ScalarProperty Name="IsSettle" ColumnName="IsSettle" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="BetTime" ColumnName="BetTime" />
+                <ScalarProperty Name="BetBonus" ColumnName="BetBonus" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="BetValue" ColumnName="BetValue" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="BetId" ColumnName="BetId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MatchUserBetContentLog">
+            <EntityTypeMapping TypeName="FT.Model.MatchUserBetContentLog">
+              <MappingFragment StoreEntitySet="MatchUserBetContentLog">
+                <ScalarProperty Name="BetScore" ColumnName="BetScore" />
+                <ScalarProperty Name="SettleIor" ColumnName="SettleIor" />
+                <ScalarProperty Name="IsSettle" ColumnName="IsSettle" />
+                <ScalarProperty Name="BetKey" ColumnName="BetKey" />
+                <ScalarProperty Name="BetContent" ColumnName="BetContent" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="MatchID" ColumnName="MatchID" />
+                <ScalarProperty Name="BetId" ColumnName="BetId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemDictionary">
+            <EntityTypeMapping TypeName="FT.Model.SystemDictionary">
+              <MappingFragment StoreEntitySet="SystemDictionary">
+                <ScalarProperty Name="DictionaryValue" ColumnName="DictionaryValue" />
+                <ScalarProperty Name="IsLock" ColumnName="IsLock" />
+                <ScalarProperty Name="Sort" ColumnName="Sort" />
+                <ScalarProperty Name="DictionaryNamePt" ColumnName="DictionaryNamePt" />
+                <ScalarProperty Name="DictionaryNameEn" ColumnName="DictionaryNameEn" />
+                <ScalarProperty Name="DictionaryName" ColumnName="DictionaryName" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SystemTask">
+            <EntityTypeMapping TypeName="FT.Model.SystemTask">
+              <MappingFragment StoreEntitySet="SystemTask">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CronRemark" ColumnName="CronRemark" />
+                <ScalarProperty Name="LastRunTime" ColumnName="LastRunTime" />
+                <ScalarProperty Name="RecentRunTime" ColumnName="RecentRunTime" />
+                <ScalarProperty Name="ModifyOn" ColumnName="ModifyOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Assembly" ColumnName="Assembly" />
+                <ScalarProperty Name="CronExpressionString" ColumnName="CronExpressionString" />
+                <ScalarProperty Name="TaskName" ColumnName="TaskName" />
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BeiJingKL8Archive">
+            <EntityTypeMapping TypeName="FT.Model.BeiJingKL8Archive">
+              <MappingFragment StoreEntitySet="BeiJingKL8Archive">
+                <ScalarProperty Name="ArchiveTime" ColumnName="ArchiveTime" />
+                <ScalarProperty Name="LotteryTime" ColumnName="LotteryTime" />
+                <ScalarProperty Name="SingleNumber" ColumnName="SingleNumber" />
+                <ScalarProperty Name="SortedNumber" ColumnName="SortedNumber" />
+                <ScalarProperty Name="LotteryNumber" ColumnName="LotteryNumber" />
+                <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="OriginalId" ColumnName="OriginalId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BeiJingKL8Source">
+            <EntityTypeMapping TypeName="FT.Model.BeiJingKL8Source">
+              <MappingFragment StoreEntitySet="BeiJingKL8Source">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="LotteryTime" ColumnName="LotteryTime" />
+                <ScalarProperty Name="SingleNumber" ColumnName="SingleNumber" />
+                <ScalarProperty Name="SortedLotNumber" ColumnName="SortedLotNumber" />
+                <ScalarProperty Name="LotteryNumber" ColumnName="LotteryNumber" />
+                <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameBeijing16Source">
+            <EntityTypeMapping TypeName="FT.Model.GameBeijing16Source">
+              <MappingFragment StoreEntitySet="GameBeijing16Source">
+                <ScalarProperty Name="IsSynch" ColumnName="IsSynch" />
+                <ScalarProperty Name="LotteryTime" ColumnName="LotteryTime" />
+                <ScalarProperty Name="LastAreaResult" ColumnName="LastAreaResult" />
+                <ScalarProperty Name="NextAreaResult" ColumnName="NextAreaResult" />
+                <ScalarProperty Name="FirstAreaResult" ColumnName="FirstAreaResult" />
+                <ScalarProperty Name="LastAreaNo" ColumnName="LastAreaNo" />
+                <ScalarProperty Name="NextAreaNo" ColumnName="NextAreaNo" />
+                <ScalarProperty Name="FirstAreaNo" ColumnName="FirstAreaNo" />
+                <ScalarProperty Name="LotteryNumber" ColumnName="LotteryNumber" />
+                <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameBeijing28Source">
+            <EntityTypeMapping TypeName="FT.Model.GameBeijing28Source">
+              <MappingFragment StoreEntitySet="GameBeijing28Source">
+                <ScalarProperty Name="LastAreaMantissa" ColumnName="LastAreaMantissa" />
+                <ScalarProperty Name="NextAreaMantissa" ColumnName="NextAreaMantissa" />
+                <ScalarProperty Name="FirstAreaMantissa" ColumnName="FirstAreaMantissa" />
+                <ScalarProperty Name="SyncTime" ColumnName="SyncTime" />
+                <ScalarProperty Name="IsSync" ColumnName="IsSync" />
+                <ScalarProperty Name="LotteryTime" ColumnName="LotteryTime" />
+                <ScalarProperty Name="LastAreaResult" ColumnName="LastAreaResult" />
+                <ScalarProperty Name="NextAreaResult" ColumnName="NextAreaResult" />
+                <ScalarProperty Name="FirstAreaResult" ColumnName="FirstAreaResult" />
+                <ScalarProperty Name="LastAreaNo" ColumnName="LastAreaNo" />
+                <ScalarProperty Name="NextAreaNo" ColumnName="NextAreaNo" />
+                <ScalarProperty Name="FirstAreaNo" ColumnName="FirstAreaNo" />
+                <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
+                <ScalarProperty Name="LotteryNumber" ColumnName="LotteryNumber" />
+                <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

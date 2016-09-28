@@ -1,0 +1,19 @@
+﻿<Window x:Class="FT.Update.LaunchUpdate"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Icon="update.ico"
+        Title="Update" Height="102" Width="582" WindowStartupLocation="CenterScreen"
+        WindowState="Normal" ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFDCECFA" Offset="1"/>
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="#FFE7F2FB" Offset="0.371"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid>
+        <ProgressBar Margin="12,32,12,0" Name="progressBar" VerticalAlignment="Top" Height="24" Width="552" />
+        <TextBlock Height="21" HorizontalAlignment="Left" Margin="12,8,0,0" Name="TblStatus" VerticalAlignment="Top" Width="235" Text="Update In Progress" TextAlignment="Left" />
+        <TextBlock HorizontalAlignment="Right" Margin="0,10,12,0" Name="TblFileName" Text="更新中的文件名" TextAlignment="Right" Width="231" FontSize="12" Height="21" VerticalAlignment="Top" />
+    </Grid>
+</Window>

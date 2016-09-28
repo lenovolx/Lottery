@@ -1,0 +1,188 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+<script src="~/Areas/PlatAdmin/Scripts/ft.ext.linkbutton.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table id="tg" title="" style="width:100%;height:100%;" toolbar="#toolbar">
+        </table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }    
+</div>
+<div id="dlg" class="easyui-dialog" style="width:400px;height:320px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" novalidate>
+        <div class="fitem">
+            <label>名称:</label>
+            <input id="Name" name="Name" class="easyui-textbox" required="true">
+            <input id="Id" name="Id" type="hidden">
+            <input id="ParentId" name="ParentId" type="hidden">
+        </div>
+        <div class="fitem">
+            <label>英文名称:</label>
+            <input id="NameEn" name="NameEn" class="easyui-textbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>链接地址:</label>
+            <input id="Url" name="Url" class="easyui-textbox" required="true">
+        </div>
+
+        <div class="fitem">
+            <label>排序:</label>
+            <input id="SortNum" name="SortNum" class="easyui-numberspinner" value="0" data-options="increment:1" required="true" />
+        </div>
+        <div class="fitem">
+            <label>类型:</label>
+            <input id="selMenuType" name="selMenuType" data-options="
+				method: 'get',
+				panelWidth: 150,
+				panelHeight: 'auto'" required="true">
+            <input type="hidden" id="MenuType" name="MenuType" />
+        </div>
+        <div class="fitem">
+            <label>动作:</label>
+            <input id="ButtonLink" name="ButtonLink" class="easyui-textbox" required="true">
+        </div>
+        <div class="fitem">
+            <label>图标:</label>
+            <input id="Icon" name="Icon" class="easyui-textbox">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="menu.saveMenu(this)" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlg').dialog('close');" style="width:90px">取消</a>
+</div>
+<script type="text/javascript">
+    var url;
+    $(function () {
+        menu.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+        $('#tg').treegrid({
+            url: '/PlatAdmin/System/MenuGrid/0',
+            method: 'post',
+            idField: 'Id',
+            treeField: 'Name',
+            rownumbers: true,
+            parentField: '_parentId',
+            fit: true,
+            fitColumns: true,
+            border: true,
+            columns: [[
+                        { field: 'Id', width: 10, title: $.i18n.prop('menu_id_title') },
+                        { field: 'Name', width: 50, title: $.i18n.prop('menu_name_title') },
+                        { field: 'Url', width: 60, title: $.i18n.prop('menu_url_title') },
+                        { field: 'MenuType', width: 20, title: $.i18n.prop('menu_type_title') },
+                        { field: 'ButtonLink', width: 30, title: $.i18n.prop('menu_link_title') },
+                        { field: 'SortNum', width: 20, title: $.i18n.prop('menu_sortnum_title') },
+                        { field: 'Icon', width: 20, title: $.i18n.prop('menu_icon_title') }
+            ]],
+            onBeforeExpand: function (row) {
+                var url = '/PlatAdmin/System/MenuGrid/' + row.Id;
+                $("#tg").treegrid("options").url = url;
+                return true;
+            },
+            onClickRow: function (row) {
+                $('#badd').linkbutton("enable");
+                $('#bedit').linkbutton("enable");
+                if ($('#tg').treegrid('isLeaf', row.Id)) {
+                    $('#bdel').linkbutton("enable");
+                } else { $('#bdel').linkbutton("disable"); }
+            }
+        });
+        $('#selMenuType').combobox({
+            url: '/PlatAdmin/System/ComBoxMenuType',
+            valueField: 'Id',
+            textField: 'Name',
+            editable: false,
+            onSelect: function (pars) {
+                $("#MenuType").val(pars.Id);
+            }
+        });
+        $("#btn_AddMenu").on("click", function () {
+            var node = $('#tg').treegrid('getSelected');
+            $('#fm').form('clear');
+            if (node.MenuType !== "菜单" && node.MenuType !== "Menu") {
+                $.messager.show({
+                    title: '提示信息',
+                    msg: '不能在非菜单项下添加功能'
+                });
+            }
+            else {
+                $('#Url').textbox('setValue', '无');
+                $("#SortNum").textbox('setValue', "0");
+                $("#ButtonLink").textbox('setValue', "无");
+                $("#ParentId").val(node.Id);
+                var data = $('#selMenuType').combobox('getData');
+                if (data.length > 0) {
+                    $("#selMenuType").combobox('select', data[0].Id);
+                }
+                $("#MenuType").val($("#selMenuType").combobox('getValue'));
+                $('#dlg').dialog('open').dialog('setTitle', '添加模块');
+                url = '/PlatAdmin/System/CreateMenu/';
+            }
+        });
+        $("#btn_EditMenu").on("click", function () {
+            var node = $('#tg').treegrid('getSelected');
+            if (node) {
+                $('#dlg').dialog('open').dialog('setTitle', '编辑模块');
+                console.log(node);
+                $('#fm').form('load', node);
+                $("#selMenuType").combobox('setValue', node.MenuType);
+                $("#Id").val(node.Id);
+                $("#ParentId").val(node._parentId);
+                $("#MenuType").val($("#selMenuType").combobox('getValue'));
+                url = '/PlatAdmin/System/EditMenu/';
+            }
+        });
+    });
+    var menu = menu || {};
+    (function() {
+        menu.loadLanguage = function(language) {
+            jQuery.i18n.properties({
+                name: 'language',
+                path: '/i18n/admin/',
+                mode: 'map',
+                language: language
+            });
+        };
+        menu.saveMenu = function(obj) {
+            $(obj).linkbutton("disable");
+            setTimeout(function() {
+                $(obj).linkbutton("enable");
+            }, 2000);
+            $('#fm').form('submit', {
+                url: url,
+                onSubmit: function() {
+                    return $(this).form('validate');
+                },
+                success: function(result) {
+                    result = eval('(' + result + ')');
+                    if (result.code !== 0) {
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: result.errors
+                        });
+                    } else {
+                        $('#dlg').dialog('close');
+                        $('#tg').treegrid("reload", 0);
+                        $.messager.show({
+                            title: '系统提示',
+                            msg: '操作成功'
+                        });
+                    }
+                }
+            });
+        };
+    })();
+</script>

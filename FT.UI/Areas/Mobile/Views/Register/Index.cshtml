@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "用户注册";
+}
+<div id="page-layout" class="page">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back">
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class="title">@ViewBag.Title</h1>
+    </header>
+    <div class="content">
+        <div class="list-block media-list inset">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media">
+                            <i class="icon icon-form-name"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="text" placeholder="帐号" class="user_name">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media">
+                            <i class="icon icon-form-password"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="password" placeholder="密码" class="user_pass" maxlength="12">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media">
+                            <i class="icon icon-form-password"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="password" placeholder="确认密码" class="user_repass" maxlength="12">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <a href="javascript:void(0)" class="button-flot button-big button-fill button-danger btn_register">注册</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section style
+{
+    <link href="~/Areas/Mobile/Content/css/ft.login.css" rel="stylesheet" />
+}
+@section script
+{
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.login.js"></script>
+}

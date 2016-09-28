@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="ff6bde85a6564855a1a276f04bf1ad5a" Name="Diagram1" DisplayType="true" ZoomLevel="100">
+        <EntityTypeShape EntityType="FT.Model.Admin" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FT.Model.Card" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="FT.Model.CardGroup" Width="1.5" PointX="0.75" PointY="5.125" />
+        <EntityTypeShape EntityType="FT.Model.MatchInfo" Width="2.625" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="FT.Model.MatchInfoLog" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="FT.Model.MatchUserBet" Width="2" PointX="0.5" PointY="1" />
+        <EntityTypeShape EntityType="FT.Model.MatchUserBetContent" Width="1.5" PointX="3" PointY="1.125" />
+        <EntityTypeShape EntityType="FT.Model.Role" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="FT.Model.RolePrivilege" Width="1.5" PointX="2.75" PointY="8.75" />
+        <EntityTypeShape EntityType="FT.Model.UserAccount" Width="2.25" PointX="6.75" PointY="8.75" />
+        <AssociationConnector Association="FT.Model.FK_CARD_REFERENCE_CARDGROU" />
+        <AssociationConnector Association="FT.Model.FK_MATCHUSE_REFERENCE_MATCHUSE" />
+        <EntityTypeShape EntityType="FT.Model.Menus" Width="1.5" PointX="9.375" PointY="8.75" />
+        <EntityTypeShape EntityType="FT.Model.RoleMenu" Width="1.5" PointX="10.375" PointY="0.75" />
+        <AssociationConnector Association="FT.Model.RoleRoleMenu" />
+        <AssociationConnector Association="FT.Model.MenusRoleMenu" />
+        <AssociationConnector Association="FT.Model.RoleAdmin" />
+        <AssociationConnector Association="FT.Model.UserAccountMatchUserBet" />
+        <EntityTypeShape EntityType="FT.Model.MatchResult" Width="1.5" PointX="10.375" PointY="3.75" />
+        <AssociationConnector Association="FT.Model.MatchInfoMatchUserBetContent" />
+        <EntityTypeShape EntityType="FT.Model.CashRecord" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="FT.Model.UserBankInfo" Width="1.5" PointX="11.75" PointY="7.75" />
+        <EntityTypeShape EntityType="FT.Model.TradeRecord" Width="1.5" PointX="3.375" PointY="11.75" />
+        <AssociationConnector Association="FT.Model.UserAccountUserBankInfo" />
+        <AssociationConnector Association="FT.Model.UserAccountCashRecord" />
+        <AssociationConnector Association="FT.Model.fk_matchid" />
+        <AssociationConnector Association="FT.Model.UserAccountAdmin" />
+        <EntityTypeShape EntityType="FT.Model.LogInfo" Width="1.5" PointX="11.375" PointY="12" />
+        <AssociationConnector Association="FT.Model.TradeRecordUserAccount" />
+        <EntityTypeShape EntityType="FT.Model.SystemSetting" Width="1.5" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FT.Model.AmountWater" Width="1.5" PointX="12.375" PointY="3.75" />
+        <AssociationConnector Association="FT.Model.AmountWaterUserAccount" />
+        <EntityTypeShape EntityType="FT.Model.MatchBlackList" Width="1.5" PointX="13.375" PointY="11.75" />
+        <AssociationConnector Association="FT.Model.AdminMatchBlackList" />
+        <EntityTypeShape EntityType="FT.Model.AdminMessage" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FT.Model.Message" Width="1.5" PointX="14.375" PointY="3.75" />
+        <EntityTypeShape EntityType="FT.Model.SiteAdv" Width="1.5" PointX="5.375" PointY="14.75" />
+        <EntityTypeShape EntityType="FT.Model.UserMessage" Width="1.5" PointX="14.375" PointY="7.75" />
+        <AssociationConnector Association="FT.Model.AdminMessageMessage" />
+        <AssociationConnector Association="FT.Model.AdminMessageAdmin" />
+        <EntityTypeShape EntityType="FT.Model.XBETMatchInfo" Width="1.5" PointX="7.375" PointY="14.75" />
+        <EntityTypeShape EntityType="FT.Model.XBETMatchResult" Width="1.5" PointX="9.625" PointY="16.375" />
+        <AssociationConnector Association="FT.Model.fk_xbetmatchid" />
+        <EntityTypeShape EntityType="FT.Model.XBETMatchInfoLog" Width="1.5" PointX="15.375" PointY="10.75" />
+        <EntityTypeShape EntityType="FT.Model.MatchUserBetLog" Width="1.5" PointX="12.375" PointY="16.125" />
+        <EntityTypeShape EntityType="FT.Model.MatchUserBetContentLog" Width="1.5" PointX="16.375" PointY="1.125" />
+        <EntityTypeShape EntityType="FT.Model.SystemDictionary" Width="1.5" PointX="0.75" PointY="17" />
+        <EntityTypeShape EntityType="FT.Model.SystemTask" Width="1.5" PointX="16.375" PointY="5" />
+        <EntityTypeShape EntityType="FT.Model.BeiJingKL8Archive" Width="1.5" PointX="14.375" PointY="17" />
+        <EntityTypeShape EntityType="FT.Model.BeiJingKL8Source" Width="1.5" PointX="16.375" PointY="17" />
+        <EntityTypeShape EntityType="FT.Model.GameBeijing16Source" Width="1.5" PointX="3.375" PointY="18" />
+        <EntityTypeShape EntityType="FT.Model.GameBeijing28Source" Width="1.5" PointX="17.375" PointY="10" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

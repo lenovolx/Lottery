@@ -1,0 +1,30 @@
+时间：2016-09-26 12:46:28,625 
+级别：ERROR 
+类名：FT.UI.Areas.Mobile.Attributes.ErrorAttribute.OnException  
+描述：异常页面：/m/Login
+引发异常源：ServiceStack.Redis
+消息类型：RedisException
+消息内容：Exceeded timeout of 00:00:03
+引发异常的方法：T SendReceive[T](Byte[][], System.Func`1[T], System.Action`1[System.Func`1[T]], Boolean)
+堆栈信息：   在 ServiceStack.Redis.RedisNativeClient.SendReceive[T](Byte[][] cmdWithBinaryArgs, Func`1 fn, Action`1 completePipelineFn, Boolean sendWithoutRead)
+   在 ServiceStack.Redis.RedisNativeClient.SendExpectData(Byte[][] cmdWithBinaryArgs)
+   在 ServiceStack.Redis.RedisNativeClient.GetBytes(String key)
+   在 ServiceStack.Redis.RedisNativeClient.Get(String key)
+   在 ServiceStack.Redis.RedisClient.GetValue(String key)
+   在 ServiceStack.Redis.RedisClient.<>c__DisplayClass34`1.<Get>b__33(RedisClient r)
+   在 ServiceStack.Redis.RedisClient.Exec[T](Func`2 action)
+   在 ServiceStack.Redis.RedisClient.Get[T](String key)
+   在 FT.Plugin.Cache.Redis.RedisCache.Get[T](String key) 位置 C:\Users\fengyan\Desktop\CodeFiles\Lottery\FT.Plugins\FT.Plugin.Cache.Redis\RedisCache.cs:行号 43
+   在 FT.Plugin.Cache.Cache.Get[T](String key) 位置 f:\TFS\FT\FT.Plugins\FT.Plugin.Cache\Cache.cs:行号 37
+   在 FT.Repository.SystemSettingRepository.GetSetting() 位置 C:\Users\fengyan\Desktop\CodeFiles\Lottery\FT.Repository\SystemSettingRepository.cs:行号 21
+   在 FT.UI.Areas.Mobile.Controllers.BaseController.get_SystemSetting() 位置 C:\Users\fengyan\Desktop\CodeFiles\Lottery\FT.UI\Areas\Mobile\Controllers\BaseController.cs:行号 18
+   在 FT.UI.Areas.Mobile.Controllers.BaseController.OnActionExecuting(ActionExecutingContext filterContext) 位置 C:\Users\fengyan\Desktop\CodeFiles\Lottery\FT.UI\Areas\Mobile\Controllers\BaseController.cs:行号 22
+   在 System.Web.Mvc.Controller.System.Web.Mvc.IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.AsyncInvocationWithFilters.InvokeActionMethodFilterAsynchronouslyRecursive(Int32 filterIndex)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass33.<BeginInvokeActionMethodWithFilters>b__31(AsyncCallback asyncCallback, Object asyncState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResult`1.CallBeginDelegate(AsyncCallback callback, Object callbackState)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.WrappedAsyncResultBase`1.Begin(AsyncCallback callback, Object state, Int32 timeout)
+   在 System.Web.Mvc.Async.AsyncResultWrapper.Begin[TResult](AsyncCallback callback, Object state, BeginInvokeDelegate beginDelegate, EndInvokeDelegate`1 endDelegate, Object tag, Int32 timeout)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.BeginInvokeActionMethodWithFilters(ControllerContext controllerContext, IList`1 filters, ActionDescriptor actionDescriptor, IDictionary`2 parameters, AsyncCallback callback, Object state)
+   在 System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass21.<BeginInvokeAction>b__19(AsyncCallback asyncCallback, Object asyncState) 
+

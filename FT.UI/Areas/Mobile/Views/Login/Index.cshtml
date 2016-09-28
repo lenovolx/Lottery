@@ -1,0 +1,92 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "用户登录";
+}
+@model FT.Model.ViewModel.TimeZoneViewModel
+@using Newtonsoft.Json
+@{
+    var localTimeZone = "[]";
+}
+@section style
+{<link href="~/Areas/Mobile/Content/css/ft.login.css" rel="stylesheet" />
+    <link href="~/Areas/Mobile/Content/css/sm-extend.css" rel="stylesheet" />}
+<div id="page-layout" class="page">
+    <header class="bar bar-nav">
+        <h1 class="title">@ViewBag.Title</h1>
+        <a class="icon icon-browser pull-right langue-change open-panel"><span>简体中文</span></a>
+    </header>
+    <div class="content">
+        <div class="list-block media-list inset">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media">
+                            <i class="icon icon-form-timezone"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="text" placeholder="选择时区" class="user_timezone">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media">
+                            <i class="icon icon-form-name"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="text" placeholder="请输入帐号" class="user_name">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media">
+                            <i class="icon icon-form-password"></i>
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="password" placeholder="请输入密码" class="user_pass" maxlength="12">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="item-content login-checkbox">
+            <div class="item-inner">
+                <div class="item-input pull-left">
+                    <label class="label-switch">
+                        <input type="checkbox" class="rember">
+                        <div class="checkbox">记住密码</div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <a href="javascript:void(0)" class="button-flot button-big button-fill button-danger btn_login">登录</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-right panel-reveal theme-dark" id='panel-right-lang'>
+    <div class="content-block panel-template">
+
+    </div>
+</div>
+@section script
+    {<script src="~/Areas/Mobile/Scripts/template.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.login.js"></script>
+    <script type="text/javascript">
+        @if (Model.cn != null && Model.PointValue!=null)
+        {
+            localTimeZone = JsonConvert.SerializeObject(Model);
+        }
+        var localTimeZone =@Html.Raw(localTimeZone);
+    </script>}

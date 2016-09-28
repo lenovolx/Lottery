@@ -1,0 +1,111 @@
+﻿<Controls:MetroWindow x:Class="FT.WinForm.HistoryAccount"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ext="clr-namespace:FT.WinForm"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             Height="500" Width="800" WindowStyle="None" TitlebarHeight="0" ResizeMode="NoResize" 
+            WindowStartupLocation="CenterScreen"  ShowInTaskbar="False"
+            Icon="/Image/favicon.ico">
+    <Window.Resources>
+        <Style x:Key="tblTitle" TargetType="TextBlock">
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+        <Style  TargetType="TextBlock">
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="TextAlignment" Value="Center"></Setter>
+            <Setter Property="Foreground" Value="#6186a4"/>
+        </Style>
+        <Style x:Key="SearchButtonStyle" TargetType="Button" BasedOn="{StaticResource  AccentedSquareButtonStyle}">
+            <Setter Property="Control.BorderBrush" Value="{x:Null}" />
+            <Setter Property="Background" Value="#9ac6e8"></Setter>
+            <Setter Property="Focusable" Value="False"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#8ebbe4"/>
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#9ac6e8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Margin="0" Background="#003261" MouseLeftButtonDown="Grid_MouseLeftButtonDown">
+            <TextBlock Text="{DynamicResource str_HistoryBetTitle}" HorizontalAlignment="Left" Foreground="White" Margin="10" FontSize="18"></TextBlock>
+            <Button Click="BtnCancel_Click" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,10,0" Background="Transparent" BorderThickness="0" Style="{StaticResource AccentedSquareButtonStyle}">
+                <Path  Margin="0" Data="M50,25 L25,50 M25,25 50,50" Fill="White" Stretch="Fill" Stroke="White" StrokeThickness="1" HorizontalAlignment="Right"/>
+            </Button>
+            <StackPanel Margin="200,0,0,0" Orientation="Horizontal" Height="30">
+                <TextBlock Text="{DynamicResource str_Date}" Margin="0,0,0,0" Height="22" FontSize="14" Foreground="White" HorizontalAlignment="Left"></TextBlock>
+                <DatePicker Name="dpStartDate" CalendarStyle="{StaticResource CalendarStyle}" IsTodayHighlighted="False" Focusable="False" Margin="10,0,0,0" Height="30" Width="150" HorizontalAlignment="Left"></DatePicker>
+                <TextBlock Text="-" Foreground="White" Height="20" VerticalAlignment="Center" FontWeight="Bold" Margin="10,0,0,5"></TextBlock>
+                <DatePicker Name="dpEndDate" CalendarStyle="{StaticResource CalendarStyle}" IsTodayHighlighted="False" Focusable="False" Margin="10,0,0,0" Height="30" Width="150" HorizontalAlignment="Left"></DatePicker>
+                <Button Padding="0" Click="btnSearch_Click" Name="btnSearch" Width="30" Height="30" VerticalAlignment="Center" Margin="5,0,10,0" BorderThickness="0" Style="{StaticResource SearchButtonStyle}">
+                    <Image Source="/Image/Search-Find.png" Width="20" Height="20" Stretch="Fill" Margin="0"></Image>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Name="headGrid" ext:GridHelper.ShowBorder="true" Margin="-1,0,0,0" Height="30" Background="#03457F" VerticalAlignment="Top">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140" ></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+                    <ColumnDefinition Width="180" ></ColumnDefinition>
+                    <ColumnDefinition Width="180" ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <TextBlock Width="110" Text="{DynamicResource str_Date}" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <TextBlock Width="180" Text="{DynamicResource str_HeaderBetValue}" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <TextBlock Width="180"  Text="{DynamicResource str_HeaderValidValue}" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <TextBlock  Width="180" Text="{DynamicResource str_HeaderBetBonus}" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+            </Grid>
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Hidden" Margin="0 0 0 0" >
+                <ScrollViewer.Content>
+                    <StackPanel Name="dymSP" >
+
+                    </StackPanel>
+                </ScrollViewer.Content>
+            </ScrollViewer>
+            <Grid Grid.Row="2" Name="footGrid" ext:GridHelper.ShowBorder="true" Margin="0,0,0,-1" Height="30" Background="#03457F" VerticalAlignment="Bottom">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140" ></ColumnDefinition>
+                    <ColumnDefinition Width="180"></ColumnDefinition>
+                    <ColumnDefinition Width="180" ></ColumnDefinition>
+                    <ColumnDefinition Width="180" ></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <TextBlock Text="{DynamicResource str_Sum}" Width="140" TextAlignment="Center" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+                <Grid Grid.Column="1" >
+                    <TextBlock Name="tblTotalBetValue" Text="" Width="180" TextAlignment="Center" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+                <Grid Grid.Column="2">
+                    <TextBlock Name="tblTotalValidValue" Width="180" Text="" TextAlignment="Center" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+                <Grid Grid.Column="3">
+                    <TextBlock Name="tblTotalBetBonus" Width="180" Text="" TextAlignment="Center" Style="{StaticResource tblTitle}"></TextBlock>
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Controls:MetroWindow>

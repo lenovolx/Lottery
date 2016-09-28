@@ -1,0 +1,179 @@
+﻿@{
+    Layout = "~/Areas/Mobile/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "账户历史";
+}
+<div id="historylist" class="page">
+    <header class="bar bar-nav">
+        <a class="button button-link button-nav pull-left back" href="/m/user/ucenter">
+            <span class="icon icon-left"></span>
+        </a>
+        <h1 class="title">@ViewBag.Title</h1>
+        <a class="button button-link button-nav pull-right langue-change">
+            <span class="span-search" onclick="history.openSearchBar('.searchExist');">搜寻</span>
+        </a>
+    </header>
+    <div class="content">
+        <div class="list-block">
+            <div class="row head-row">
+                <div class="col-25 text-center"><span class="head0">日期</span> </div>
+                <div class="col-25 text-center"><span class="head1">投注额</span> </div>
+                <div class="col-25 text-center"><span class="head2">有效金额</span> </div>
+                <div class="col-25 text-center"><span class="head3">输/赢</span> </div>
+            </div>
+            <!--搜索条件-->
+            <div class="searchExist openbox">
+                <span>日期</span>
+                <span><input type="text" placeholder="开始时间" class="sdate" /></span>
+                <span>到</span>
+                <span><input type="text" placeholder="结束时间" class="edate" /></span>
+                <span><a href="javascript:void(0);" class="button button-big button-fill button-success btn-search">搜索</a></span>
+
+            </div>
+            <!--/搜索条件-->
+            <div class="list-container history_ul"></div>
+        </div>
+    </div>
+    <nav class="bar bar-tab">
+        <div class="row nav-row nav-total">
+
+        </div>
+    </nav>
+</div>
+<script type="text/html" id="history_tpl">
+    {{each data.Grid as item}}
+    <div class="row data-row">
+        <div class="col-25 text-center">
+            {{if item.BetAmount==0}}
+            <i>{{#item.DateTimes}}</i><i>{{#item.DateWeek}}</i>
+            {{else}}
+            <a href="/m/user/historydetail?date={{#item.DateTimes}}"> <i>{{#item.DateTimes}}</i><i>{{#item.DateWeek}}</i></a>
+            {{/if}}
+        </div>
+        <div class="col-25 text-center"><span>{{amountoutput item.BetAmount}}</span> </div>
+        <div class="col-25 text-center"><span class="cheng">{{amountoutput item.EffectiveAmount}}</span> </div>
+        <div class="col-25 text-center"><span class="green">{{amountoutput item.WinOrLose}}</span> </div>
+    </div>
+    {{/each}}
+</script>
+<script type="text/html" id="history_total_tpl">
+    <div class="col-25 text-center"><span class="total">总计</span> </div>
+    <div class="col-25 text-center"><span>{{SumBetAmount.toFixed(2)}}</span> </div>
+    <div class="col-25 text-center"><span>{{SumEffectiveAmount.toFixed(2)}}</span> </div>
+    <div class="col-25 text-center"><span class="cheng">{{SumWinOrLose.toFixed(2)}}</span> </div>
+</script>
+
+@section style
+{
+    <link href="~/Areas/Mobile/Content/css/ft.history.css" rel="stylesheet" />
+}
+@section script
+{
+    <script src="~/Areas/Mobile/Scripts/template.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.app.js"></script>
+    <script src="~/Areas/Mobile/Scripts/md5.js"></script>
+    <script src="~/Areas/Mobile/Scripts/ft.template.helper.js"></script>
+    <script type="text/javascript">
+        var pageseting = {
+            sdate: '',
+            edate: ''
+        };
+        var maxDate = new Date(new Date().getTime()).format('yyyy-mm-dd');
+        var minDate = new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000).format('yyyy-mm-dd');
+        $(function() {
+            "use strict";
+            history.loadLanguage();
+            $(document).on("pageInit", "#historylist", function(e, id, page) {
+                var $content = $(page).find('.content');
+                history.loadUserHistory();
+                $(page).on('click', '.btn-search', function() {
+                    history.openSearchBar('.searchExist');
+                    history.loadUserHistory();
+                    //console.log(pageseting);
+                });
+                $(".sdate").calendar({
+                    inputReadOnly: true,
+                    dateFormat: 'yyyy-mm-dd',
+                    maxDate: maxDate,
+                    minDate: minDate,
+                    onChange: function(p, values, displayValues) {
+                        pageseting.sdate = displayValues[0];
+                    },
+                    onClose: function(p) {
+
+                    }
+                });
+                $(".edate").calendar({
+                    inputReadOnly: true,
+                    dateFormat: 'yyyy-mm-dd',
+                    maxDate: maxDate,
+                    minDate: minDate,
+                    onChange: function(p, values, displayValues) {
+                        pageseting.edate = displayValues[0];
+                    }
+                });
+            });
+            $.init();
+        });
+        var history = history || {};
+        (function () {
+            history.loadLanguage = function () {
+                Zepto.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/mobile/',
+                    mode: 'map',
+                    language: app.siteConfig.sitelanguage,
+                    callback: function () {
+                        $(".title").html($.i18n.prop('history_li_text'));
+                        $(".span-search").text($.i18n.prop('common_search_text'));
+                        $(".btn-search").text($.i18n.prop('common_search_text'));
+                        $(".head0").text($.i18n.prop('history_date_title'));
+                        $(".head1").text($.i18n.prop('history_bet_title'));
+                        $(".head2").text($.i18n.prop('history_eff_title'));
+                        $(".head3").text($.i18n.prop('history_wl_title'));                        
+                    }
+                });
+            };
+            history.loadUserHistory = function () {
+                var params = {
+                    "ticket": app.siteConfig.siteuserticket,
+                    "userid": app.siteConfig.siteuserid,
+                    lang: app.siteConfig.sitelanguage
+                };
+                if (pageseting.sdate !== '' && pageseting.edate !== '') {
+                    params.sdate = pageseting.sdate;
+                    params.edate = pageseting.edate;
+                }
+                params.sign = app.createParamSign(params);
+                $.showIndicator();
+                $.ajax({
+                    type: 'POST',
+                    url: app.siteConfig.userhistory,
+                    data: params,
+                    dataType: 'json',
+                    context: $('body'),
+                    success: function (data) {
+                        if (data.code === 0 && data.data != null) {
+                            var html = template('history_tpl', data);
+                            $(".history_ul").html('').html(html);
+                            html = template('history_total_tpl', data.data.Foot);
+                            $(".nav-total").html('').html(html);
+                            $(".total").text($.i18n.prop('common_total_text'));
+                        } else if (data.code === 98 || data.code === 99) {
+                            app.clearLogin(data.errors);
+                        } else {
+                            $.toast(data.message || data.errors);
+                        }
+                    },
+                    error: function (xhr, type) {
+                    },
+                    complete: function (xhr) {
+                        $.hideIndicator();
+                    }
+                });
+            };
+            history.openSearchBar = function (obj) {
+                $(obj).toggleClass("zhover");
+            };
+        })();
+    </script>
+}

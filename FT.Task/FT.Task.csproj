@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.3.0.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.3.0.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.Extended, Version=6.0.0.0, Culture=neutral, PublicKeyToken=05b7e29bdd433584, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.Extended.6.1.0.168\lib\net45\EntityFramework.Extended.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\packages\Quartz.2.2.4\lib\net40\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="1XBET\FTPlayGameJob.cs" />
+    <Compile Include="1XBET\FTPlayGameResultJob.cs" />
+    <Compile Include="1XBET\FTPlayMatchLogJob.cs" />
+    <Compile Include="Beijingflcp\BeiJWelfareLotteryKL8.cs" />
+    <Compile Include="Beijingflcp\GameBeiJingKL8.cs" />
+    <Compile Include="HGA\NewFTPlayResultJob.cs" />
+    <Compile Include="HGA\OldAnalyzeData.cs" />
+    <Compile Include="BaseJob.cs" />
+    <Compile Include="HGA\OldFTPlayResultJob.cs" />
+    <Compile Include="HGA\NewPlayMethodJob.cs" />
+    <Compile Include="HGA\NewAnalyzeData.cs" />
+    <Compile Include="HGA\OldPlayMethodJob.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Quartz\CustomTriggerListener.cs" />
+    <Compile Include="Quartz\QuartzHelper.cs" />
+    <Compile Include="Quartz\TaskHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Quartz\TaskUtil.cs" />
+    <Compile Include="USERBET\MatchUserBetJob.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FT.Entities\FT.Entities.csproj">
+      <Project>{8bf650af-5912-4bb0-8ad8-db02da50608d}</Project>
+      <Name>FT.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Model\FT.Model.csproj">
+      <Project>{31e4e000-53d9-4715-abda-965457ee75ee}</Project>
+      <Name>FT.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Plugins\FT.Plugin.Cache.AspNet\FT.Plugin.Cache.AspNet.csproj">
+      <Project>{180a20bd-4c79-494a-811a-375a0a3f0046}</Project>
+      <Name>FT.Plugin.Cache.AspNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Plugins\FT.Plugin.Cache.Redis\FT.Plugin.Cache.Redis.csproj">
+      <Project>{60b06e29-43fa-4995-85a7-898e220e45da}</Project>
+      <Name>FT.Plugin.Cache.Redis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Plugins\FT.Plugin.Cache\FT.Plugin.Cache.csproj">
+      <Project>{19669c00-ec17-4853-93c5-e01f8aaeb617}</Project>
+      <Name>FT.Plugin.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Repository\FT.Repository.csproj">
+      <Project>{eae8fcd9-a845-4a15-a702-11f3fbac85dc}</Project>
+      <Name>FT.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Utility\FT.Utility.csproj">
+      <Project>{f7b67599-88cc-4bde-b5d6-03f6ff60ec0c}</Project>
+      <Name>FT.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

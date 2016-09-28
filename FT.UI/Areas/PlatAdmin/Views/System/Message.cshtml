@@ -1,0 +1,229 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table id="dg" title="" style="width:100%;height:100%;" toolbar="#toolbar"></table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<div id="dlg" class="easyui-dialog" style="width:800px;height:500px;padding:10px 20px"
+     closed="true" buttons="#dlg-buttons" modal="true">
+    <form id="fm" method="post" enctype="multipart/form-data" novalidate>
+        <div class="fitem">
+            <label>标题:</label>
+            <input id="Title" name="Title" class="easyui-textbox" required="true">
+            <input id="Id" name="Id" type="hidden">
+        </div>
+        <div class="fitem">
+            <label>附件:</label>
+            <input name="Annexes" id="Annexes" class="easyui-textbox upload-path" style="width: 200px" />
+            <div class="upload-box upload-img"></div>
+        </div>
+        <div class="fitem">
+            <textarea id="Descriptions" name="Descriptions"></textarea>
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="mess.saveForm('fm', 'dlg', this)" style="width: 90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlg').dialog('close');" style="width: 90px">取消</a>
+</div>
+@section scripts{
+    <script src="~/Areas/PlatAdmin/Scripts/easyui/easyui.ext.linkbutton.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/webuploader/webuploader.min.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.uploader.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ueditor/ueditor.config.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ueditor/ueditor.all.min.js"></script>
+    <script language="javascript">
+        var url = "";
+        var eidtor;
+        $(function () {
+            $('#btn_MsgEnable').linkbutton("disable");
+            $('#btn_MsgDisable').linkbutton("disable");
+            mess.loadLanguage($.cookie('FT.PlatAdmin.Langue'));
+            $('#dg').datagrid({
+                title: "",
+                url: "/PlatAdmin/System/MessGrid",
+                width: "100%",
+                method: 'post',
+                height: "100%",
+                fitColumns: true,
+                sortName: 'LastUpdateDate',
+                sortOrder: 'desc',
+                idField: 'Id',
+                pageSize: 50,
+                pagination: true,
+                striped: true,
+                singleSelect: true,
+                rownumbers: true,
+                checkOnSelect: true,
+                selectOnCheck: true,
+                columns: [
+                    [
+                        { field: 'chk', align: 'center', width: 10, checkbox: true },
+                        { field: 'Id', align: 'center', width: 20, sortable: true, title: $.i18n.prop('admin_id_title') },
+                        { field: 'Title', width: 30, align: 'center', sortable: true, title: $.i18n.prop('adv_name_title') },
+                        //{ field: 'Type', width: 20, align: 'center', sortable: true, title: $.i18n.prop('adv_platfor_title') },
+                        { field: 'CreateDate', width: 20, align: 'center', sortable: true, formatter: formatDateBoxFull, title: $.i18n.prop('admin_createdate_title') },
+                        { field: 'CreateUserName', width: 20, align: 'center', sortable: true, title: $.i18n.prop('trad_CreateUser_title') },
+                        { field: 'LastUpdateDate', width: 20, align: 'center', sortable: true, formatter: formatDateBoxFull, title: $.i18n.prop('common_editdate_title') },
+                        { field: 'IsDrafts', width: 20, align: 'center', sortable: true, title: $.i18n.prop('msg_isdrafts_title') }
+                    ]
+                ],
+                onClickRow: function (index, row) {
+                    if (row.IsDraftsNum === 1) {
+                        $('#btn_MsgEnable').linkbutton("enable");
+                        $('#btn_MsgDisable').linkbutton("disable");
+                    } else {
+                        $('#btn_MsgEnable').linkbutton("disable");
+                        $('#btn_MsgDisable').linkbutton("enable");
+                    }
+                }
+            });
+            $("#btn_AddMsg").on("click", function () {
+                mess.addMsg();
+            });
+            $("#btn_EditMsg").on("click", function () {
+                mess.editMsg();
+            });
+            $("#btn_DelMsg").on("click", function () {
+                mess.delMsg();
+            });
+            $("#btn_MsgEnable").on("click", function () {
+                mess.editStaus(0);
+            });
+            $("#btn_MsgDisable").on("click", function () {
+                mess.editStaus(1);
+            });
+            (function initRichTextEditor() {
+                eidtor = UE.getEditor('Descriptions');
+            })();
+        });
+        var mess = mess || {};
+        (function () {
+            mess.loadLanguage = function (language) {
+                jQuery.i18n.properties({
+                    name: 'language',
+                    path: '/i18n/admin/',
+                    mode: 'map',
+                    language: language
+                });
+            };
+            mess.addMsg = function () {
+                $('#fm').form('clear');
+                $('#dlg').dialog('open').dialog('setTitle', '通告新增');
+                url = '/PlatAdmin/System/CreateMess';
+                UE.getEditor('Descriptions').setContent("");
+                mess.loadUploadify();
+            };
+            mess.editMsg = function (obj) {
+                $('#fm').form('clear');
+                var node = $('#dg').datagrid('getSelected');
+                if (node) {
+                    console.log(node);
+                    $("#Id").val(node.Id);
+                    $('#dlg').dialog('open').dialog('setTitle', '通告编辑');
+                    UE.getEditor('Descriptions').setContent(node.Descriptions);
+                    $('#fm').form('load', node);
+                    url = '/PlatAdmin/System/EditMess';
+                    mess.loadUploadify();
+                }
+            };
+            mess.saveForm = function (fmid, dlgid, obj) {
+                $(obj).linkbutton("disable");
+                setTimeout(function () {
+                    $(obj).linkbutton("enable");
+                }, 2000);
+                $('#' + fmid).form('submit', {
+                    url: url,
+                    onSubmit: function () {
+                        $(this).attr({ "enabled": true });
+                        return $(this).form('validate');
+                    },
+                    success: function (result) {
+                        result = eval('(' + result + ')');
+                        if (result.code !== 0) {
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.errors
+                            });
+                        } else {
+                            $('#' + dlgid).dialog('close');
+                            $('#dg').datagrid('reload');
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.message
+                            });
+                        }
+                    }
+                });
+            };
+            mess.delMsg = function () {
+                var node = $('#dg').datagrid('getSelected');
+                if (node) {
+                    $.messager.confirm('系统提示', '确定删除通告?', function (r) {
+                        if (r) {
+                            $.post('/PlatAdmin/System/DelMess', { id: node.Id }, function (result) {
+                                if (result.code === 0) {
+                                    $('#dg').datagrid('reload');
+                                    $.messager.show({
+                                        title: '系统提示',
+                                        msg: "操作成功"
+                                    });
+                                } else {
+                                    $.messager.show({
+                                        title: '系统提示',
+                                        msg: result.errors
+                                    });
+                                }
+                            }, 'json').complete(function () {
+                                $('#dg').datagrid('clearSelections');
+                            });
+                        }
+                    });
+                }
+            };
+            mess.editStaus = function (drafts) {
+                var node = $('#dg').datagrid('getSelected');
+                if (node) {
+                    $.post('/PlatAdmin/System/SetMessDrafts', { id: node.Id, drafts: drafts }, function (result) {
+                        if (result.code === 0) {
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: "操作成功"
+                            });
+                        } else {
+                            $.messager.show({
+                                title: '系统提示',
+                                msg: result.errors
+                            });
+                        }
+                    }, 'json').complete(function () {
+                        $('#dg').datagrid('reload');
+                        $('#dg').datagrid('clearSelections');
+                        $('#btn_MsgEnable').linkbutton("disable");
+                        $('#btn_MsgDisable').linkbutton("disable");
+                    });
+                }
+            };
+            mess.loadUploadify = function () {
+                $(".upload-img").InitUploader({
+                    filesize: "10240",
+                    sendurl: "/PlatAdmin/System/UploadFiles",
+                    swf: "/Areas/PlatAdmin/Scripts/webuploader/uploader.swf",
+                    filetypes: "word,zip,rar,xls"
+                });
+            };
+        })();
+    </script>
+}

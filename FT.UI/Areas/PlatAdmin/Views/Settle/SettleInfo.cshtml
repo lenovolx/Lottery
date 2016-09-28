@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Areas/PlatAdmin/Views/Shared/_EasyUiLayout.cshtml";
+
+}
+@section scripts{
+
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+}
+<div id="cc" class="easyui-layout" fit="true">
+    <div data-options="region:'north',split:true,border:false" style="padding:5px;" fit="true">
+        <table style="margin:10px" id="dg" title="" toolbar="#toolbar">
+            <thead>
+                <tr>
+                    <th data-options="field:'chk',align:'center',width:10,checkbox:true"></th>
+                    <th data-options="field:'Id',width:12,align:'center',hidden:true">编号</th>
+                    <th data-options="field:'BetValue',width:30,align:'center',sortable: true">赛事</th>
+                    <th data-options="field:'MatchDate',width:35,align:'center',sortable: true">时间</th>
+                    <th data-options="field:'HTeam',width:30,align:'center'">主场</th>
+                    <th data-options="field:'CTeam',width:15,align:'center'">客场</th>
+                    <th data-options="field:'CreateDate',width:15,align:'center'">创建时间</th>
+                    <th data-options="field:'BetType',width:15,align:'center'">玩法种类</th>
+                    <th data-options="field:'email',width:15,align:'center'">邮箱</th>
+                    <th data-options="field:'Cell',width:40,align:'center'">操作</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+<div id="toolbar">
+    @if (ViewBag.RoleButtons != null && ViewBag.RoleButtons.Count > 0)
+    {
+        foreach (var item in ViewBag.RoleButtons)
+        {
+            <a href="javascript:void(0)" class="easyui-linkbutton" plain="true" id="@(item.ButtonLink)" iconcls="@(item.ButtonIcon)">@(item.ButtonName)</a>
+        }
+    }
+</div>
+<script language="javascript">
+    $(function () {
+        $('#dg').datagrid({
+            title: "",
+            url: "/PlatAdmin/Sellte/GetData",
+            width: "100%",
+            method: 'post',
+            height: "100%",
+            fitColumns: true,
+            sortName: 'CreateDate',
+            sortOrder: 'asc',
+            idField: 'Id',
+            pageSize: 50,
+            pagination: true,
+            striped: true, //奇偶行是否区分
+            singleSelect: true, //单选模式
+            rownumbers: true, //行号
+            checkOnSelect: true,
+            selectOnCheck: true,
+            onClickRow: function (index, row) {
+                if (row.SellerType !== 0) {
+                    $('#btn_SetUserApi').linkbutton("disable");
+                    $('#btn_AddUserRecharge').linkbutton("disable");
+                } else {
+                    $('#btn_SetUserApi').linkbutton("enable");
+                    $('#btn_AddUserRecharge').linkbutton("enable");
+                }
+            }
+        });
+    });
+</script>

@@ -1,0 +1,5 @@
+时间：2016-09-24 14:56:11,155 
+级别：INFO  
+类名：FT.UI.Filters.ArgumentsSignFilter.OnActionExecuting  
+描述：{"User":{"Id":16,"LoginName":"fy0001","BalanceAmount":891816.00,"Type":0,"Level":0},"System":{"MaxBetAmount":300000.00,"MinBetAmount":30.00,"DangerBall":30,"CloseWebSite":false,"Id":0,"Key":null,"Value":null},"AutoLogin":false,"ErrCode":0,"ErrMsg":"","ExpiresIn":1800,"Ticket":"user16_N3Nvy/l129IZJkYd05LiRVE451DUAf/iCscsjeHXeJTx9dAr1iXXdkJkFdDgte+X","BeUsed":0} 
+

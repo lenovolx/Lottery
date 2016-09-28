@@ -1,0 +1,871 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=3.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Configuration, Version=3.3.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Autofac.Configuration.3.3.0\lib\net40\Autofac.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=__MvcPagesVersion__, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\BaseApiController.cs" />
+    <Compile Include="API\MatchController.cs" />
+    <Compile Include="API\SystemController.cs" />
+    <Compile Include="API\UserController.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Mobile\Attributes\ErrorAttribute.cs" />
+    <Compile Include="Areas\Mobile\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\MatchController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\RegisterController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\RollBallController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\UserController.cs" />
+    <Compile Include="Areas\Mobile\Filters\UserAuthorizeAttribute.cs" />
+    <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
+    <Compile Include="Areas\PC\PCAreaRegistration.cs" />
+    <Compile Include="Areas\PlatAdmin\Attributes\AdminErrorAttribute.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\MatchController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\PartialController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\SettleController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\SystemController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\TradingController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\UEditorController.cs" />
+    <Compile Include="Areas\PlatAdmin\Controllers\UserController.cs" />
+    <Compile Include="Areas\PlatAdmin\Filters\AdminAuthorizeAttribute.cs" />
+    <Compile Include="Areas\PlatAdmin\Filters\LogInfoAttribute.cs" />
+    <Compile Include="Areas\PlatAdmin\Filters\PublicViewBagFilterAttribute.cs" />
+    <Compile Include="Areas\PlatAdmin\PlatAdminAreaRegistration.cs" />
+    <Compile Include="Areas\Web\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Web\WebAreaRegistration.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\ArgumentsSignFilter.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Areas\Mobile\Content\css\font_1433401008_2229297.svg" />
+    <Content Include="Areas\Mobile\Content\css\ft.history.css" />
+    <Content Include="Areas\Mobile\Content\css\ft.index.css" />
+    <Content Include="Areas\Mobile\Content\css\ft.login.css" />
+    <Content Include="Areas\Mobile\Content\css\ft.match.css" />
+    <Content Include="Areas\Mobile\Content\css\ft.user.css" />
+    <Content Include="Areas\Mobile\Content\css\sm-extend.css" />
+    <Content Include="Areas\Mobile\Content\css\sm.css" />
+    <Content Include="Areas\Mobile\Content\css\sm.min.css" />
+    <Content Include="Areas\Mobile\Content\img\20160708145745.png" />
+    <Content Include="Areas\Mobile\Content\img\apple-icon-114.png" />
+    <Content Include="Areas\Mobile\Content\img\apple-icon-120.png" />
+    <Content Include="Areas\Mobile\Content\img\apple-icon-144.png" />
+    <Content Include="Areas\Mobile\Content\img\apple-icon-57.jpg" />
+    <Content Include="Areas\Mobile\Content\img\user.png" />
+    <Content Include="Areas\Mobile\Scripts\ft.app.js" />
+    <Content Include="Areas\Mobile\Scripts\ft.login.js" />
+    <Content Include="Areas\Mobile\Scripts\ft.rollball.match.js" />
+    <Content Include="Areas\Mobile\Scripts\ft.match.js" />
+    <Content Include="Areas\Mobile\Scripts\ft.user.bank.js" />
+    <Content Include="Areas\Mobile\Scripts\ft.user.js" />
+    <Content Include="Areas\Mobile\Scripts\jquery.i18n.properties-min-1.0.9.js" />
+    <Content Include="Areas\PlatAdmin\Content\images\head_cnBIG.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\head_enBIG.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\head_ptBIG.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\skin_icons.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\admin.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\adv.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\audit.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\black.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\card.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\deal.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\dictionary.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\disable.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\drafts.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\enable.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\finacial.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\match.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\matchs.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\notice.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\record.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\role.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\settle.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\sys-setting.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\system.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\task.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\unlock.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\easyui-lang-en.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\easyui-lang-pt_BR.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.ext.linkbutton.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\jquery.i18n.properties-min-1.0.9.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.uploader.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\anchor\anchor.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\attachment.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\attachment.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\attachment.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_chm.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_default.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_doc.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_exe.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_jpg.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_mp3.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_mv.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_pdf.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_ppt.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_psd.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_rar.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_txt.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\fileTypeImages\icon_xls.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\alignicon.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\alignicon.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\file-icons.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\file-icons.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\icons.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\icons.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\image.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\progress.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\success.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\attachment\images\success.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\background\background.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\background\background.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\background\background.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\background\images\bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\background\images\success.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\chart.config.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\charts.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\charts.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\charts.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\images\charts0.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\images\charts1.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\images\charts2.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\images\charts3.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\images\charts4.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\charts\images\charts5.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\emotion.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\emotion.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\emotion.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\0.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\bface.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\cface.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\fface.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\jxface2.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\neweditor-tab-bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\tface.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\wface.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\emotion\images\yface.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\gmap\gmap.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\help\help.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\help\help.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\help\help.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\image.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\image.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\image.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\alignicon.jpg" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\icons.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\icons.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\image.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\progress.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\success.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\image\images\success.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\insertframe\insertframe.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\internal.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\link\link.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\map\map.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\map\show.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\music\music.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\music\music.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\music\music.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\preview\preview.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\addimg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\brush.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\delimg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\delimgH.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\empty.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\emptyH.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\eraser.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\redo.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\redoH.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\scale.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\scaleH.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\size.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\undo.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\images\undoH.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\scrawl.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\scrawl.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\scrawl\scrawl.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\searchreplace\searchreplace.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\searchreplace\searchreplace.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\snapscreen\snapscreen.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\spechars\spechars.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\spechars\spechars.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\table\dragicon.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\table\edittable.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\table\edittable.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\table\edittable.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\table\edittd.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\table\edittip.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\config.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\images\bg.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\images\pre0.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\images\pre1.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\images\pre2.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\images\pre3.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\images\pre4.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\template.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\template.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\template\template.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\center_focus.jpg" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\file-icons.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\file-icons.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\icons.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\icons.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\image.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\left_focus.jpg" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\none_focus.jpg" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\progress.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\right_focus.jpg" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\success.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\images\success.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\video.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\video.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\video\video.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\webapp\webapp.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\wordimage\fClipboard_ueditor.swf" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\wordimage\imageUploader.swf" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\wordimage\tangram.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\wordimage\wordimage.html" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\dialogs\wordimage\wordimage.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\en.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\addimage.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\alldeletebtnhoverskin.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\alldeletebtnupskin.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\background.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\button.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\copy.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\deletedisable.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\deleteenable.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\listbackground.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\localimage.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\music.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\rotateleftdisable.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\rotateleftenable.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\rotaterightdisable.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\rotaterightenable.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\en\images\upload.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\zh-cn\images\copy.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\zh-cn\images\localimage.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\zh-cn\images\music.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\zh-cn\images\upload.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\lang\zh-cn\zh-cn.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\css\ueditor.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\css\ueditor.min.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\dialogbase.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\anchor.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\arrow.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\arrow_down.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\arrow_up.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\button-bg.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\cancelbutton.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\charts.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\cursor_h.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\cursor_h.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\cursor_v.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\cursor_v.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\dialog-title-bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\filescan.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\highlighted.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\icons-all.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\icons.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\icons.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\loaderror.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\loading.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\lock.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\neweditor-tab-bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\pagebreak.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\scale.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\sortable.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\spacer.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\sparator_v.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\table-cell-align.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\tangram-colorpicker.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\toolbar_bg.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\unhighlighted.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\upload.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\videologo.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\word.gif" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\default\images\wordpaste.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\themes\iframe.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\codemirror\codemirror.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\codemirror\codemirror.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\adapters\mootools-adapter.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\adapters\mootools-adapter.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\adapters\prototype-adapter.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\adapters\prototype-adapter.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\adapters\standalone-framework.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\adapters\standalone-framework.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\highcharts-more.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\highcharts-more.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\highcharts.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\highcharts.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\annotations.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\annotations.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\canvas-tools.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\canvas-tools.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\data.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\data.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\drilldown.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\drilldown.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\exporting.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\exporting.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\funnel.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\funnel.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\heatmap.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\heatmap.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\map.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\map.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\no-data-to-display.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\modules\no-data-to-display.src.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\themes\dark-blue.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\themes\dark-green.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\themes\gray.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\themes\grid.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\highcharts\themes\skies.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\jquery-1.10.2.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\jquery-1.10.2.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\snapscreen\UEditorSnapscreen.exe" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\SyntaxHighlighter\shCore.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\SyntaxHighlighter\shCoreDefault.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\font\vjs.svg" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\video-js.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\video-js.min.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\video-js.swf" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\video.dev.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\video.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\Uploader.swf" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.css" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.custom.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.custom.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.flashonly.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.flashonly.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.html5only.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.html5only.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.withoutimage.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\webuploader\webuploader.withoutimage.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\zeroclipboard\ZeroClipboard.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\zeroclipboard\ZeroClipboard.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\zeroclipboard\ZeroClipboard.swf" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\ueditor.all.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\ueditor.all.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\ueditor.config.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\ueditor.parse.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\ueditor.parse.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\webuploader\uploader.swf" />
+    <Content Include="Areas\PlatAdmin\Scripts\webuploader\webuploader.min.js" />
+    <Content Include="i18n\mobile\language_en.properties" />
+    <Content Include="i18n\mobile\language.properties" />
+    <Content Include="i18n\mobile\language_pt.properties" />
+    <Content Include="Areas\PlatAdmin\Views\User\CashRecord.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\LogInfo.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\Dictionary.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Settle\SettleInfo.cshtml" />
+    <Content Include="i18n\admin\language.properties" />
+    <Content Include="i18n\admin\language_cn.properties" />
+    <Content Include="i18n\admin\language_en.properties" />
+    <Content Include="i18n\admin\language_pt.properties" />
+    <Content Include="Areas\PlatAdmin\Views\Trading\FinacialDetail.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Match\SettleRecord.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Match\LeagueBlackList.cshtml" />
+    <Content Include="Config\Redis.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\PlatAdmin\Views\System\Message.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\Advertise.cshtml" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\config.json" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\jquery-1.10.2.min.map" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\font\vjs.eot" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\font\vjs.ttf" />
+    <Content Include="Areas\PlatAdmin\Scripts\ueditor\third-party\video-js\font\vjs.woff" />
+    <Content Include="Areas\Mobile\Views\RollBall\Index.cshtml" />
+    <Content Include="Areas\Mobile\Views\Error\Close.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\Card.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\Task.cshtml" />
+    <Content Include="Areas\Web\Views\web.config" />
+    <None Include="i18n\mobile\language_cn.properties" />
+    <Content Include="Areas\Mobile\Scripts\md5.js" />
+    <Content Include="Areas\Mobile\Scripts\sm-extend.js" />
+    <Content Include="Areas\Mobile\Scripts\sm.js" />
+    <Content Include="Areas\Mobile\Scripts\template.js" />
+    <Content Include="Areas\Mobile\Scripts\zepto.cookie.min.js" />
+    <Content Include="Areas\Mobile\Scripts\zepto.min.js" />
+    <Content Include="Areas\PlatAdmin\Content\custom.css" />
+    <Content Include="Areas\PlatAdmin\Content\default.css" />
+    <Content Include="Areas\PlatAdmin\Content\images\error.jpg" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\btnbg.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\btnbg1.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\btnbg2.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\buttonbg.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\cloud.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\leftline.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\leftmenubg.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\lefttop.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\libg.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\light.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\loginbg1.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\loginbg2.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\loginbg3.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\logininfo.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\loginlogo.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\loginpassword.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\loginsj.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\loginuser.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\logo.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\msg.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\navbg.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\tbg.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\tcbg.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\th.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\toolbg.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\topbg.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\topleft.jpg" />
+    <Content Include="Areas\PlatAdmin\Content\images\login\topright.jpg" />
+    <Content Include="Areas\PlatAdmin\Content\images\ui\headbg.png" />
+    <Content Include="Areas\PlatAdmin\Content\images\ui\head_bg.gif" />
+    <Content Include="Areas\PlatAdmin\Content\images\ui\logo.png" />
+    <Content Include="Areas\PlatAdmin\Content\style.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\accordion.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\calendar.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\combo.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\combobox.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\datagrid.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\datalist.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\datebox.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\dialog.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\easyui.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\filebox.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\accordion_arrows.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\blank.gif" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\calendar_arrows.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\combo_arrow.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\datagrid_icons.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\datebox_arrow.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\layout_arrows.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\linkbutton_bg.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\loading.gif" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\menu_arrows.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\messager_icons.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\pagination_icons.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\panel_tools.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\searchbox_button.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\slider_handle.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\spinner_arrows.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\tabs_icons.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\tree_icons.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\images\validatebox_warning.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\layout.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\linkbutton.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\menu.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\menubutton.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\messager.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\numberbox.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\pagination.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\panel.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\progressbar.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\propertygrid.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\searchbox.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\slider.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\spinner.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\splitbutton.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\switchbutton.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\tabs.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\textbox.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\tooltip.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\tree.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\validatebox.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\bootstrap\window.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\color.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icon.css" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\back.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\blank.gif" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\cancel.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\cancell.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\clear.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\cut.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\datadict.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\edit.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\edit_add.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\edit_remove.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\filesave.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\filter.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\help.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\icon-sys-log.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\icon-sys-manage.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\icon-sys-model.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\icon-sys-organization.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\icon-sys-role.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\icon-sys-user.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\imp_excel.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\index.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\isi_chart.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\it_create.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\it_e.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\it_services.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\it_services_list.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\it_write.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\large_chart.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\large_clipart.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\large_picture.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\large_shapes.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\large_smartart.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\lock.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\man.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\menu.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\menu2.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\mini_add.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\mini_edit.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\mini_refresh.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\more.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\no.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\ok.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\pencil.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\print.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\redo.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\reload.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\search.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\sum.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\tip.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\todo.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\undo.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\user.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\users.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\wf_manage.png" />
+    <Content Include="Areas\PlatAdmin\Content\themes\icons\work.png" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.home.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.cloud.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.datagrid.detailview.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\easyloader.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\easyui-lang-zh_CN.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\easyui.ext.linkbutton.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.accordion.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.calendar.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.combo.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.combobox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.combogrid.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.combotree.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.datagrid.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.datalist.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.datebox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.datetimebox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.datetimespinner.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.dialog.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.draggable.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.droppable.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.easyui.min.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.filebox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.form.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.layout.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.linkbutton.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.menu.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.menubutton.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.messager.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.mobile.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.numberbox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.numberspinner.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.pagination.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.panel.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.parser.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.progressbar.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.propertygrid.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.resizable.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.searchbox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.slider.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.spinner.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.splitbutton.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.switchbutton.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.tabs.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.textbox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.timespinner.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.tooltip.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.tree.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.treegrid.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.validatebox.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\easyui\jquery.window.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.easyui.common.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.easyui.validbox.ext.js" />
+    <Content Include="Areas\PlatAdmin\Scripts\ft.textScroll.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Config\log4net.config" />
+    <Content Include="Areas\Mobile\Views\web.config" />
+    <Content Include="Areas\PC\Views\web.config" />
+    <Content Include="Areas\PlatAdmin\Views\web.config" />
+    <Content Include="Areas\PlatAdmin\Views\Shared\_EasyUiLayout.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Shared\_LeftMenu.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Home\Index.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\AdminInfo.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\MenuInfo.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\System\RoleInfo.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Login\Index.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Trading\TradingInfo.cshtml" />
+    <Content Include="Areas\Mobile\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Mobile\Views\Login\Index.cshtml" />
+    <Content Include="Areas\Mobile\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Mobile\Views\Error\Index.cshtml" />
+    <Content Include="Areas\Mobile\Views\User\Index.cshtml" />
+    <Content Include="Areas\Mobile\Views\Match\Index.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\Match\MatchInfo.cshtml" />
+    <Content Include="Areas\PlatAdmin\Views\User\UserInfo.cshtml" />
+    <Content Include="Areas\Mobile\Scripts\ft.index.js" />
+    <Content Include="Areas\Mobile\Scripts\ft.template.helper.js" />
+    <Content Include="Areas\Mobile\Views\Register\Index.cshtml" />
+    <Content Include="Areas\Mobile\Content\css\font_1433401008_2229297.woff" />
+    <Content Include="Areas\Mobile\Content\css\font_1433401008_2229297.ttf" />
+    <Content Include="Areas\Mobile\Views\User\Deal.cshtml" />
+    <Content Include="Areas\Mobile\Views\User\History.cshtml" />
+    <Content Include="Areas\Mobile\Views\User\Bank.cshtml" />
+    <Content Include="Areas\Mobile\Content\css\font_1433401008_2229297.eot" />
+    <Content Include="Areas\Mobile\Views\User\HistoryDetail.cshtml" />
+    <None Include="Properties\PublishProfiles\FBLT.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="UpdateFile\Launch.xml" />
+    <Content Include="UpdateFile\LaunchUpdate.xml" />
+    <Content Include="UploadFiles\Adv\31086179-1c1d-46b3-9861-cb6a374929a8.png" />
+    <Content Include="UploadFiles\Adv\61caa6d9-c51a-4a00-972d-d50e57740b7a.png" />
+    <Content Include="UploadFiles\Adv\9a28eec6-f93c-4513-aa48-e7474079b36c.jpg" />
+    <Content Include="UploadFiles\Adv\a48ed1d7-1a47-493e-ba0d-fa2407bf5ef8.png" />
+    <Content Include="UploadFiles\Adv\b2e31022-83fd-414b-84ff-b2a2ef346b82.jpg" />
+    <Content Include="UploadFiles\Adv\b3bafbf5-fb51-4948-bfd9-01b05c6c7cee.png" />
+    <Content Include="UploadFiles\Adv\bb874361-2f1e-4948-a944-a17a330708ba.png" />
+    <Content Include="UploadFiles\Adv\de8d2715-208e-4ce7-a38f-a52c86c7852e.jpg" />
+    <Content Include="UploadFiles\Adv\f6f24ca8-fe69-450d-8383-ee6daf22706c.png" />
+    <Content Include="UploadFiles\Adv\ff58772f-5605-4c38-93f0-7f832d7c4ad8.jpg" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\Mobile\Models\" />
+    <Folder Include="Areas\PC\Controllers\" />
+    <Folder Include="Areas\PC\Models\" />
+    <Folder Include="Areas\PC\Views\Shared\" />
+    <Folder Include="Areas\PlatAdmin\Models\" />
+    <Folder Include="Areas\Web\Models\" />
+    <Folder Include="Areas\Web\Views\Home\" />
+    <Folder Include="Areas\Web\Views\Shared\" />
+    <Folder Include="UpdateFile\2.0.1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FT.IRepository\FT.IRepository.csproj">
+      <Project>{54eef4e9-790b-463e-b7cc-f5b92903b729}</Project>
+      <Name>FT.IRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Model\FT.Model.csproj">
+      <Project>{31e4e000-53d9-4715-abda-965457ee75ee}</Project>
+      <Name>FT.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Plugins\FT.Plugin.Cache.AspNet\FT.Plugin.Cache.AspNet.csproj">
+      <Project>{180a20bd-4c79-494a-811a-375a0a3f0046}</Project>
+      <Name>FT.Plugin.Cache.AspNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Plugins\FT.Plugin.Cache.Redis\FT.Plugin.Cache.Redis.csproj">
+      <Project>{60b06e29-43fa-4995-85a7-898e220e45da}</Project>
+      <Name>FT.Plugin.Cache.Redis</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Plugins\FT.Plugin.Cache\FT.Plugin.Cache.csproj">
+      <Project>{19669c00-ec17-4853-93c5-e01f8aaeb617}</Project>
+      <Name>FT.Plugin.Cache</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Repository\FT.Repository.csproj">
+      <Project>{eae8fcd9-a845-4a15-a702-11f3fbac85dc}</Project>
+      <Name>FT.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FT.Utility\FT.Utility.csproj">
+      <Project>{f7b67599-88cc-4bde-b5d6-03f6ff60ec0c}</Project>
+      <Name>FT.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>17470</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:17470/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

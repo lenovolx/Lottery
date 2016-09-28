@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="1XBET\ResultMatch.cs" />
+    <Compile Include="1XBET\Root.cs" />
+    <Compile Include="Admin.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AdminMessage.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AmountWater.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BeiJingKL8Archive.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BeiJingKL8Source.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Entity1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\GameCategory.cs" />
+    <Compile Include="GameBeijing16Source.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GameBeijing28Source.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HGA\New_ZHGG_Model.cs" />
+    <Compile Include="LogInfo.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MatchBlackList.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MatchUserBetContentLog.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MatchUserBetLog.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OtherModel\AngularTable.cs" />
+    <Compile Include="HGA\BaseGame.cs" />
+    <Compile Include="HGA\BetInfo.cs" />
+    <Compile Include="CacheKeyCollection.cs" />
+    <Compile Include="Card.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CardGroup.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CashRecord.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OtherModel\ComBoxModel.cs" />
+    <Compile Include="OtherModel\EasyDataGrid.cs" />
+    <Compile Include="HGA\BZ_Gamehead.cs" />
+    <Compile Include="FTEnum.cs" />
+    <Compile Include="MatchInfo.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MatchInfoLog.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MatchResult.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MatchUserBet.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MatchUserBetContent.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Menus.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HGA\New_BCQC_Model.cs" />
+    <Compile Include="HGA\New_BD_Model.cs" />
+    <Compile Include="HGA\New_BZP_Model.cs" />
+    <Compile Include="HGA\New_ZRQ_Model.cs" />
+    <Compile Include="PartialModel\MatchInfo.cs" />
+    <Compile Include="PartialModel\MatchResult.cs" />
+    <Compile Include="PartialModel\MatchUserBetContent.cs" />
+    <Compile Include="PartialModel\SystemSetting.cs" />
+    <Compile Include="PartialModel\XBETMatchInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryModel\AmountWaterQueryModel.cs" />
+    <Compile Include="QueryModel\BaseQueryModel.cs" />
+    <Compile Include="QueryModel\AdminQueryModel.cs" />
+    <Compile Include="QueryModel\BlackLeagueQueryModel.cs" />
+    <Compile Include="QueryModel\CardQueryModel.cs" />
+    <Compile Include="QueryModel\CashRecordQueryModel.cs" />
+    <Compile Include="QueryModel\LogInfoQueryModel.cs" />
+    <Compile Include="QueryModel\MatchQueryModel.cs" />
+    <Compile Include="QueryModel\MessageQueryModel.cs" />
+    <Compile Include="QueryModel\OrderQueryModel.cs" />
+    <Compile Include="QueryModel\RoleQueryModel.cs" />
+    <Compile Include="QueryModel\TradingInfoQueryModel.cs" />
+    <Compile Include="QueryModel\UserBetQueryModel.cs" />
+    <Compile Include="QueryModel\UserQueryModel.cs" />
+    <Compile Include="Role.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleMenu.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RolePrivilege.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SiteAdv.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemDictionary.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemSetting.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SystemTask.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TradeRecord.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QueryModel\TradeRecordQueryModel.cs" />
+    <Compile Include="UserMessage.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\CashRecordViewModel.cs" />
+    <Compile Include="ViewModel\ChangePassViewModel.cs" />
+    <Compile Include="ViewModel\AmountWaterViewModel.cs" />
+    <Compile Include="ViewModel\ChartPointViewModel.cs" />
+    <Compile Include="ViewModel\MatchResultViewModel.cs" />
+    <Compile Include="QueryModel\MatchUserBetContentQueryModel.cs" />
+    <Compile Include="ViewModel\TradeRecordViewModel.cs" />
+    <Compile Include="UserAccount.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserBankInfo.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OtherModel\UserResponse.cs" />
+    <Compile Include="ViewModel\AdminViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\LeagueMatchViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\MatchViewModel.cs" />
+    <Compile Include="ViewModel\MenuViewModel.cs" />
+    <Compile Include="ViewModel\TradingInfoViewModel.cs" />
+    <Compile Include="ViewModel\RoleViewModel.cs" />
+    <Compile Include="ViewModel\UserAccountHistoryViewModel.cs" />
+    <Compile Include="ViewModel\UserBetRecordViewModel.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="XBETMatchInfo.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XBETMatchInfoLog.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+    <Compile Include="XBETMatchResult.cs">
+      <DependentUpon>Entity.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Entity.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Entity1.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FT.Utility\FT.Utility.csproj">
+      <Project>{f7b67599-88cc-4bde-b5d6-03f6ff60ec0c}</Project>
+      <Name>FT.Utility</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

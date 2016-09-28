@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="~/Areas/Mobile/Content/css/sm.css">
+    <link rel="apple-touch-icon" href="~/Areas/Mobile/Content/img/apple-icon-57.jpg" />
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Areas/Mobile/Content/img/apple-icon-114.png" />
+    <link rel="apple-touch-icon" sizes="144x120" href="~/Areas/Mobile/Content/img/apple-icon-120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="~/Areas/Mobile/Content/img/apple-icon-144.png" />
+    @RenderSection("style", false)
+</head>
+<body>
+    @RenderBody()
+    <script src="~/Areas/Mobile/Scripts/zepto.min.js"></script>
+    <script type='text/javascript' src='~/Areas/Mobile/Scripts/sm.js' charset='utf-8'></script>
+    <script src="~/Areas/Mobile/Scripts/zepto.cookie.min.js"></script>
+    <script src="~/Areas/Mobile/Scripts/jquery.i18n.properties-min-1.0.9.js"></script>
+    @RenderSection("script", false)
+</body>
+</html>
+
+

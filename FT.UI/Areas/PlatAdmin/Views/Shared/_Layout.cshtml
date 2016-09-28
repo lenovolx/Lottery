@@ -1,0 +1,98 @@
+﻿@using FT.Utility.CacheHelper
+@using FT.Utility.Helper
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/Areas/PlatAdmin/Content/themes/bootstrap/easyui.css" rel="stylesheet" />
+    <link href="~/Areas/PlatAdmin/Content/themes/icon.css" rel="stylesheet" />
+    @RenderSection("styles", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/easyui/jquery.easyui.min.js"></script>
+    @{
+        var language = CookieHelper.GetCookieValue(Constant.PlatAdminLanguage);
+        if (language.Equals("en"))
+        {
+            @Html.Raw("<script src=\"/Areas/PlatAdmin/Scripts/easyui/easyui-lang-en.js\"></script>")
+        }
+        else if (language.Equals("cn"))
+        {
+            @Html.Raw("<script src=\"/Areas/PlatAdmin/Scripts/easyui/easyui-lang-zh_CN.js\"></script>")
+        }
+        else
+        {
+            @Html.Raw("<script src=\"/Areas/PlatAdmin/Scripts/easyui/easyui-lang-pt_BR.js\"></script>")
+        }
+    }
+    <script src="~/Areas/PlatAdmin/Scripts/ft.easyui.common.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/jquery.i18n.properties-min-1.0.9.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="~/Areas/PlatAdmin/Scripts/ft.home.js"></script>
+    <style type="text/css">
+        A.top_link:link{FONT-SIZE:12px;COLOR:#ffffff;TEXT-DECORATION:none}
+        A.top_link:visited{FONT-SIZE:12px;COLOR:#ffffff;TEXT-DECORATION:none}
+        A.top_link:hover{FONT-SIZE:12px;COLOR:#ffffff;TEXT-DECORATION:none}
+        #fm{margin:0;padding:10px 30px}
+        .ftitle{font-size:14px;font-weight:bold;padding:5px 0;margin-bottom:10px;border-bottom:1px solid #ccc}
+        .fitem{margin-bottom:5px}
+        .fitem label{display:inline-block;width:100px}
+        .fitem input{width:160px}
+        .menu_h,.menu_v,.menu_h li,.menu_v li{padding:0;line-height:21px;font-size:12px;list-style-type:none;float:left}
+        .menu_h a{display:block;line-height:21px;padding:0 10px;text-decoration:none;color:#ffffff}
+        .menu_v a{display:block;line-height:21px;text-align:center;text-decoration:none}
+        .menu_h li{float:left;position:relative}
+        .menu_v{position:absolute;width:300px;margin-left:-50px;padding-top:5px}
+        .menu_v li{float:left;padding:0;margin:0}
+        .sub_menu_off .menu_v{display:none}
+        .sub_menu_on .menu_v{display:block}
+    </style>
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'north',split:true" border="false" style="overflow: hidden; height: 50px; background: #2076C3 url(/Areas/PlatAdmin/Content/images/ui/head_bg.gif) repeat-x; line-height: 50px; color: #fff; font-family: Verdana, 微软雅黑,黑体">
+        <span style="float: right; padding-right: 20px;" class="head">
+            <ul class="menu_h">
+                <li class="loyout_login"></li>
+                <li><a href="#" id="editpass" class="top_link" onclick="home.modifyPassword()">修改密码</a></li>
+                <li><a href="javascript:void(0)" id="logout" class="top_link">安全退出</a></li>
+            </ul>
+        </span>
+        @*<span style="background: url(/Areas/PlatAdmin/Content/images/ui/logo.png) no-repeat left; width: 310px; height: 64px; float: left;"></span>*@
+        <div id="tnav"></div>
+    </div>
+    <div data-options="region:'west',split:true,title:'系统菜单'" style="width:200px;">
+        @{Html.RenderAction("LeftMenu", "Partial");}
+    </div>
+    @*<div data-options="region:'east',split:true,collapsed:true,title:'East'" style="width:100px;padding:10px;">east region</div>*@
+    <div data-options="region:'center',title:''" style="padding:5px;background:#eee;" iconcls="icon-work-platform">
+        <div class="easyui-tabs" fit="true" id="tt">
+            @RenderBody()
+        </div>
+    </div>
+    <div id="dlgchangePassword" class="easyui-dialog" style="width:380px;height:240px;padding:10px 20px"
+         closed="true" buttons="#dlg-buttonchangePassword">
+        <div class="ftitle">@ViewBag.trueName</div>
+        <form id="fmchangePassword" method="post" novalidate>
+            <div class="fitem">
+                <label class="opass">当前密码:</label>
+                <input name="OldPassword" validtype="password_rule" class=" easyui-textbox" type="password" style="width:200px;" required="required">
+            </div>
+            <div class="fitem">
+                <label class="npass">新密码:</label>
+                <input id="NewPassword" name="NewPassword" validtype="password_rule" type="password" class=" easyui-textbox" style="width:200px;" required="required">
+            </div>
+            <div class="fitem">
+                <label class="cpass">确认新密码:</label>
+                <input name="ConfirmPassword" validtype="password['#NewPassword']" type="password" class="easyui-textbox" style="width:200px;" required="required">
+            </div>
+        </form>
+    </div>
+    <div id="dlg-buttonchangePassword">
+        <a href="javascript:void(0)" id="btn_ok" class="easyui-linkbutton c6" iconcls="icon-ok" onclick="home.saveForm()" style="width:90px">确定</a>
+        <a href="javascript:void(0)" id="btn_cancel" class="easyui-linkbutton" iconcls="icon-cancel" onclick="javascript: $('#dlgchangePassword').dialog('close');" style="width:90px">取消</a>
+    </div>
+</body>
+@RenderSection("scripts", required: false)
+</html>
