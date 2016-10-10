@@ -7,8 +7,9 @@ using FT.Model;
 using FT.Utility.Helper;
 using Quartz;
 
-namespace FT.Task.Beijingflcp
+namespace FT.Task
 {
+    [DisallowConcurrentExecution]
     public class BeiJWelfareLotteryKL8:BaseJob,IJob
     {
         public void Execute(IJobExecutionContext context)
@@ -21,7 +22,7 @@ namespace FT.Task.Beijingflcp
             Log.Debug("北京快乐8  开始抓取");
             string siteUrl = ConfigurationManager.AppSettings["BeiJingKL8"];
             siteUrl = "http://www.bwlc.net/bulletin/keno.html";
-            string url = siteUrl + "?page=1";
+            string url = siteUrl;
             try
             {
                 string html = string.Empty;
@@ -47,22 +48,24 @@ namespace FT.Task.Beijingflcp
                     });
                 }
                 var termNums = arr.Select(t => t.TermNumber);
-                QueryDb((context) =>
+                QueryDb((Db) =>
                 {
                     var existsMatch =
-                        context.BeiJingKL8Source.Where(t => termNums.Contains(t.TermNumber)).ToArray();
+                        Db.BeiJingKL8Source.Where(t => termNums.Contains(t.TermNumber)).ToArray();
                     var existsNums = existsMatch.Select(t => t.TermNumber).ToArray();
                     var notExistsData = arr.Where(t => !existsNums.Contains(t.TermNumber)).ToList();
                     if (notExistsData.Any())
                     {
-                        context.BeiJingKL8Source.AddRange(notExistsData);
+                        Db.BeiJingKL8Source.AddRange(notExistsData);
+                        GameBeiJingKL8 kl8 = new GameBeiJingKL8();
+                        kl8.InsertBeiJing28Data(notExistsData, Db);
                     }
                     else
                         Log.Debug("北京快乐8 未更新新数据");
 
                     //
 
-                    context.SaveChanges();
+                    Db.SaveChanges();
                 });
             }
             catch (Exception ex)

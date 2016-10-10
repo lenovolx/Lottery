@@ -57,6 +57,14 @@
         <EntityTypeShape EntityType="FT.Model.BeiJingKL8Source" Width="1.5" PointX="16.375" PointY="17" />
         <EntityTypeShape EntityType="FT.Model.GameBeijing16Source" Width="1.5" PointX="3.375" PointY="18" />
         <EntityTypeShape EntityType="FT.Model.GameBeijing28Source" Width="1.5" PointX="17.375" PointY="10" />
+        <EntityTypeShape EntityType="FT.Model.GameBeijing28Archive" Width="1.5" PointX="18.375" PointY="0.75" />
+        <EntityTypeShape EntityType="FT.Model.GameCategory" Width="1.5" PointX="18.375" PointY="5.75" />
+        <EntityTypeShape EntityType="FT.Model.GameOdds" Width="1.5" PointX="18.375" PointY="14.75" />
+        <EntityTypeShape EntityType="FT.Model.GameOddsLog" Width="1.5" PointX="18.375" PointY="18.75" />
+        <EntityTypeShape EntityType="FT.Model.GameUserBet" Width="1.5" PointX="19.375" PointY="8.75" />
+        <EntityTypeShape EntityType="FT.Model.GameUserBetContent" Width="1.5" PointX="21.625" PointY="8.75" IsExpanded="true" />
+        <AssociationConnector Association="FT.Model.GameUserBetGameUserBetContent" />
+        <AssociationConnector Association="FT.Model.UserAccountGameUserBet" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

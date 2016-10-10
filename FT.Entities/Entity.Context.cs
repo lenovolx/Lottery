@@ -94,5 +94,11 @@ namespace FT.Entities
         public virtual DbSet<BeiJingKL8Source> BeiJingKL8Source { get; set; }
         public virtual DbSet<GameBeijing16Source> GameBeijing16Source { get; set; }
         public virtual DbSet<GameBeijing28Source> GameBeijing28Source { get; set; }
+        public virtual DbSet<GameBeijing28Archive> GameBeijing28Archive { get; set; }
+        public virtual DbSet<GameCategory> GameCategory { get; set; }
+        public virtual DbSet<GameOdds> GameOdds { get; set; }
+        public virtual DbSet<GameOddsLog> GameOddsLog { get; set; }
+        public virtual DbSet<GameUserBet> GameUserBet { get; set; }
+        public virtual DbSet<GameUserBetContent> GameUserBetContent { get; set; }
     }
 }

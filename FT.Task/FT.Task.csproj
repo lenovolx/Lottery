@@ -1,6 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4A08CF32-547B-404D-B2DF-8735CAF4736D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FT.Task</RootNamespace>
+    <AssemblyName>FT.Task</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -57,6 +72,7 @@
     <Compile Include="1XBET\FTPlayMatchLogJob.cs" />
     <Compile Include="Beijingflcp\BeiJWelfareLotteryKL8.cs" />
     <Compile Include="Beijingflcp\GameBeiJingKL8.cs" />
+    <Compile Include="Beijingflcp\GameBeijingKL8Base.cs" />
     <Compile Include="HGA\NewFTPlayResultJob.cs" />
     <Compile Include="HGA\OldAnalyzeData.cs" />
     <Compile Include="BaseJob.cs" />

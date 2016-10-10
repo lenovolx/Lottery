@@ -120,6 +120,27 @@
           <Property Name="LotteryTime" Type="datetime" />
           <Property Name="IsSynch" Type="bit" />
         </EntityType>
+        <EntityType Name="GameBeijing28Archive">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OriginalId" Type="bigint" />
+          <Property Name="TermNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="LotteryNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="SortNumber" Type="nvarchar" MaxLength="200" />
+          <Property Name="FirstAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="NextAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastAreaNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstAreaResult" Type="int" />
+          <Property Name="NextAreaResult" Type="int" />
+          <Property Name="LastAreaResult" Type="int" />
+          <Property Name="FIrstAreaMantissa" Type="int" />
+          <Property Name="NextAreaMantissa" Type="int" />
+          <Property Name="LastAreaMantissa" Type="int" />
+          <Property Name="LotteryTime" Type="datetime" />
+          <Property Name="ArchiveTime" Type="datetime" />
+        </EntityType>
         <EntityType Name="GameBeijing28Source">
           <Key>
             <PropertyRef Name="Id" />
@@ -134,12 +155,77 @@
           <Property Name="FirstAreaResult" Type="int" />
           <Property Name="NextAreaResult" Type="int" />
           <Property Name="LastAreaResult" Type="int" />
-          <Property Name="LotteryTime" Type="datetime" />
-          <Property Name="IsSync" Type="bit" />
-          <Property Name="SyncTime" Type="datetime" />
           <Property Name="FirstAreaMantissa" Type="int" />
           <Property Name="NextAreaMantissa" Type="int" />
           <Property Name="LastAreaMantissa" Type="int" />
+          <Property Name="LotteryTime" Type="datetime" />
+          <Property Name="IsSync" Type="bit" />
+          <Property Name="SyncTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="GameCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GameName" Type="nvarchar" MaxLength="50" />
+          <Property Name="GamenCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="DataSource" Type="nvarchar" MaxLength="50" />
+          <Property Name="GameRule" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="GameOdds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GameCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="GameNumber" Type="tinyint" />
+          <Property Name="CurrentOdds" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="OldOdds" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="StandardOdds" Type="decimal" Precision="18" Scale="5" />
+          <Property Name="UpdateTime" Type="bigint" />
+        </EntityType>
+        <EntityType Name="GameOddsLog">
+          <Key>
+            <PropertyRef Name="OddsId" />
+          </Key>
+          <Property Name="OddsId" Type="bigint" Nullable="false" />
+          <Property Name="GameCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="GameNumber" Type="tinyint" />
+          <Property Name="Odds" Type="decimal" Precision="10" Scale="5" />
+          <Property Name="CreateTime" Type="bigint" />
+        </EntityType>
+        <EntityType Name="GameUserBet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="TermNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="GameCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="GameNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="BetMoney" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsDraw" Type="bit" />
+          <Property Name="IsGetPrize" Type="bit" />
+          <Property Name="BetTime" Type="bigint" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="WinningMoney" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="GameUserBetContent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BetId" Type="bigint" Nullable="false" />
+          <Property Name="TermNumber" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BetContent" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BetType" Type="tinyint" />
+          <Property Name="CurrentOdds" Type="decimal" Precision="10" Scale="5" />
+          <Property Name="BetMoney" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsGetPrize" Type="bit" />
+          <Property Name="WinningMoney" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="BetRate" Type="int" />
+          <Property Name="BetTime" Type="bigint" />
+          <Property Name="CreateTime" Type="datetime" />
         </EntityType>
         <EntityType Name="LogInfo">
           <Key>
@@ -576,7 +662,13 @@
           <EntitySet Name="CardGroup" EntityType="Self.CardGroup" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CashRecord" EntityType="Self.CashRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GameBeijing16Source" EntityType="Self.GameBeijing16Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameBeijing28Archive" EntityType="Self.GameBeijing28Archive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GameBeijing28Source" EntityType="Self.GameBeijing28Source" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameCategory" EntityType="Self.GameCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameOdds" EntityType="Self.GameOdds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameOddsLog" EntityType="Self.GameOddsLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameUserBet" EntityType="Self.GameUserBet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GameUserBetContent" EntityType="Self.GameUserBetContent" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LogInfo" EntityType="Self.LogInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MatchBlackList" EntityType="Self.MatchBlackList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MatchInfo" EntityType="Self.MatchInfo" Schema="dbo" store:Type="Tables" />
@@ -723,6 +815,20 @@
           <EntitySet Name="BeiJingKL8Source" EntityType="FT.Model.BeiJingKL8Source" />
           <EntitySet Name="GameBeijing16Source" EntityType="FT.Model.GameBeijing16Source" />
           <EntitySet Name="GameBeijing28Source" EntityType="FT.Model.GameBeijing28Source" />
+          <EntitySet Name="GameBeijing28Archive" EntityType="FT.Model.GameBeijing28Archive" />
+          <EntitySet Name="GameCategory" EntityType="FT.Model.GameCategory" />
+          <EntitySet Name="GameOdds" EntityType="FT.Model.GameOdds" />
+          <EntitySet Name="GameOddsLog" EntityType="FT.Model.GameOddsLog" />
+          <EntitySet Name="GameUserBet" EntityType="FT.Model.GameUserBet" />
+          <EntitySet Name="GameUserBetContent" EntityType="FT.Model.GameUserBetContent" />
+          <AssociationSet Name="GameUserBetGameUserBetContent" Association="FT.Model.GameUserBetGameUserBetContent">
+            <End Role="GameUserBet" EntitySet="GameUserBet" />
+            <End Role="GameUserBetContent" EntitySet="GameUserBetContent" />
+          </AssociationSet>
+          <AssociationSet Name="UserAccountGameUserBet" Association="FT.Model.UserAccountGameUserBet">
+            <End Role="UserAccount" EntitySet="UserAccount" />
+            <End Role="GameUserBet" EntitySet="GameUserBet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Admin">
           <Key>
@@ -903,6 +1009,7 @@
           <NavigationProperty Name="AmountWater" Relationship="FT.Model.AmountWaterUserAccount" FromRole="UserAccount" ToRole="AmountWater" />
           <Property Name="SafePassword" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ReturnRate" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="GameUserBet" Relationship="FT.Model.UserAccountGameUserBet" FromRole="UserAccount" ToRole="GameUserBet" />
         </EntityType>
         <Association Name="FK_CARD_REFERENCE_CARDGROU">
           <End Type="FT.Model.CardGroup" Role="CardGroup" Multiplicity="0..1" />
@@ -1499,6 +1606,119 @@
           <Property Name="NextAreaMantissa" Type="Int32" />
           <Property Name="LastAreaMantissa" Type="Int32" />
         </EntityType>
+        <EntityType Name="GameBeijing28Archive">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OriginalId" Type="Int64" />
+          <Property Name="TermNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LotteryNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SortNumber" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NextAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastAreaNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstAreaResult" Type="Int32" />
+          <Property Name="NextAreaResult" Type="Int32" />
+          <Property Name="LastAreaResult" Type="Int32" />
+          <Property Name="FIrstAreaMantissa" Type="Int32" />
+          <Property Name="NextAreaMantissa" Type="Int32" />
+          <Property Name="LastAreaMantissa" Type="Int32" />
+          <Property Name="LotteryTime" Type="DateTime" Precision="3" />
+          <Property Name="ArchiveTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="GameCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GameName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GamenCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DataSource" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GameRule" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="GameOdds">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GameCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GameNumber" Type="Byte" />
+          <Property Name="CurrentOdds" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="OldOdds" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="StandardOdds" Type="Decimal" Precision="18" Scale="5" />
+          <Property Name="UpdateTime" Type="Int64" />
+        </EntityType>
+        <EntityType Name="GameOddsLog">
+          <Key>
+            <PropertyRef Name="OddsId" />
+          </Key>
+          <Property Name="OddsId" Type="Int64" Nullable="false" />
+          <Property Name="GameCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GameNumber" Type="Byte" />
+          <Property Name="Odds" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="CreateTime" Type="Int64" />
+        </EntityType>
+        <EntityType Name="GameUserBet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int64" Nullable="false" />
+          <Property Name="TermNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GameCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GameNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BetMoney" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsDraw" Type="Boolean" />
+          <Property Name="IsGetPrize" Type="Boolean" />
+          <Property Name="BetTime" Type="Int64" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="WinningMoney" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="GameUserBetContent" Relationship="FT.Model.GameUserBetGameUserBetContent" FromRole="GameUserBet" ToRole="GameUserBetContent" />
+          <NavigationProperty Name="UserAccount" Relationship="FT.Model.UserAccountGameUserBet" FromRole="GameUserBet" ToRole="UserAccount" />
+        </EntityType>
+        <EntityType Name="GameUserBetContent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BetId" Type="Int64" Nullable="false" />
+          <Property Name="TermNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BetContent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BetType" Type="Byte" />
+          <Property Name="CurrentOdds" Type="Decimal" Precision="10" Scale="5" />
+          <Property Name="BetMoney" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsGetPrize" Type="Boolean" />
+          <Property Name="WinningMoney" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="BetRate" Type="Int32" />
+          <NavigationProperty Name="GameUserBet" Relationship="FT.Model.GameUserBetGameUserBetContent" FromRole="GameUserBetContent" ToRole="GameUserBet" />
+          <Property Name="BetTime" Type="Int64" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="GameUserBetGameUserBetContent">
+          <End Type="FT.Model.GameUserBet" Role="GameUserBet" Multiplicity="1" />
+          <End Type="FT.Model.GameUserBetContent" Role="GameUserBetContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameUserBet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameUserBetContent">
+              <PropertyRef Name="BetId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserAccountGameUserBet">
+          <End Type="FT.Model.UserAccount" Role="UserAccount" Multiplicity="1" />
+          <End Type="FT.Model.GameUserBet" Role="GameUserBet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GameUserBet">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2061,6 +2281,98 @@
                 <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
                 <ScalarProperty Name="LotteryNumber" ColumnName="LotteryNumber" />
                 <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameBeijing28Archive">
+            <EntityTypeMapping TypeName="FT.Model.GameBeijing28Archive">
+              <MappingFragment StoreEntitySet="GameBeijing28Archive">
+                <ScalarProperty Name="ArchiveTime" ColumnName="ArchiveTime" />
+                <ScalarProperty Name="LotteryTime" ColumnName="LotteryTime" />
+                <ScalarProperty Name="LastAreaMantissa" ColumnName="LastAreaMantissa" />
+                <ScalarProperty Name="NextAreaMantissa" ColumnName="NextAreaMantissa" />
+                <ScalarProperty Name="FIrstAreaMantissa" ColumnName="FIrstAreaMantissa" />
+                <ScalarProperty Name="LastAreaResult" ColumnName="LastAreaResult" />
+                <ScalarProperty Name="NextAreaResult" ColumnName="NextAreaResult" />
+                <ScalarProperty Name="FirstAreaResult" ColumnName="FirstAreaResult" />
+                <ScalarProperty Name="LastAreaNo" ColumnName="LastAreaNo" />
+                <ScalarProperty Name="NextAreaNo" ColumnName="NextAreaNo" />
+                <ScalarProperty Name="FirstAreaNo" ColumnName="FirstAreaNo" />
+                <ScalarProperty Name="SortNumber" ColumnName="SortNumber" />
+                <ScalarProperty Name="LotteryNumber" ColumnName="LotteryNumber" />
+                <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="OriginalId" ColumnName="OriginalId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameCategory">
+            <EntityTypeMapping TypeName="FT.Model.GameCategory">
+              <MappingFragment StoreEntitySet="GameCategory">
+                <ScalarProperty Name="GameRule" ColumnName="GameRule" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="GamenCode" ColumnName="GamenCode" />
+                <ScalarProperty Name="GameName" ColumnName="GameName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameOdds">
+            <EntityTypeMapping TypeName="FT.Model.GameOdds">
+              <MappingFragment StoreEntitySet="GameOdds">
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="StandardOdds" ColumnName="StandardOdds" />
+                <ScalarProperty Name="OldOdds" ColumnName="OldOdds" />
+                <ScalarProperty Name="CurrentOdds" ColumnName="CurrentOdds" />
+                <ScalarProperty Name="GameNumber" ColumnName="GameNumber" />
+                <ScalarProperty Name="GameCategory" ColumnName="GameCategory" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameOddsLog">
+            <EntityTypeMapping TypeName="FT.Model.GameOddsLog">
+              <MappingFragment StoreEntitySet="GameOddsLog">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Odds" ColumnName="Odds" />
+                <ScalarProperty Name="GameNumber" ColumnName="GameNumber" />
+                <ScalarProperty Name="GameCategory" ColumnName="GameCategory" />
+                <ScalarProperty Name="OddsId" ColumnName="OddsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameUserBet">
+            <EntityTypeMapping TypeName="FT.Model.GameUserBet">
+              <MappingFragment StoreEntitySet="GameUserBet">
+                <ScalarProperty Name="WinningMoney" ColumnName="WinningMoney" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="BetTime" ColumnName="BetTime" />
+                <ScalarProperty Name="IsGetPrize" ColumnName="IsGetPrize" />
+                <ScalarProperty Name="IsDraw" ColumnName="IsDraw" />
+                <ScalarProperty Name="BetMoney" ColumnName="BetMoney" />
+                <ScalarProperty Name="GameNumber" ColumnName="GameNumber" />
+                <ScalarProperty Name="GameCategory" ColumnName="GameCategory" />
+                <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GameUserBetContent">
+            <EntityTypeMapping TypeName="FT.Model.GameUserBetContent">
+              <MappingFragment StoreEntitySet="GameUserBetContent">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="BetTime" ColumnName="BetTime" />
+                <ScalarProperty Name="BetRate" ColumnName="BetRate" />
+                <ScalarProperty Name="WinningMoney" ColumnName="WinningMoney" />
+                <ScalarProperty Name="IsGetPrize" ColumnName="IsGetPrize" />
+                <ScalarProperty Name="BetMoney" ColumnName="BetMoney" />
+                <ScalarProperty Name="CurrentOdds" ColumnName="CurrentOdds" />
+                <ScalarProperty Name="BetType" ColumnName="BetType" />
+                <ScalarProperty Name="BetContent" ColumnName="BetContent" />
+                <ScalarProperty Name="TermNumber" ColumnName="TermNumber" />
+                <ScalarProperty Name="BetId" ColumnName="BetId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

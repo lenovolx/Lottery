@@ -39,7 +39,7 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "足彩竞技玩法数据采集服务";
+            this.serviceInstaller1.Description = "飞扬彩票源数据采集服务";
             this.serviceInstaller1.DisplayName = "FT.Auto.Services";
             this.serviceInstaller1.ServiceName = "FT.Auto.Services";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;

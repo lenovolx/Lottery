@@ -15,6 +15,7 @@ namespace FT.Model
             this.Admin = new HashSet<Admin>();
             this.TradeRecord = new HashSet<TradeRecord>();
             this.AmountWater = new HashSet<AmountWater>();
+            this.GameUserBet = new HashSet<GameUserBet>();
         }
     
         public long Id { get; set; }
@@ -40,5 +41,6 @@ namespace FT.Model
         public virtual ICollection<Admin> Admin { get; set; }
         public virtual ICollection<TradeRecord> TradeRecord { get; set; }
         public virtual ICollection<AmountWater> AmountWater { get; set; }
+        public virtual ICollection<GameUserBet> GameUserBet { get; set; }
     }
 }

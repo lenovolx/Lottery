@@ -15,8 +15,9 @@ namespace FT.Tests
         [TestMethod]
         public void ToStringTest()
         {
-            string str1 = "0";
-            Console.Write(str1.ToInt());
+            var now = DateTime.Now;
+            DateTime testTime = new DateTime(now.Year, now.Month, now.Day, now.Hour, 60, 0);
+            Console.Write(testTime.ToString());
         }
     }
 }
